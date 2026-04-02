@@ -1,0 +1,9 @@
+step,mined_block_count,window_blocks,window_orphan_count,canonical_head_id,canonical_coverage,max_fork_degree,longest_branch_len,branch_count,forum_window_posts,forum_window_avg_tone,forum_hot_board,forum_top_target
+22840,10,10,6,B5,0.400000,4,5,4,16,-0.422500,mining,M5
+41253,20,10,7,B17,0.300000,3,4,5,24,-0.376667,mining,M5
+55782,30,10,7,B25,0.300000,2,5,5,19,-0.402105,mining,M5
+67494,40,10,6,B39,0.400000,3,4,7,28,-0.477857,mining,M5
+85575,50,10,4,B49,0.600000,3,7,4,26,-0.476154,mining,M5
+103935,60,10,9,B54,0.100000,2,5,5,15,-0.500000,mining,M5
+125821,70,10,8,B67,0.200000,2,4,5,24,-0.396667,mining,M5
+148495,80,10,7,B76,0.300000,3,5,6,23,-0.473043,mining,M5

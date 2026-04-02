@@ -96,6 +96,17 @@ sim.run()
   - `reputation_provider` (Callable) —— 一个函数指针，由于治理需要知道声誉，而声誉在 `ForumModule` 中，你需要将 `forum_mod.forum.reputation_of` 传给这个参数，以保持两个模块的轻度解耦。
 - **使用说明:** 每个 tick 该模块会检查节点声誉，若达标则调用 `graph.ban_node()` 在图拓扑层面上对其进行物理级断网处理，并发送通告事件。
 
+### 💰 5. 代币经济学模块 (`TokenomicsModule`)
+*路径：`blockchain_sandbox/modules/tokenomics_module.py`*
+
+模拟区块链底层的经济激励博弈系统。
+- **关联的 LLM 决策输出键:**
+  - `economic_action`: 经济行为指令（`none`, `power_off`）。
+- **使用说明:** 
+  - 开启后，矿工每参与一步挖矿都会按其算力（Hash Power）比例消耗 `fiat` (法币/电费)。
+  - 当其挖出的块上链时，会获得 `tokens`。而 `tokens` 的法币价格受到全网孤块率的动态影响（网络混乱时币价暴跌）。
+  - 大模型可以评估其投入产出比（ROI），当亏本严重时，可以选择主动执行 `power_off` 以关闭算力停止亏损。
+
 ---
 
 ## 3. 开发者教程：如何编写一个新模块

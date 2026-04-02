@@ -109,6 +109,9 @@ python -m experiments.run_honest_no_llm
 10. `SANDBOX_ENABLE_ATTACK_JAMMING`（默认 1）
 - 是否允许大模型使用 `jam_target` 动作对目标矿工发动物理断网/降速攻击。
 
+11. `SANDBOX_ENABLE_TOKENOMICS`（默认 0）
+- 是否启用代币经济学模块。开启后，挖矿将消耗模拟资金，成功出块将奖励 Token（随网络孤块率浮动）。大模型可执行 `economic_action='power_off'` 关机止损。
+
 ## 3.3 No-LLM 模式专用参数
 
 1. `SANDBOX_TARGET_MINED_BLOCKS`（默认 5000）
@@ -214,6 +217,10 @@ python -m experiments.run_llm_sandbox
 | 实验4 | LLM 自私 + 论坛 + 声誉 | 启用 | 有（1.0~4.0） | 6矿工 / 30块（建议） | `python -m experiments.run_llm_sandbox` 或者 `experiments.run_social_warfare`|
 
 > 说明：实验 3/4 都建议先确认 `configs/llm_provider.yaml` 可连通；若网络不稳定，可临时设置 `SANDBOX_PREFLIGHT_STRICT=0` 避免启动前中断。
+
+### 实验 5：Tokenomics 对自私挖矿的抑制测试
+包含两个对比实验（开启/关闭代币经济学），用于研究经济惩罚与币价绑定机制如何改变矿工的作恶策略。
+**详细实验参数与分析方法请参阅：** [`docs/EXPERIMENT_CASES.md`](./EXPERIMENT_CASES.md)
 
 ---
 

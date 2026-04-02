@@ -1,0 +1,240 @@
+{
+  "generated_at": "2026-04-02T14:07:58",
+  "config": {
+    "total_steps": 1500,
+    "random_seed": 11,
+    "num_miners": 6,
+    "num_full_nodes": 12,
+    "edge_probability": 0.25,
+    "min_latency": 1.5,
+    "max_latency": 3.5,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.05,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": true,
+    "enable_attack_jamming": true,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 10
+  },
+  "headline_metrics": {
+    "total_blocks": 81,
+    "canonical_height": 35,
+    "canonical_head_id": "B76",
+    "orphan_blocks": 45,
+    "orphan_ratio": 0.5555555555555556,
+    "fork_events": 0,
+    "jam_events": 103,
+    "network_efficiency": 4.534181698962524,
+    "forum_post_count": 175,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 16
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 16
+    },
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 15
+    },
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 13
+    },
+    {
+      "miner_id": "M3",
+      "discovered_blocks": 13
+    },
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 7
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 1.0,
+    "M1": 1.0,
+    "M2": 1.0
+  },
+  "final_reputation": {
+    "M5": -78.38,
+    "M2": 0.12,
+    "M4": 0.9199999999999999,
+    "M0": 0.0,
+    "M1": 0.12,
+    "M3": 0.0,
+    "SYSTEM": 0.0
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.12935335356880617,
+      "mined_blocks": 13,
+      "canonical_blocks": 5,
+      "orphan_blocks": 8,
+      "orphan_ratio": 0.6153846153846154,
+      "mined_share": 0.1625,
+      "canonical_share": 0.14285714285714285,
+      "mined_vs_hp_ratio": 1.2562488371324856,
+      "canonical_vs_hp_ratio": 1.1043945820944927,
+      "top_actions": [
+        [
+          "jam_target",
+          30
+        ],
+        [
+          "publish_private",
+          4
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M5's ongoing reliability issues could jeopardize overall network stability, and jamming their block propagation will increase our competitive advantage.",
+      "last_prompt": "step=145792;miner_id=M0;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.12935;local_public_height=35;private_lead=0;rivalry_pressure=0.0000;heads=M1:35,M2:35,M3:35,M4:35,M5:18;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=-0.457;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P171|mining|author=M1|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl || P170|mining|author=M4|target=M5|tone=-0.50|M5's reliability issues continue to pose a risk  || P169|mining|author=M0|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P167|mining|author=M1|target=M5|tone=-0.50|M5's reliability issues are concerning and could || P168|mining|author=M2|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl;own_reputation=+0.000;reputation_risk=normal;jam_target=M5;recent_memory=[t=126161 action=jam_target content=M5's ongoing reliability issues are beco... | t=136091 action=jam_target content=M5's reliability issues are becoming inc... | t=138050 action=jam_target content=M5's ongoing reliability issues could je...]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.16006124682899286,
+      "mined_blocks": 16,
+      "canonical_blocks": 5,
+      "orphan_blocks": 11,
+      "orphan_ratio": 0.6875,
+      "mined_share": 0.2,
+      "canonical_share": 0.14285714285714285,
+      "mined_vs_hp_ratio": 1.2495216922412027,
+      "canonical_vs_hp_ratio": 0.8925154944580018,
+      "top_actions": [
+        [
+          "jam_target",
+          37
+        ],
+        [
+          "publish_private",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M5's ongoing reliability issues may hinder their block propagation, giving us an opportunity to capitalize on the situation.",
+      "last_prompt": "step=147511;miner_id=M1;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.16006;local_public_height=35;private_lead=1;rivalry_pressure=0.0000;heads=M0:35,M2:35,M3:35,M4:35,M5:18;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=-0.457;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P172|mining|author=M0|target=M5|tone=-0.50|M5's ongoing reliability issues are concerning a || P171|mining|author=M1|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl || P170|mining|author=M4|target=M5|tone=-0.50|M5's reliability issues continue to pose a risk  || P169|mining|author=M0|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P168|mining|author=M2|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl;own_reputation=+0.120;reputation_risk=normal;jam_target=M5;recent_memory=[t=136090 action=jam_target content=M5's reliability issues continue to pose... | t=137743 action=jam_target content=M5's reliability issues are concerning a... | t=140984 action=jam_target content=M5's reliability issues are becoming inc...]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.2642686600659098,
+      "mined_blocks": 15,
+      "canonical_blocks": 8,
+      "orphan_blocks": 7,
+      "orphan_ratio": 0.4666666666666667,
+      "mined_share": 0.1875,
+      "canonical_share": 0.22857142857142856,
+      "mined_vs_hp_ratio": 0.7095052434641196,
+      "canonical_vs_hp_ratio": 0.8649206777467362,
+      "top_actions": [
+        [
+          "jam_target",
+          36
+        ],
+        [
+          "publish_if_win",
+          1
+        ],
+        [
+          "publish_private",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M5's reliability issues are becoming increasingly concerning, and jamming can exploit this to slow down their block propagation.",
+      "last_prompt": "step=148495;miner_id=M2;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.26427;local_public_height=35;private_lead=0;rivalry_pressure=0.0000;heads=M0:35,M1:35,M3:35,M4:35,M5:18;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=-0.457;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P173|mining|author=M1|target=M5|tone=-0.50|M5's reliability issues could jeopardize their m || P172|mining|author=M0|target=M5|tone=-0.50|M5's ongoing reliability issues are concerning a || P171|mining|author=M1|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl || P169|mining|author=M0|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P170|mining|author=M4|target=M5|tone=-0.50|M5's reliability issues continue to pose a risk ;own_reputation=+0.120;reputation_risk=normal;jam_target=M5;recent_memory=[t=135975 action=publish_private content=M5's ongoing reliability issues could je... | t=136325 action=jam_target content=M5's reliability issues are becoming inc... | t=137774 action=jam_target content=M5's reliability issues are becoming inc...]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.13314792344090332,
+      "mined_blocks": 13,
+      "canonical_blocks": 10,
+      "orphan_blocks": 3,
+      "orphan_ratio": 0.23076923076923078,
+      "mined_share": 0.1625,
+      "canonical_share": 0.2857142857142857,
+      "mined_vs_hp_ratio": 1.220447122272428,
+      "canonical_vs_hp_ratio": 2.145841094105368,
+      "top_actions": [
+        [
+          "publish_if_win",
+          28
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M5's ongoing reliability issues could jeopardize network stability, and jamming their block propagation can maintain my advantage.",
+      "last_prompt": "step=137396;miner_id=M3;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.13315;local_public_height=34;private_lead=0;rivalry_pressure=0.0000;heads=M0:34,M1:34,M2:34,M4:34,M5:18;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=-0.457;forum_personal_sentiment=-0.422;forum_hot_board=mining;forum_feed_digest=P165|mining|author=M4|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P164|mining|author=M2|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl || P162|mining|author=M1|target=M5|tone=-0.50|M5's reliability issues continue to pose a risk  || P163|mining|author=M0|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl || P161|mining|author=M2|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize;own_reputation=+0.000;reputation_risk=normal;jam_target=M5;recent_memory=[t=119431 action=jam_target content=M5's ongoing reliability issues could je... | t=125979 action=jam_target content=M5's ongoing reliability issues are beco... | t=135743 action=jam_target content=M5's ongoing reliability issues could je...]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.14521207079672052,
+      "mined_blocks": 7,
+      "canonical_blocks": 4,
+      "orphan_blocks": 3,
+      "orphan_ratio": 0.42857142857142855,
+      "mined_share": 0.0875,
+      "canonical_share": 0.11428571428571428,
+      "mined_vs_hp_ratio": 0.6025669871652026,
+      "canonical_vs_hp_ratio": 0.7870262689504688,
+      "top_actions": [
+        [
+          "publish_if_win",
+          25
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M5's ongoing reliability issues could jeopardize the network's stability, and slowing their block propagation may protect my position.",
+      "last_prompt": "step=138145;miner_id=M4;is_selfish=false;event_kind=on_block_received;trigger_block_id=B76;hash_power=0.14521;local_public_height=35;private_lead=0;rivalry_pressure=0.0000;heads=M0:35,M1:35,M2:35,M3:35,M5:18;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=-0.457;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P169|mining|author=M0|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P168|mining|author=M2|target=M5|tone=-0.50|M5's reliability issues are becoming increasingl || P167|mining|author=M1|target=M5|tone=-0.50|M5's reliability issues are concerning and could || P166|mining|author=M3|target=M5|tone=-0.50|M5's reliability issues continue to pose a risk  || P165|mining|author=M4|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize;own_reputation=+0.920;reputation_risk=normal;jam_target=M5;recent_memory=[t=125821 action=jam_target content=M5's reliability issues could jeopardize... | t=135585 action=jam_target content=M5's ongoing reliability issues may pose... | t=136563 action=jam_target content=M5's ongoing reliability issues could je...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.16795674529866725,
+      "mined_blocks": 16,
+      "canonical_blocks": 3,
+      "orphan_blocks": 13,
+      "orphan_ratio": 0.8125,
+      "mined_share": 0.2,
+      "canonical_share": 0.08571428571428572,
+      "mined_vs_hp_ratio": 1.190782779484993,
+      "canonical_vs_hp_ratio": 0.5103354769221399,
+      "top_actions": [
+        [
+          "publish_if_win",
+          17
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "To slow down M4's block propagation and protect my position amidst rising rivalry pressure.",
+      "last_prompt": "step=134911;miner_id=M5;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.16796;local_public_height=32;private_lead=0;rivalry_pressure=1.0000;heads=M0:32,M1:32,M2:32,M3:32,M4:32;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=-0.463;forum_personal_sentiment=-0.446;forum_hot_board=mining;forum_feed_digest=P157|mining|author=M2|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P156|mining|author=M2|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P155|mining|author=M1|target=M5|tone=-0.50|M5's ongoing reliability issues could jeopardize || P153|mining|author=M0|target=M5|tone=-0.50|M5's ongoing reliability issues are becoming inc || P154|mining|author=M2|target=M5|tone=-0.50|M5's reliability issues could jeopardize the net;own_reputation=-70.380;reputation_risk=critical;jam_target=M4;recent_memory=[t=109694 action=jam_target content=In light of recent challenges, let's foc... | t=112630 action=jam_target content=I propose we focus on long-term stabilit... | t=124825 action=jam_target content=Given the challenges we're facing, I bel...]"
+    }
+  ]
+}

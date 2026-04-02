@@ -1,0 +1,72 @@
+{"step": 14506, "time": 145.05918092593606, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B3", "private_lead_after": 1}
+{"step": 14713, "time": 147.13195624609767, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B4", "private_lead_after": 1}
+{"step": 19435, "time": 194.34540867328803, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B5", "private_lead_after": 2}
+{"step": 21327, "time": 213.27170840139752, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B4"], "private_lead_after": 0}
+{"step": 21348, "time": 213.4831467093757, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B3", "B5"], "private_lead_after": 0}
+{"step": 22598, "time": 225.97884791630864, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B9", "private_lead_after": 1}
+{"step": 23492, "time": 234.92418735005006, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B9"], "private_lead_after": 0}
+{"step": 25150, "time": 251.50276650826285, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B11", "private_lead_after": 1}
+{"step": 26025, "time": 260.2454661845755, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B11"], "private_lead_after": 0}
+{"step": 28486, "time": 284.85811263134207, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B14", "private_lead_after": 1}
+{"step": 31474, "time": 314.7359867900258, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B15", "private_lead_after": 1}
+{"step": 32262, "time": 322.6175817855897, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B17", "private_lead_after": 2}
+{"step": 32371, "time": 323.70877100765284, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B14", "B17"], "private_lead_after": 0}
+{"step": 32647, "time": 326.4676808321209, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B15"], "private_lead_after": 0}
+{"step": 44187, "time": 441.86741570552465, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B22", "private_lead_after": 1}
+{"step": 44235, "time": 442.35112351523344, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B22"], "private_lead_after": 0}
+{"step": 44724, "time": 447.23569471814835, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B23", "private_lead_after": 1}
+{"step": 45133, "time": 451.3267199395051, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B23"], "private_lead_after": 0}
+{"step": 45133, "time": 451.3267199395051, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B24", "private_lead_after": 1}
+{"step": 46228, "time": 462.27680665004823, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B24"], "private_lead_after": 0}
+{"step": 48378, "time": 483.7837087601369, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B26", "private_lead_after": 1}
+{"step": 52214, "time": 522.1384189365181, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B29", "private_lead_after": 1}
+{"step": 56005, "time": 560.0507740143387, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B31", "private_lead_after": 1}
+{"step": 56057, "time": 560.5742406757245, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B31"], "private_lead_after": 0}
+{"step": 56310, "time": 563.098057953808, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B29"], "private_lead_after": 0}
+{"step": 57150, "time": 571.502091075992, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B33", "private_lead_after": 1}
+{"step": 57369, "time": 573.6946445101955, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B26"], "private_lead_after": 0}
+{"step": 57645, "time": 576.4535543346635, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B33"], "private_lead_after": 0}
+{"step": 60085, "time": 600.8539614896328, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B35", "private_lead_after": 1}
+{"step": 61251, "time": 612.5127756062368, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B35"], "private_lead_after": 0}
+{"step": 64464, "time": 644.6406291155829, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B38", "private_lead_after": 1}
+{"step": 65789, "time": 657.8867484481286, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B38"], "private_lead_after": 0}
+{"step": 68267, "time": 682.669719073166, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B41", "private_lead_after": 1}
+{"step": 72653, "time": 726.5321856315492, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B41"], "private_lead_after": 0}
+{"step": 72653, "time": 726.5321856315492, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B43", "private_lead_after": 1}
+{"step": 74147, "time": 741.4724104728202, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B44", "private_lead_after": 2}
+{"step": 77291, "time": 772.9111523709602, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B43", "B44"], "private_lead_after": 0}
+{"step": 77291, "time": 772.9111523709602, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B45", "private_lead_after": 1}
+{"step": 77385, "time": 773.8506707297955, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B46", "private_lead_after": 2}
+{"step": 81961, "time": 819.606998918428, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B45", "B46"], "private_lead_after": 0}
+{"step": 81961, "time": 819.606998918428, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B47", "private_lead_after": 1}
+{"step": 82481, "time": 824.808208360259, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B48", "private_lead_after": 1}
+{"step": 84453, "time": 844.5256660530528, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B48"], "private_lead_after": 0}
+{"step": 84798, "time": 847.9815983016426, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B47"], "private_lead_after": 0}
+{"step": 85575, "time": 855.7481882697657, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B50", "private_lead_after": 1}
+{"step": 86740, "time": 867.4044032477099, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B51", "private_lead_after": 1}
+{"step": 89945, "time": 899.4456427082338, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B52", "private_lead_after": 1}
+{"step": 94788, "time": 947.8795123175945, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B54", "private_lead_after": 2}
+{"step": 95049, "time": 950.4933125520587, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B51"], "private_lead_after": 0}
+{"step": 95119, "time": 951.1903349761806, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B50", "B54"], "private_lead_after": 0}
+{"step": 95395, "time": 953.9492448006486, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B52"], "private_lead_after": 0}
+{"step": 96729, "time": 967.294340173319, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B55", "private_lead_after": 1}
+{"step": 99770, "time": 997.6995594536984, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B56", "private_lead_after": 1}
+{"step": 100624, "time": 1006.2357473798926, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B57", "private_lead_after": 2}
+{"step": 102219, "time": 1022.1859233328959, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B58", "private_lead_after": 3}
+{"step": 102674, "time": 1026.7401124635658, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B59", "private_lead_after": 4}
+{"step": 103935, "time": 1039.3514971767042, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B60", "private_lead_after": 2}
+{"step": 105662, "time": 1056.615285467729, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B55", "B60"], "private_lead_after": 0}
+{"step": 105777, "time": 1057.7707770386887, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B56", "B57", "B58", "B59"], "private_lead_after": 0}
+{"step": 107783, "time": 1077.8336143285646, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B63", "private_lead_after": 1}
+{"step": 112085, "time": 1120.8546987642044, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B63"], "private_lead_after": 0}
+{"step": 120801, "time": 1208.0071098149938, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B68", "private_lead_after": 1}
+{"step": 126327, "time": 1263.2655032335824, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B68"], "private_lead_after": 0}
+{"step": 127497, "time": 1274.9715201023823, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B71", "private_lead_after": 1}
+{"step": 129494, "time": 1294.9358687048334, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B72", "private_lead_after": 2}
+{"step": 135975, "time": 1359.7492969493248, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B71", "B72"], "private_lead_after": 0}
+{"step": 136325, "time": 1363.2469100214714, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B75", "private_lead_after": 1}
+{"step": 137774, "time": 1377.7366888011586, "miner_id": "M2", "event_type": "release_private", "released_blocks": ["B75"], "private_lead_after": 0}
+{"step": 140984, "time": 1409.836649128926, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B77", "private_lead_after": 1}
+{"step": 145792, "time": 1457.915428208087, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B78", "private_lead_after": 1}
+{"step": 147511, "time": 1475.1141744252939, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B79", "private_lead_after": 2}
+{"step": 148495, "time": 1484.947711783256, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B80", "private_lead_after": 1}

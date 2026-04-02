@@ -1,0 +1,7 @@
+miner_id,strategy,hash_power,mined_blocks,canonical_blocks,orphan_blocks,orphan_ratio,mined_share,canonical_share,mined_vs_hp_ratio,canonical_vs_hp_ratio,top_actions,last_raw_action,last_effective_action,last_reason,last_prompt
+M0,social_selfish,0.12935335,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M1,social_selfish,0.16006125,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M2,social_selfish,0.26426866,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M3,honest,0.13314792,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M4,honest,0.14521207,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M5,honest,0.16795675,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,

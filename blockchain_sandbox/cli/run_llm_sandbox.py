@@ -12,6 +12,7 @@ from blockchain_sandbox.modules.forum_module import ForumModule
 from blockchain_sandbox.modules.network_attack_module import NetworkAttackModule
 from blockchain_sandbox.modules.governance_module import GovernanceModule
 from blockchain_sandbox.modules.metrics_module import MetricsObserverModule
+from blockchain_sandbox.modules.tokenomics_module import TokenomicsModule
 from blockchain_sandbox.llm.llm_backend import build_llm_backend
 from blockchain_sandbox.reporting.agentic_metrics import (
     build_agentic_report,
@@ -134,6 +135,8 @@ def main() -> None:
         enable_forum=os.getenv("SANDBOX_ENABLE_FORUM", "1").strip().lower() in {"1", "true"},
         enable_attack_jamming=os.getenv("SANDBOX_ENABLE_ATTACK_JAMMING", "1").strip().lower() in {"1", "true"},
     )
+    
+    enable_tokenomics = os.getenv("SANDBOX_ENABLE_TOKENOMICS", "0").strip().lower() in {"1", "true"}
     show_snapshots = os.getenv("SANDBOX_SHOW_SNAPSHOTS", "1").strip().lower() in {"1", "true"}
     progress_interval_steps = int(os.getenv("SANDBOX_PROGRESS_INTERVAL_STEPS", "20"))
     verbose_llm_log = os.getenv("SANDBOX_VERBOSE_LLM_LOG", "0").strip().lower() in {"1", "true"}
@@ -150,6 +153,7 @@ def main() -> None:
             ("Miner Count", str(sim_cfg.num_miners)),
             ("Full Node Count", str(sim_cfg.num_full_nodes)),
             ("Forum Module", "Enabled" if sim_cfg.enable_forum else "Disabled"),
+            ("Tokenomics Module", "Enabled" if enable_tokenomics else "Disabled"),
             ("Edge Probability", f"{sim_cfg.edge_probability:.3f}"),
             ("Latency Range", f"{sim_cfg.min_latency:.2f}~{sim_cfg.max_latency:.2f}"),
             ("Reliability", f"{sim_cfg.min_reliability:.2f}~{sim_cfg.max_reliability:.2f}"),
@@ -178,6 +182,10 @@ def main() -> None:
         max_steps_of_jam_effect=sim_cfg.max_steps_of_jam_effect,
         enable_jamming=sim_cfg.enable_attack_jamming
     ))
+    
+    # Tokenomics module
+    if enable_tokenomics:
+        modules.append(TokenomicsModule())
     
     # Metrics Module 
     metrics_mod = MetricsObserverModule(

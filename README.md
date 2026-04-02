@@ -119,6 +119,10 @@ $env:SANDBOX_OUTPUT_ROOT='outputs/social_warfare'
 python -m experiments.run_social_warfare
 ```
 
+### 🟣 实验 4: Tokenomics 代币经济博弈对抗
+观察在大模型面临算力开销、市场币价崩塌时，是否会减缓其恶意的自私分叉行为。
+> **详细参数设计与结果分析方法请参阅**：[docs/EXPERIMENT_CASES.md](docs/EXPERIMENT_CASES.md)
+
 ---
 
 ## 📊 结果分析与可视化
