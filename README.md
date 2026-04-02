@@ -56,8 +56,9 @@ docs/                   # 详细的技术原理与模块开发者文档
 ```
 
 > 💡 **项目文档导航**：
-> - **想了解核心机制与代码架构？** 👉 请参阅 [`docs/README_structure.md`](docs/README_structure.md) (模块、离散事件引擎、参数含义)
-> - **想调整参数、运行命令行实验？** 👉 请参阅 [`docs/README_engine.md`](docs/README_engine.md) (全部 CLI 参数列表、输出文件判读)
+> - **想了解核心机制与代码架构？** 👉 请参阅 [`docs/README_structure.md`](docs/README_structure.md) (离散事件引擎、模块交互机制与参数设计)
+> - **想调整参数、运行命令行实验？** 👉 请参阅 [`docs/README_engine.md`](docs/README_engine.md) (CLI 参数列表、预设实验配方与输出说明)
+> - **想进行二次开发或编写新模块？** 👉 请参阅 [`docs/MODULE_GUIDE.md`](docs/MODULE_GUIDE.md) (EventBus 事件订阅与 Pluggable Module 开发指南)
 
 ---
 
@@ -66,8 +67,8 @@ docs/                   # 详细的技术原理与模块开发者文档
 ### 1. 环境准备
 
 ```bash
-git clone https://github.com/Entropy-wz/block_v2.git
-cd block_v2
+git clone https://github.com/Entropy-wz/Block_Chain_vModularization.git
+cd Block_Chain_vModularization
 pip install -r requirements.txt
 ```
 
