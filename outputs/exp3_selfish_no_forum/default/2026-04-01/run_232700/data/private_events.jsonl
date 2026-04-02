@@ -1,0 +1,5 @@
+{"step": 2733, "time": 27.33366971292636, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B4", "private_lead_after": 1}
+{"step": 3158, "time": 31.580390883172072, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B6", "private_lead_after": 2}
+{"step": 9493, "time": 94.93296747317906, "miner_id": "M0", "event_type": "release_private", "released_blocks": ["B4", "B6"], "private_lead_after": 0}
+{"step": 11625, "time": 116.25037985293407, "miner_id": "M2", "event_type": "withhold_mined", "block_id": "B8", "private_lead_after": 1}
+{"step": 14190, "time": 141.89875229356792, "miner_id": "M0", "event_type": "withhold_mined", "block_id": "B9", "private_lead_after": 1}

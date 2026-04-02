@@ -1,0 +1,2 @@
+{"step": 10264, "time": 102.64160198309926, "miner_id": "M1", "event_type": "withhold_mined", "block_id": "B11", "private_lead_after": 1}
+{"step": 10395, "time": 103.95011044009344, "miner_id": "M1", "event_type": "release_private", "released_blocks": ["B11"], "private_lead_after": 0}

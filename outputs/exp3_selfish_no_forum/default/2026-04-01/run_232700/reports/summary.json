@@ -1,0 +1,223 @@
+{
+  "generated_at": "2026-04-01T23:27:00",
+  "config": {
+    "total_steps": 150,
+    "random_seed": 11,
+    "num_miners": 6,
+    "num_full_nodes": 10,
+    "edge_probability": 0.3,
+    "min_latency": 1.0,
+    "max_latency": 4.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.05,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": false,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 10
+  },
+  "headline_metrics": {
+    "total_blocks": 10,
+    "canonical_height": 5,
+    "canonical_head_id": "B6",
+    "orphan_blocks": 4,
+    "orphan_ratio": 0.4,
+    "fork_events": 0,
+    "jam_events": 13,
+    "network_efficiency": 4.267379829667657,
+    "forum_post_count": 0,
+    "forum_hottest_board": "none"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 3
+    },
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M3",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 0
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 0.9,
+    "M1": 0.4,
+    "M2": 0.8
+  },
+  "final_reputation": {},
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.12935335356880617,
+      "mined_blocks": 3,
+      "canonical_blocks": 2,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.3333333333333333,
+      "mined_share": 0.3333333333333333,
+      "canonical_share": 0.4,
+      "mined_vs_hp_ratio": 2.5769206915538163,
+      "canonical_vs_hp_ratio": 3.09230482986458,
+      "top_actions": [
+        [
+          "jam_target",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "Maximizing competitive advantage by targeting M5 to disrupt their operations and secure a stronger position in the network.",
+      "last_prompt": "step=14190;miner_id=M0;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.12935;local_public_height=5;private_lead=0;rivalry_pressure=0.0000;heads=M1:5,M2:5,M3:5,M4:5,M5:5;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;jam_target=M5;recent_memory=[t=2733 action=jam_target content=none | t=3158 action=jam_target content=none | t=9493 action=jam_target content=none]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.16006124682899286,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "Maximize disruption to M5's mining efforts while leveraging my aggressive persona to maintain pressure. Given the current rivalry pressure is low, I can afford to be aggressive and jam M5 effectively.",
+      "last_prompt": "step=9747;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B7;hash_power=0.16006;local_public_height=4;private_lead=0;rivalry_pressure=0.0000;heads=M0:5,M2:4,M3:5,M4:4,M5:3;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;jam_target=M5;recent_memory=[t=632 action=jam_target content=none | t=2135 action=jam_target content=none]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.2642686600659098,
+      "mined_blocks": 2,
+      "canonical_blocks": 0,
+      "orphan_blocks": 2,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.2222222222222222,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.8408951033648824,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          4
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "With my aggressive hunting style and high risk tolerance, I can leverage my hash power to disrupt M5, potentially gaining an advantage in the network.",
+      "last_prompt": "step=11625;miner_id=M2;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.26427;local_public_height=5;private_lead=0;rivalry_pressure=0.0000;heads=M0:5,M1:5,M3:5,M4:5,M5:5;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;jam_target=M5;recent_memory=[t=1938 action=jam_target content=none | t=9210 action=publish_if_win content=none | t=10124 action=jam_target content=none]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.13314792344090332,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.1111111111111111,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.8344937588187541,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ],
+        [
+          "rebroadcast",
+          1
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "The private lead is fragile and the risk of rivals catching up is low. Publishing now secures my share while maintaining my position.",
+      "last_prompt": "step=9499;miner_id=M3;is_selfish=false;event_kind=on_block_received;trigger_block_id=B7;hash_power=0.13315;local_public_height=3;private_lead=0;rivalry_pressure=0.0000;heads=M0:5,M1:3,M2:4,M4:4,M5:3;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;jam_target=M5;recent_memory=[t=723 action=rebroadcast content=none | t=2226 action=hold content=none | t=2958 action=publish_if_win content=none]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.14521207079672052,
+      "mined_blocks": 2,
+      "canonical_blocks": 2,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.2222222222222222,
+      "canonical_share": 0.4,
+      "mined_vs_hp_ratio": 1.530328856292578,
+      "canonical_vs_hp_ratio": 2.754591941326641,
+      "top_actions": [
+        [
+          "publish_if_win",
+          4
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "With no private lead and no rivalry pressure, the best course of action is to publish immediately to secure any potential reward from the current block.",
+      "last_prompt": "step=9336;miner_id=M4;is_selfish=false;event_kind=on_block_received;trigger_block_id=B7;hash_power=0.14521;local_public_height=3;private_lead=0;rivalry_pressure=0.0000;heads=M0:3,M1:3,M2:4,M3:3,M5:3;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;jam_target=M5;recent_memory=[t=222 action=publish_private content=none | t=1990 action=publish_private content=none | t=2488 action=publish_if_win content=none]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.16795674529866725,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.1111111111111111,
+      "canonical_share": 0.2,
+      "mined_vs_hp_ratio": 0.6615459886027738,
+      "canonical_vs_hp_ratio": 1.190782779484993,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Withholding is not advantageous due to lack of private lead and low rivalry pressure. Publishing will secure current lead and minimize orphan risk.",
+      "last_prompt": "step=9749;miner_id=M5;is_selfish=false;event_kind=on_block_received;trigger_block_id=B6;hash_power=0.16796;local_public_height=4;private_lead=0;rivalry_pressure=0.0000;heads=M0:5,M1:5,M2:4,M3:5,M4:4;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;jam_target=M4;recent_memory=[t=634 action=publish_if_win content=none | t=1729 action=hold content=none | t=2900 action=publish_if_win content=none]"
+    }
+  ]
+}

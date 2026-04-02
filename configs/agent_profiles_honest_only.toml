@@ -1,0 +1,24 @@
+# 全诚实矿工样本（用于验证 奖励~算力 匹配）
+# 该文件会让所有矿工都走 honest 阵营。
+
+[policy]
+selfish_ratio = 0.0
+explicit_selfish = []
+
+[defaults.selfish]
+risk_appetite = [0.70, 0.90]
+aggression = [0.65, 0.88]
+patience = [0.45, 0.80]
+sociability = [0.35, 0.75]
+investment_style = "event_driven"
+narrative_style = "provocative"
+
+[defaults.honest]
+risk_appetite = [0.28, 0.55]
+aggression = [0.18, 0.42]
+patience = [0.60, 0.90]
+sociability = [0.45, 0.85]
+investment_style = "value_stability"
+narrative_style = "measured"
+
+# 你可按需继续添加 miners.Mx 个体覆盖

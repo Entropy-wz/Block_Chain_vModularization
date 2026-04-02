@@ -1,0 +1,9 @@
+api_key:
+  - sk-CAD4iMgGyj1cJi8ts6Zz1Essy6H6Ctwl5pIsM3mzPwJvtc1X
+model_name: gpt-4o-mini
+base_url: https://api.chatanywhere.tech/v1
+use_chat_completions: false
+temperature: 0.65
+max_output_tokens: 400
+timeout_seconds: 30
+

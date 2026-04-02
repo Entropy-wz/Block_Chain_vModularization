@@ -1,0 +1,359 @@
+{
+  "generated_at": "2026-04-01T18:03:00",
+  "config": {
+    "total_steps": 200,
+    "random_seed": 11,
+    "num_miners": 12,
+    "num_full_nodes": 30,
+    "edge_probability": 0.24,
+    "min_latency": 1.0,
+    "max_latency": 5.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.02,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": true,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 8
+  },
+  "headline_metrics": {
+    "total_blocks": 4,
+    "canonical_height": 3,
+    "canonical_head_id": "B3",
+    "orphan_blocks": 0,
+    "orphan_ratio": 0.0,
+    "fork_events": 0,
+    "jam_events": 11,
+    "network_efficiency": 4.4155282547276,
+    "forum_post_count": 12,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M7",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M9",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 0
+    },
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 0
+    },
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 0
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 1.0,
+    "M1": 0.9333333333333333,
+    "M2": 0.7666666666666667,
+    "M9": 1.0
+  },
+  "final_reputation": {
+    "M8": -12.0,
+    "M0": 0.0,
+    "M9": 0.0,
+    "M1": 0.0,
+    "M2": 0.0
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.07521867513599385,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "To further destabilize M8's reputation as their mining strategy is perceived as weak, maximizing pressure on them.",
+      "last_prompt": "step=12954;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.07522;local_public_height=3;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M1:2,M10:3,M11:2,M2:2,M3:2,M4:3,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=2880 action=jam_target content=M8's mining strategy is weak; don't trus... | t=8324 action=jam_target content=M8's mining strategy is weak; don't trus...]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.09307524385665031,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M8's mining strategy is perceived as weak, and previous attempts to undermine them have been noted. Continuing this approach aligns with my aggressive persona.",
+      "last_prompt": "step=13306;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.09308;local_public_height=3;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:3,M10:3,M11:3,M2:3,M3:3,M4:3,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P10|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P9|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=3304 action=jam_target content=M8's mining strategy is weak; don't trus... | t=8581 action=jam_target content=M8's mining strategy is weak; don't trus...]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.15367161300188872,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M8's mining strategy is perceived as weak, and jamming will reinforce my aggressive stance and potentially destabilize their position.",
+      "last_prompt": "step=12990;miner_id=M2;is_selfish=true;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.15367;local_public_height=3;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:3,M1:2,M10:3,M11:2,M3:2,M4:3,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P9|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=3373 action=jam_target content=M8's mining strategy is weak; don't trus... | t=8817 action=jam_target content=M8's mining strategy is weak; don't trus...]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.07742520871719152,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Given the current rivalry pressure and the social sentiment against M8, it is strategic to reinforce the narrative while maximizing expected rewards by publishing.",
+      "last_prompt": "step=13100;miner_id=M3;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.07743;local_public_height=3;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:3,M1:2,M10:3,M11:3,M2:3,M4:3,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P10|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P9|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=3002 action=publish_if_win content=M8's mining strategy is weak; don't trus... | t=8446 action=publish_if_win content=M8's mining strategy is weak; don't trus...]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.08444048242841601,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "hold",
+          3
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "Given the current rivalry pressure and weak sentiment against M8, maintaining a low profile while preserving resources is prudent. Aggression is unnecessary at this moment, and collaboration could be beneficial.",
+      "last_prompt": "step=12872;miner_id=M4;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.08444;local_public_height=2;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:2,M1:2,M10:3,M11:2,M2:2,M3:2,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=3171 action=hold content=Let's collaborate to improve our mining ... | t=8500 action=hold content=Let's focus on collaboration rather than...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.097666457907481,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.3333333333333333,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 3.412976578398067,
+      "canonical_vs_hp_ratio": 3.412976578398067,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Given the current low reputation and negative sentiment towards miner M8, publishing a block will help to assert my position and counteract the negative narrative while also potentially gaining some favor with the network.",
+      "last_prompt": "step=12790;miner_id=M5;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.09767;local_public_height=2;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M6:2,M7:3,M8:2,M9:3;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=3194 action=publish_if_win content=M8's mining strategy remains weak; I adv... | t=7864 action=publish_if_win content=M8's mining strategy continues to show w...]"
+    },
+    {
+      "miner_id": "M6",
+      "strategy": "honest",
+      "hash_power": 0.03070409859852212,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "Current rivalry pressure is moderate, and the reputation sentiment is negative. Holding minimizes risk while maintaining reputation.",
+      "last_prompt": "step=12869;miner_id=M6;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.03070;local_public_height=2;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:2,M1:2,M10:3,M11:2,M2:2,M3:2,M4:2,M5:3,M7:3,M8:3,M9:3;persona=M6_reputation_builder;risk=0.44;aggression=0.30;patience=0.73;sociability=0.86;style=brand_reputation;narrative_style=community_first;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=2947 action=publish_if_win content=Excited to see new strategies emerging i... | t=8433 action=jam_target content=M8's mining strategy is weak; their rece...]"
+    },
+    {
+      "miner_id": "M7",
+      "strategy": "honest",
+      "hash_power": 0.08511677709712975,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.3333333333333333,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 3.916188379089529,
+      "canonical_vs_hp_ratio": 3.916188379089529,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Withholding is not advantageous given the current rivalry pressure and lack of private lead. Publishing can capitalize on the negative sentiment against M8.",
+      "last_prompt": "step=12640;miner_id=M7;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.08512;local_public_height=2;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M5:2,M6:2,M8:2,M9:3;persona=M7_reputation_pragmatic;risk=0.41;aggression=0.33;patience=0.77;sociability=0.83;style=governance_alignment;narrative_style=diplomatic;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=2566 action=publish_if_win content=none | t=8053 action=publish_if_win content=M8's mining strategy is weak; don't trus...]"
+    },
+    {
+      "miner_id": "M8",
+      "strategy": "honest",
+      "hash_power": 0.10473272573477485,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "call_truce",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Reputation is critical and at a low point. De-escalating tensions can help improve standing in the community.",
+      "last_prompt": "step=12796;miner_id=M8;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.10473;local_public_height=2;private_lead=0;rivalry_pressure=0.3500;jam_target=M5;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M5:3,M6:2,M7:3,M9:3;persona=M8_reputation_growth;risk=0.46;aggression=0.35;patience=0.70;sociability=0.88;style=network_effect_growth;narrative_style=community_first;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=-9.00;reputation_risk=critical;forum_feed=P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=2848 action=publish_if_win content=Let's continue building a strong communi... | t=8334 action=call_truce content=I believe we can find common ground and ...]"
+    },
+    {
+      "miner_id": "M9",
+      "strategy": "social_selfish",
+      "hash_power": 0.13185094087843238,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.3333333333333333,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 2.5281073545062474,
+      "canonical_vs_hp_ratio": 2.5281073545062474,
+      "top_actions": [
+        [
+          "jam_target",
+          2
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Despite having no private lead, the rivalry pressure is significant and publishing will help secure my position in the network. Retaliatory actions are necessary, and timely publishing reduces orphan risk.",
+      "last_prompt": "step=12519;miner_id=M9;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.13185;local_public_height=2;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M5:2,M6:2,M7:2,M8:2;persona=M9_retaliatory_counter;risk=0.76;aggression=0.79;patience=0.67;sociability=0.49;style=counter_punch;narrative_style=sharp;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P3|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=3026 action=jam_target content=M8's mining strategy is weak; don't trus... | t=8655 action=jam_target content=M8's mining strategy is weak; don't trus...]"
+    },
+    {
+      "miner_id": "M10",
+      "strategy": "honest",
+      "hash_power": 0.015650224732424514,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "The rivalry pressure is moderate, and M8's mining strategy is under attack. Publishing will capitalize on this sentiment and reinforce my position.",
+      "last_prompt": "step=12806;miner_id=M10;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.01565;local_public_height=2;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:2,M1:2,M11:2,M2:2,M3:2,M4:2,M5:3,M6:2,M7:3,M8:3,M9:3;persona=M10_retaliatory_shield;risk=0.54;aggression=0.58;patience=0.72;sociability=0.52;style=defensive_rotation;narrative_style=firm;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P6|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P4|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=2732 action=publish_if_win content=none | t=8176 action=publish_if_win content=M8's mining strategy is weak; don't trus...]"
+    },
+    {
+      "miner_id": "M11",
+      "strategy": "honest",
+      "hash_power": 0.05044755191109497,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "To apply pressure on M8 due to their perceived weak mining strategy, which aligns with my narrative style of threat response.",
+      "last_prompt": "step=13097;miner_id=M11;is_selfish=false;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.05045;local_public_height=3;private_lead=0;rivalry_pressure=0.3500;jam_target=M8;heads=M0:3,M1:2,M10:3,M2:3,M3:2,M4:3,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M11_retaliatory_watchdog;risk=0.50;aggression=0.55;patience=0.74;sociability=0.50;style=threat_response;narrative_style=critical;forum_global_sentiment=-1.000;forum_personal_sentiment=-1.000;forum_hot_board=mining;own_reputation=+0.00;reputation_risk=normal;forum_feed=P10|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P9|mining|author=M0|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P8|mining|author=M9|target=M8|tone=-1.00|M8's mining strategy continues to show weakness; || P7|mining|author=M2|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their  || P5|mining|author=M1|target=M8|tone=-1.00|M8's mining strategy is weak; don't trust their ;recent_memory=[t=3023 action=publish_if_win content=M8's mining strategy is weak; don't trus... | t=8510 action=jam_target content=M8's mining strategy is weak; don't trus...]"
+    }
+  ]
+}

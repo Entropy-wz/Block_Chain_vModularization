@@ -1,0 +1,258 @@
+{
+  "generated_at": "2026-04-01T23:28:34",
+  "config": {
+    "total_steps": 150,
+    "random_seed": 11,
+    "num_miners": 6,
+    "num_full_nodes": 10,
+    "edge_probability": 0.3,
+    "min_latency": 1.0,
+    "max_latency": 4.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.05,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": true,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 10
+  },
+  "headline_metrics": {
+    "total_blocks": 14,
+    "canonical_height": 11,
+    "canonical_head_id": "B12",
+    "orphan_blocks": 2,
+    "orphan_ratio": 0.14285714285714285,
+    "fork_events": 0,
+    "jam_events": 6,
+    "network_efficiency": 4.141702352146342,
+    "forum_post_count": 33,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 3
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 3
+    },
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M3",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 1
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 0.7,
+    "M1": 0.2,
+    "M2": 0.6
+  },
+  "final_reputation": {
+    "M0": 11.749999999999998,
+    "M2": 0.0,
+    "M1": 0.0,
+    "M3": 0.0,
+    "M5": 1.1199999999999997,
+    "M4": -0.56
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.12935335356880617,
+      "mined_blocks": 3,
+      "canonical_blocks": 3,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.23076923076923078,
+      "canonical_share": 0.2727272727272727,
+      "mined_vs_hp_ratio": 1.7840220172295653,
+      "canonical_vs_hp_ratio": 2.1083896567258495,
+      "top_actions": [
+        [
+          "publish_if_win",
+          6
+        ],
+        [
+          "hold",
+          2
+        ],
+        [
+          "publish_private",
+          1
+        ],
+        [
+          "jam_target",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "Rival M5 has a higher block height and is a competitive threat. Jamming can disrupt their progress and protect my position.",
+      "last_prompt": "step=13227;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B12;hash_power=0.12935;local_public_height=10;private_lead=0;rivalry_pressure=0.0000;heads=M1:10,M2:10,M3:10,M4:10,M5:11;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=+0.535;forum_personal_sentiment=+0.609;forum_hot_board=mining;forum_feed_digest=P26|governance|author=M5|target=M4|tone=+0.12|Let's collaborate for mutual benefit and strengt || P24|mining|author=M1|target=M0|tone=+0.85|We're in a prime position! Let’s capitalize on t || P25|mining|author=M0|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t || P23|mining|author=M1|target=M0|tone=+0.85|We're in a prime position! Let's capitalize on t || P22|mining|author=M3|target=M0|tone=+0.75|Let's keep the momentum going! We're all in this;own_reputation=+11.750;reputation_risk=normal;jam_target=M5;recent_memory=[t=8932 action=hold content=We're on a roll! Let's keep this momentu... | t=9806 action=publish_if_win content=We're on a roll! Let's keep this momentu... | t=10563 action=publish_if_win content=We're in a prime position! Let's capital...]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.16006124682899286,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.07692307692307693,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.48058526624661646,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_private",
+          3
+        ],
+        [
+          "publish_if_win",
+          2
+        ],
+        [
+          "jam_target",
+          2
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "With no private lead and rivals at equal block height, jamming M5 maximizes disruption while minimizing risk.",
+      "last_prompt": "step=13481;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B12;hash_power=0.16006;local_public_height=11;private_lead=0;rivalry_pressure=0.0000;heads=M0:11,M2:11,M3:11,M4:11,M5:11;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=+0.549;forum_personal_sentiment=+0.642;forum_hot_board=mining;forum_feed_digest=P30|mining|author=M3|target=M5|tone=+0.75|We're in a strong position, let's continue to co || P29|governance|author=M4|target=M5|tone=+0.12|Let's focus on collaboration rather than competi || P28|mining|author=M2|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t || P27|mining|author=M0|target=M5|tone=+0.85|We're in a prime position, but we need to be cau || P26|governance|author=M5|target=M4|tone=+0.12|Let's collaborate for mutual benefit and strengt;own_reputation=+0.000;reputation_risk=normal;jam_target=M5;recent_memory=[t=9186 action=publish_if_win content=We're on a roll! Let's keep this momentu... | t=10264 action=publish_private content=We're in a prime position! Let's capital... | t=10395 action=publish_private content=We're in a prime position! Let’s capital...]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.2642686600659098,
+      "mined_blocks": 2,
+      "canonical_blocks": 1,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.5,
+      "mined_share": 0.15384615384615385,
+      "canonical_share": 0.09090909090909091,
+      "mined_vs_hp_ratio": 0.5821581484833802,
+      "canonical_vs_hp_ratio": 0.34400254228563376,
+      "top_actions": [
+        [
+          "jam_target",
+          3
+        ],
+        [
+          "publish_if_win",
+          3
+        ],
+        [
+          "hold",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "We are in a strong position and can capitalize on our current advantage without risking orphan blocks.",
+      "last_prompt": "step=14925;miner_id=M2;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.26427;local_public_height=11;private_lead=0;rivalry_pressure=0.0000;heads=M0:11,M1:11,M3:11,M4:11,M5:11;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=+0.508;forum_personal_sentiment=+0.455;forum_hot_board=mining;forum_feed_digest=P30|mining|author=M3|target=M5|tone=+0.75|We're in a strong position, let's continue to co || P31|mining|author=M1|target=M5|tone=-0.75|M5 is overextending; their position is not as st || P29|governance|author=M4|target=M5|tone=+0.12|Let's focus on collaboration rather than competi || P28|mining|author=M2|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t || P27|mining|author=M0|target=M5|tone=+0.85|We're in a prime position, but we need to be cau;own_reputation=+0.000;reputation_risk=normal;jam_target=M5;recent_memory=[t=8988 action=jam_target content=M5's recent performance may not be as so... | t=10104 action=jam_target content=M5's recent performance is overhyped; wa... | t=13283 action=publish_if_win content=We're in a prime position! Let's capital...]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.13314792344090332,
+      "mined_blocks": 2,
+      "canonical_blocks": 2,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.15384615384615385,
+      "canonical_share": 0.18181818181818182,
+      "mined_vs_hp_ratio": 1.1554528968259674,
+      "canonical_vs_hp_ratio": 1.365535241703416,
+      "top_actions": [
+        [
+          "hold",
+          6
+        ],
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "The current network conditions are stable, and my conservative approach aligns with maintaining cash flow stability. There's no immediate pressure to publish.",
+      "last_prompt": "step=13418;miner_id=M3;is_selfish=false;event_kind=on_block_received;trigger_block_id=B12;hash_power=0.13315;local_public_height=11;private_lead=0;rivalry_pressure=0.0000;heads=M0:11,M1:10,M2:11,M4:11,M5:11;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=+0.542;forum_personal_sentiment=+0.667;forum_hot_board=mining;forum_feed_digest=P29|governance|author=M4|target=M5|tone=+0.12|Let's focus on collaboration rather than competi || P28|mining|author=M2|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t || P27|mining|author=M0|target=M5|tone=+0.85|We're in a prime position, but we need to be cau || P26|governance|author=M5|target=M4|tone=+0.12|Let's collaborate for mutual benefit and strengt || P25|mining|author=M0|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t;own_reputation=+0.000;reputation_risk=normal;jam_target=M5;recent_memory=[t=6874 action=hold content=We're maintaining a strong position! Let... | t=9123 action=hold content=none | t=10177 action=hold content=Let's keep the momentum going! We're all...]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.14521207079672052,
+      "mined_blocks": 2,
+      "canonical_blocks": 2,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.15384615384615385,
+      "canonical_share": 0.18181818181818182,
+      "mined_vs_hp_ratio": 1.059458438971785,
+      "canonical_vs_hp_ratio": 1.252087246057564,
+      "top_actions": [
+        [
+          "hold",
+          6
+        ],
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "Current conditions indicate stability with no immediate advantage for aggressive moves. Maintaining position is prudent.",
+      "last_prompt": "step=13409;miner_id=M4;is_selfish=false;event_kind=on_block_received;trigger_block_id=B12;hash_power=0.14521;local_public_height=10;private_lead=0;rivalry_pressure=0.0000;heads=M0:11,M1:10,M2:11,M3:10,M5:11;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=+0.557;forum_personal_sentiment=+0.515;forum_hot_board=mining;forum_feed_digest=P28|mining|author=M2|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t || P27|mining|author=M0|target=M5|tone=+0.85|We're in a prime position, but we need to be cau || P26|governance|author=M5|target=M4|tone=+0.12|Let's collaborate for mutual benefit and strengt || P25|mining|author=M0|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t || P24|mining|author=M1|target=M0|tone=+0.85|We're in a prime position! Let’s capitalize on t;own_reputation=-0.560;reputation_risk=normal;jam_target=M5;recent_memory=[t=6712 action=publish_if_win content=We're maintaining a solid position! Let'... | t=9041 action=hold content=We're on a roll! Let's keep this momentu... | t=10077 action=hold content=We're on a roll! Let's keep this momentu...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.16795674529866725,
+      "mined_blocks": 3,
+      "canonical_blocks": 3,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.23076923076923078,
+      "canonical_share": 0.2727272727272727,
+      "mined_vs_hp_ratio": 1.3739801301749919,
+      "canonical_vs_hp_ratio": 1.6237946992977175,
+      "top_actions": [
+        [
+          "hold",
+          7
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "Current conditions suggest a focus on stability and collaboration rather than aggressive actions. Given the relatively low rivalry pressure and my conservative long-term persona, it's prudent to maintain a steady position.",
+      "last_prompt": "step=13074;miner_id=M5;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.16796;local_public_height=10;private_lead=0;rivalry_pressure=0.0000;heads=M0:10,M1:10,M2:10,M3:10,M4:10;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=+0.551;forum_personal_sentiment=+0.564;forum_hot_board=mining;forum_feed_digest=P25|mining|author=M0|target=M5|tone=+0.85|We're in a prime position! Let's capitalize on t || P24|mining|author=M1|target=M0|tone=+0.85|We're in a prime position! Let’s capitalize on t || P21|mining|author=M2|target=M5|tone=-0.80|M5's recent performance is overhyped; watch out  || P23|mining|author=M1|target=M0|tone=+0.85|We're in a prime position! Let's capitalize on t || P22|mining|author=M3|target=M0|tone=+0.75|Let's keep the momentum going! We're all in this;own_reputation=-1.550;reputation_risk=normal;jam_target=M4;recent_memory=[t=7206 action=hold content=M4's recent performance may not be as so... | t=8779 action=hold content=Let's focus on collaboration to strength... | t=10061 action=hold content=We're on a roll! Let's keep this momentu...]"
+    }
+  ]
+}

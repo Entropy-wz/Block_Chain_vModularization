@@ -1,0 +1,8 @@
+{
+  "total_mined": 53,
+  "total_canonical": 25,
+  "corr_hashpower_mined_share": 0.7254221681076128,
+  "corr_hashpower_canonical_share": 0.6362777629984157,
+  "mae_hashpower_vs_mined_share": 0.02560605838443396,
+  "mae_hashpower_vs_canonical_share": 0.035917381875
+}

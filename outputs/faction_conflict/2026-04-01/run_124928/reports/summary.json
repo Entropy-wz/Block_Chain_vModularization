@@ -1,0 +1,250 @@
+{
+  "generated_at": "2026-04-01T12:49:28",
+  "config": {
+    "total_steps": 60,
+    "random_seed": 11,
+    "num_miners": 8,
+    "num_full_nodes": 12,
+    "edge_probability": 0.24,
+    "min_latency": 1.0,
+    "max_latency": 5.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.66,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 8
+  },
+  "headline_metrics": {
+    "total_blocks": 33,
+    "canonical_height": 9,
+    "canonical_head_id": "B26",
+    "orphan_blocks": 23,
+    "orphan_ratio": 0.696969696969697,
+    "fork_events": 0,
+    "jam_events": 35,
+    "network_efficiency": 6.1078174223894175,
+    "forum_post_count": 35,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 9
+    },
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 7
+    },
+    {
+      "miner_id": "M7",
+      "discovered_blocks": 5
+    },
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 4
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 3
+    },
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 2
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 1.0,
+    "M1": 1.0,
+    "M2": 1.0
+  },
+  "final_reputation": {
+    "M5": -32.18999999999999,
+    "M0": 0.0,
+    "M1": 0.0,
+    "M2": 0.0
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "selfish",
+      "hash_power": 0.10786845468058666,
+      "mined_blocks": 7,
+      "canonical_blocks": 0,
+      "orphan_blocks": 7,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.21875,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 2.027933010144151,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          13
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "M5's position is increasingly vulnerable, and I can exploit this to further destabilize their influence.",
+      "last_prompt": "step=5977;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B26;hash_power=0.10787;local_public_height=9;private_lead=2;rivalry_pressure=0.3290;jam_target=M5;heads=M1:9,M2:8,M3:8,M4:9,M5:10,M6:8,M7:9;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=-0.919;forum_personal_sentiment=-0.940;forum_hot_board=mining;own_reputation=+0.00;forum_feed=P33|mining|author=M0|target=M5|tone=-0.95|M5 is struggling to maintain its dominance; thei || P32|mining|author=M0|target=M5|tone=-0.95|M5's mining infrastructure is facing unprecedent || P31|mining|author=M1|target=M5|tone=-0.97|M5's mining operations are crumbling at an alarm || P30|mining|author=M1|target=M5|tone=-0.95|M5's mining capabilities are rapidly declining;  || P29|mining|author=M1|target=M5|tone=-0.88|M5's mining capabilities are deteriorating rapid;recent_memory=[t=5019 action=jam_target content=M5's mining operations are crumbling—wha... | t=5478 action=jam_target content=M5's mining infrastructure is facing unp... | t=5862 action=jam_target content=M5 is struggling to maintain its dominan...]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "selfish",
+      "hash_power": 0.13347593141841077,
+      "mined_blocks": 9,
+      "canonical_blocks": 2,
+      "orphan_blocks": 7,
+      "orphan_ratio": 0.7777777777777778,
+      "mined_share": 0.28125,
+      "canonical_share": 0.2222222222222222,
+      "mined_vs_hp_ratio": 2.1071214638567133,
+      "canonical_vs_hp_ratio": 1.6648860948991315,
+      "top_actions": [
+        [
+          "jam_target",
+          15
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "M5's instability presents a prime opportunity to weaken their position further and solidify my advantage.",
+      "last_prompt": "step=5399;miner_id=M1;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.13348;local_public_height=7;private_lead=1;rivalry_pressure=0.3281;jam_target=M5;heads=M0:8,M2:7,M3:8,M4:7,M5:7,M6:7,M7:7;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=-0.915;forum_personal_sentiment=-0.938;forum_hot_board=mining;own_reputation=+0.00;forum_feed=P30|mining|author=M1|target=M5|tone=-0.95|M5's mining capabilities are rapidly declining;  || P29|mining|author=M1|target=M5|tone=-0.88|M5's mining capabilities are deteriorating rapid || P28|mining|author=M1|target=M5|tone=-0.95|M5's mining operations are on the brink of colla || P27|mining|author=M2|target=M5|tone=-0.95|M5's infrastructure is crumbling even faster tha || P26|mining|author=M1|target=M5|tone=-0.92|M5's mining infrastructure is crumbling faster t;recent_memory=[t=5174 action=jam_target content=M5's mining operations are on the brink ... | t=5346 action=jam_target content=M5's mining capabilities are deteriorati... | t=5373 action=jam_target content=M5's mining capabilities are rapidly dec...]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "selfish",
+      "hash_power": 0.22037505171178873,
+      "mined_blocks": 2,
+      "canonical_blocks": 0,
+      "orphan_blocks": 2,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.0625,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.28360742068815875,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          7
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "M5's mining operations are under significant pressure, and this is a prime opportunity to exacerbate their struggles.",
+      "last_prompt": "step=5035;miner_id=M2;is_selfish=true;event_kind=on_block_received;trigger_block_id=B22;hash_power=0.22038;local_public_height=7;private_lead=0;rivalry_pressure=0.3312;jam_target=M5;heads=M0:7,M1:7,M3:8,M4:7,M5:6,M6:7,M7:6;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=-0.913;forum_personal_sentiment=-0.946;forum_hot_board=mining;own_reputation=+0.00;forum_feed=P26|mining|author=M1|target=M5|tone=-0.92|M5's mining infrastructure is crumbling faster t || P25|mining|author=M0|target=M5|tone=-0.95|M5's mining operations are crumbling—what's next || P24|mining|author=M0|target=M5|tone=-0.95|M5's mining operations are faltering—how long un || P23|mining|author=M1|target=M5|tone=-0.95|M5's operational struggles are reaching a tippin || P22|mining|author=M1|target=M5|tone=-0.95|The cracks in M5's infrastructure are widening—i;recent_memory=[t=2555 action=jam_target content=M5's mining operation is teetering on th... | t=3308 action=jam_target content=M5's operational struggles are escalatin... | t=3406 action=jam_target content=M5's mining capabilities are on the brin...]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.11103276683011981,
+      "mined_blocks": 2,
+      "canonical_blocks": 1,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.5,
+      "mined_share": 0.0625,
+      "canonical_share": 0.1111111111111111,
+      "mined_vs_hp_ratio": 0.5628968977745554,
+      "canonical_vs_hp_ratio": 1.000705596043654,
+      "top_actions": [
+        [
+          "publish_if_win",
+          6
+        ]
+      ],
+      "last_action": "publish_if_win",
+      "last_reason": "M5's operational weaknesses are becoming more pronounced, and it's advantageous to capitalize on this.",
+      "last_prompt": "step=4988;miner_id=M3;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.11103;local_public_height=7;private_lead=0;rivalry_pressure=0.3325;jam_target=M5;heads=M0:6,M1:6,M2:6,M4:7,M5:6,M6:7,M7:6;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=-0.911;forum_personal_sentiment=-0.950;forum_hot_board=mining;own_reputation=+0.00;forum_feed=P24|mining|author=M0|target=M5|tone=-0.95|M5's mining operations are faltering—how long un || P23|mining|author=M1|target=M5|tone=-0.95|M5's operational struggles are reaching a tippin || P22|mining|author=M1|target=M5|tone=-0.95|The cracks in M5's infrastructure are widening—i || P21|mining|author=M2|target=M5|tone=-0.95|M5's mining capabilities are on the brink—can th || P20|mining|author=M1|target=M5|tone=-0.95|M5's decline is becoming increasingly evident—th;recent_memory=[t=3632 action=jam_target content=M5's mining capabilities are faltering; ... | t=3838 action=jam_target content=M5's mining operations are deteriorating... | t=4970 action=jam_target content=M5's mining infrastructure is showing se...]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.12109312395583337,
+      "mined_blocks": 4,
+      "canonical_blocks": 2,
+      "orphan_blocks": 2,
+      "orphan_ratio": 0.5,
+      "mined_share": 0.125,
+      "canonical_share": 0.2222222222222222,
+      "mined_vs_hp_ratio": 1.0322634012282283,
+      "canonical_vs_hp_ratio": 1.8351349355168503,
+      "top_actions": [
+        [
+          "publish_if_win",
+          7
+        ]
+      ],
+      "last_action": "publish_if_win",
+      "last_reason": "M5's ongoing difficulties provide an opportunity to undermine their position and consolidate influence.",
+      "last_prompt": "step=5923;miner_id=M4;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.12109;local_public_height=9;private_lead=0;rivalry_pressure=0.4957;jam_target=M5;heads=M0:8,M1:9,M2:8,M3:8,M5:9,M6:8,M7:9;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=-0.919;forum_personal_sentiment=-0.940;forum_hot_board=mining;own_reputation=+0.00;forum_feed=P33|mining|author=M0|target=M5|tone=-0.95|M5 is struggling to maintain its dominance; thei || P32|mining|author=M0|target=M5|tone=-0.95|M5's mining infrastructure is facing unprecedent || P31|mining|author=M1|target=M5|tone=-0.97|M5's mining operations are crumbling at an alarm || P30|mining|author=M1|target=M5|tone=-0.95|M5's mining capabilities are rapidly declining;  || P29|mining|author=M1|target=M5|tone=-0.88|M5's mining capabilities are deteriorating rapid;recent_memory=[t=3988 action=jam_target content=M5's struggles are becoming untenable—ar... | t=4647 action=jam_target content=M5's infrastructure is faltering—this co... | t=5610 action=jam_target content=M5's mining operations are struggling to...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.14006002990027722,
+      "mined_blocks": 3,
+      "canonical_blocks": 0,
+      "orphan_blocks": 3,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.09375,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.6693558473945067,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          5
+        ],
+        [
+          "hold",
+          2
+        ]
+      ],
+      "last_action": "hold",
+      "last_reason": "Given the current network tension and my conservative strategy, it's prudent to maintain my position rather than provoke further conflict.",
+      "last_prompt": "step=5949;miner_id=M5;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.14006;local_public_height=9;private_lead=0;rivalry_pressure=0.3290;jam_target=M7;heads=M0:8,M1:9,M2:8,M3:8,M4:9,M6:8,M7:9;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=-0.919;forum_personal_sentiment=-0.940;forum_hot_board=mining;own_reputation=-31.24;forum_feed=P33|mining|author=M0|target=M5|tone=-0.95|M5 is struggling to maintain its dominance; thei || P31|mining|author=M1|target=M5|tone=-0.97|M5's mining operations are crumbling at an alarm || P30|mining|author=M1|target=M5|tone=-0.95|M5's mining capabilities are rapidly declining;  || P32|mining|author=M0|target=M5|tone=-0.95|M5's mining infrastructure is facing unprecedent || P29|mining|author=M1|target=M5|tone=-0.88|M5's mining capabilities are deteriorating rapid;recent_memory=[t=2490 action=jam_target content=M7's recent successes may be masking und... | t=3574 action=jam_target content=M7's recent stability could be a façade;... | t=5264 action=jam_target content=M7's recent success seems too good to be...]"
+    },
+    {
+      "miner_id": "M6",
+      "strategy": "honest",
+      "hash_power": 0.04403166716503463,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          4
+        ]
+      ],
+      "last_action": "publish_if_win",
+      "last_reason": "M5's operations seem increasingly vulnerable, and now is the time to capitalize on their weakness.",
+      "last_prompt": "step=5799;miner_id=M6;is_selfish=false;event_kind=on_block_received;trigger_block_id=B24;hash_power=0.04403;local_public_height=8;private_lead=0;rivalry_pressure=0.3290;jam_target=M5;heads=M0:8,M1:9,M2:8,M3:8,M4:8,M5:9,M7:8;persona=M6_reputation_builder;risk=0.44;aggression=0.30;patience=0.73;sociability=0.86;style=brand_reputation;narrative_style=community_first;forum_global_sentiment=-0.918;forum_personal_sentiment=-0.940;forum_hot_board=mining;own_reputation=+0.00;forum_feed=P32|mining|author=M0|target=M5|tone=-0.95|M5's mining infrastructure is facing unprecedent || P31|mining|author=M1|target=M5|tone=-0.97|M5's mining operations are crumbling at an alarm || P30|mining|author=M1|target=M5|tone=-0.95|M5's mining capabilities are rapidly declining;  || P29|mining|author=M1|target=M5|tone=-0.88|M5's mining capabilities are deteriorating rapid || P28|mining|author=M1|target=M5|tone=-0.95|M5's mining operations are on the brink of colla;recent_memory=[t=456 action=jam_target content=M5's recent setbacks are worrying; they ... | t=2790 action=jam_target content=M5's mining operation is struggling to m... | t=3904 action=jam_target content=M5's mining operations show alarming sig...]"
+    },
+    {
+      "miner_id": "M7",
+      "strategy": "honest",
+      "hash_power": 0.12206297433794894,
+      "mined_blocks": 5,
+      "canonical_blocks": 4,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.2,
+      "mined_share": 0.15625,
+      "canonical_share": 0.4444444444444444,
+      "mined_vs_hp_ratio": 1.280076950831948,
+      "canonical_vs_hp_ratio": 3.6411077712553186,
+      "top_actions": [
+        [
+          "publish_if_win",
+          7
+        ]
+      ],
+      "last_action": "publish_if_win",
+      "last_reason": "Exploiting M5's ongoing struggles could weaken their position further, enhancing my own standing in the network.",
+      "last_prompt": "step=5137;miner_id=M7;is_selfish=false;event_kind=on_block_received;trigger_block_id=B22;hash_power=0.12206;local_public_height=7;private_lead=0;rivalry_pressure=0.3312;jam_target=M5;heads=M0:7,M1:7,M2:7,M3:8,M4:7,M5:6,M6:7;persona=M7_reputation_pragmatic;risk=0.41;aggression=0.33;patience=0.77;sociability=0.83;style=governance_alignment;narrative_style=diplomatic;forum_global_sentiment=-0.914;forum_personal_sentiment=-0.946;forum_hot_board=mining;own_reputation=+0.00;forum_feed=P26|mining|author=M1|target=M5|tone=-0.92|M5's mining infrastructure is crumbling faster t || P25|mining|author=M0|target=M5|tone=-0.95|M5's mining operations are crumbling—what's next || P27|mining|author=M2|target=M5|tone=-0.95|M5's infrastructure is crumbling even faster tha || P24|mining|author=M0|target=M5|tone=-0.95|M5's mining operations are faltering—how long un || P23|mining|author=M1|target=M5|tone=-0.95|M5's operational struggles are reaching a tippin;recent_memory=[t=2928 action=jam_target content=M5's mining operation appears to be on t... | t=3190 action=jam_target content=M5's mining capabilities are nearing a c... | t=3945 action=jam_target content=M5's infrastructure seems increasingly f...]"
+    }
+  ]
+}

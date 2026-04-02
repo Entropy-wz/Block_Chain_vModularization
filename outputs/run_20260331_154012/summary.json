@@ -1,0 +1,409 @@
+{
+  "generated_at": "2026-03-31T15:40:12",
+  "config": {
+    "total_steps": 120,
+    "random_seed": 11,
+    "num_miners": 16,
+    "num_full_nodes": 48,
+    "edge_probability": 0.38,
+    "min_latency": 1.0,
+    "max_latency": 5.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.4,
+    "max_hops_for_propagation": 8,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 20
+  },
+  "headline_metrics": {
+    "total_blocks": 54,
+    "canonical_height": 25,
+    "canonical_head_id": "B51",
+    "orphan_blocks": 28,
+    "orphan_ratio": 0.5185185185185185,
+    "fork_events": 0,
+    "jam_events": 0,
+    "network_efficiency": 3.1776697430325704,
+    "forum_post_count": 0,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 7
+    },
+    {
+      "miner_id": "M8",
+      "discovered_blocks": 7
+    },
+    {
+      "miner_id": "M14",
+      "discovered_blocks": 7
+    },
+    {
+      "miner_id": "M7",
+      "discovered_blocks": 6
+    },
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 5
+    },
+    {
+      "miner_id": "M3",
+      "discovered_blocks": 4
+    }
+  ],
+  "selfish_gamma": {},
+  "final_reputation": {},
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "honest",
+      "hash_power": 0.059135928131423786,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "top_actions": [
+        [
+          "jam_target",
+          120
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner M2 and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M0;is_selfish=false;hash_power=0.05914;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M0_steady_fundamentalist;risk=0.55;aggression=0.41;patience=0.80;sociability=0.70;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "honest",
+      "hash_power": 0.07317452642671955,
+      "mined_blocks": 2,
+      "canonical_blocks": 1,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.5,
+      "top_actions": [
+        [
+          "jam_target",
+          109
+        ],
+        [
+          "hold",
+          11
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner's progress and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M1;is_selfish=false;hash_power=0.07317;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M1_steady_fundamentalist;risk=0.32;aggression=0.18;patience=0.76;sociability=0.47;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "honest",
+      "hash_power": 0.12081459086974901,
+      "mined_blocks": 7,
+      "canonical_blocks": 3,
+      "orphan_blocks": 4,
+      "orphan_ratio": 0.5714285714285714,
+      "top_actions": [
+        [
+          "jam_target",
+          119
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner's progress and maintain stability in my own mining efforts.",
+      "last_prompt": "step=120;miner_id=M2;is_selfish=false;hash_power=0.12081;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M13;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M2_steady_fundamentalist;risk=0.33;aggression=0.24;patience=0.61;sociability=0.64;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.060870675666412445,
+      "mined_blocks": 4,
+      "canonical_blocks": 2,
+      "orphan_blocks": 2,
+      "orphan_ratio": 0.5,
+      "top_actions": [
+        [
+          "jam_target",
+          113
+        ],
+        [
+          "hold",
+          7
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner M2's progress and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M3;is_selfish=false;hash_power=0.06087;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M3_steady_fundamentalist;risk=0.40;aggression=0.38;patience=0.76;sociability=0.71;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.06638599112841957,
+      "mined_blocks": 5,
+      "canonical_blocks": 2,
+      "orphan_blocks": 3,
+      "orphan_ratio": 0.6,
+      "top_actions": [
+        [
+          "jam_target",
+          120
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner M2 and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M4;is_selfish=false;hash_power=0.06639;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M4_steady_fundamentalist;risk=0.41;aggression=0.34;patience=0.74;sociability=0.56;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.07678407822559172,
+      "mined_blocks": 2,
+      "canonical_blocks": 1,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.5,
+      "top_actions": [
+        [
+          "jam_target",
+          102
+        ],
+        [
+          "hold",
+          18
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt M2's mining efforts and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M5;is_selfish=false;hash_power=0.07678;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M6:25,M7:25,M8:26,M9:25;persona=M5_steady_fundamentalist;risk=0.55;aggression=0.42;patience=0.85;sociability=0.73;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M6",
+      "strategy": "honest",
+      "hash_power": 0.02413915646319982,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "top_actions": [
+        [
+          "jam_target",
+          88
+        ],
+        [
+          "hold",
+          32
+        ]
+      ],
+      "last_action": "hold",
+      "last_reason": "Current conditions indicate stability with no immediate threat or opportunity for aggressive action.",
+      "last_prompt": "step=120;miner_id=M6;is_selfish=false;hash_power=0.02414;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M7:25,M8:26,M9:25;persona=M6_steady_fundamentalist;risk=0.37;aggression=0.24;patience=0.69;sociability=0.48;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M7",
+      "strategy": "honest",
+      "hash_power": 0.06691768505751915,
+      "mined_blocks": 6,
+      "canonical_blocks": 2,
+      "orphan_blocks": 4,
+      "orphan_ratio": 0.6666666666666666,
+      "top_actions": [
+        [
+          "jam_target",
+          107
+        ],
+        [
+          "hold",
+          13
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner's progress and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M7;is_selfish=false;hash_power=0.06692;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M8:26,M9:25;persona=M7_steady_fundamentalist;risk=0.49;aggression=0.28;patience=0.85;sociability=0.60;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M8",
+      "strategy": "honest",
+      "hash_power": 0.08233948458759875,
+      "mined_blocks": 7,
+      "canonical_blocks": 3,
+      "orphan_blocks": 4,
+      "orphan_ratio": 0.5714285714285714,
+      "top_actions": [
+        [
+          "jam_target",
+          82
+        ],
+        [
+          "hold",
+          38
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner's progress and maintain my own position.",
+      "last_prompt": "step=120;miner_id=M8;is_selfish=false;hash_power=0.08234;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M9:25;persona=M8_steady_fundamentalist;risk=0.54;aggression=0.38;patience=0.60;sociability=0.53;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M9",
+      "strategy": "honest",
+      "hash_power": 0.10365946687774723,
+      "mined_blocks": 3,
+      "canonical_blocks": 0,
+      "orphan_blocks": 3,
+      "orphan_ratio": 1.0,
+      "top_actions": [
+        [
+          "jam_target",
+          83
+        ],
+        [
+          "hold",
+          37
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner M2's progress and maintain competitive advantage.",
+      "last_prompt": "step=120;miner_id=M9;is_selfish=false;hash_power=0.10366;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26;persona=M9_steady_fundamentalist;risk=0.53;aggression=0.29;patience=0.89;sociability=0.61;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M10",
+      "strategy": "honest",
+      "hash_power": 0.012303999815790674,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "top_actions": [
+        [
+          "jam_target",
+          107
+        ],
+        [
+          "hold",
+          13
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner M2's progress and maintain my position in the network.",
+      "last_prompt": "step=120;miner_id=M10;is_selfish=false;hash_power=0.01230;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M11:26,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M10_steady_fundamentalist;risk=0.30;aggression=0.33;patience=0.83;sociability=0.56;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M11",
+      "strategy": "honest",
+      "hash_power": 0.039661198483316853,
+      "mined_blocks": 2,
+      "canonical_blocks": 1,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.5,
+      "top_actions": [
+        [
+          "jam_target",
+          74
+        ],
+        [
+          "hold",
+          46
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt the rival miner's progress and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M11;is_selfish=false;hash_power=0.03966;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M12:25,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M11_steady_fundamentalist;risk=0.30;aggression=0.26;patience=0.89;sociability=0.75;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M12",
+      "strategy": "honest",
+      "hash_power": 0.01185262761580272,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "top_actions": [
+        [
+          "jam_target",
+          79
+        ],
+        [
+          "hold",
+          41
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt the rival miner's progress and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M12;is_selfish=false;hash_power=0.01185;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M13:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M12_steady_fundamentalist;risk=0.31;aggression=0.24;patience=0.63;sociability=0.47;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M13",
+      "strategy": "honest",
+      "hash_power": 0.10583829579578534,
+      "mined_blocks": 4,
+      "canonical_blocks": 4,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          91
+        ],
+        [
+          "hold",
+          28
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner's progress and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M13;is_selfish=false;hash_power=0.10584;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M14:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M13_steady_fundamentalist;risk=0.50;aggression=0.22;patience=0.77;sociability=0.63;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M14",
+      "strategy": "honest",
+      "hash_power": 0.09064761647374553,
+      "mined_blocks": 7,
+      "canonical_blocks": 6,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.14285714285714285,
+      "top_actions": [
+        [
+          "jam_target",
+          96
+        ],
+        [
+          "hold",
+          24
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner's progress and maintain stability in my own mining efforts.",
+      "last_prompt": "step=120;miner_id=M14;is_selfish=false;hash_power=0.09065;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M15:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M14_steady_fundamentalist;risk=0.33;aggression=0.36;patience=0.64;sociability=0.71;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    },
+    {
+      "miner_id": "M15",
+      "strategy": "honest",
+      "hash_power": 0.005474678381177794,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          113
+        ],
+        [
+          "hold",
+          7
+        ]
+      ],
+      "last_action": "jam_target",
+      "last_reason": "To disrupt rival miner M2's progress and maintain stability in the network.",
+      "last_prompt": "step=120;miner_id=M15;is_selfish=false;hash_power=0.00547;local_public_height=25;private_lead=0;rivalry_pressure=0.0000;jam_target=M2;heads=M0:25,M1:25,M10:25,M11:26,M12:25,M13:25,M14:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M15_steady_fundamentalist;risk=0.31;aggression=0.28;patience=0.66;sociability=0.56;style=value_stability;narrative_style=measured;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;own_reputation=+0.00;forum_feed=no recent posts"
+    }
+  ]
+}
