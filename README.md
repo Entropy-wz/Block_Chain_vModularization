@@ -86,9 +86,11 @@ python -m pytest tests/modules/
 
 ---
 
-## 🚀 快速上手 (Quick Start)
+## 🚀 5 分钟快速上手 (5-Minute Quickstart)
 
-### 1. 环境准备
+我们提供了“开箱即用”的体验。**你不需要立刻配置大模型 API Key 即可看到沙盘的震撼效果。**
+
+### Step 1: 环境准备
 
 ```bash
 git clone https://github.com/Entropy-wz/Block_Chain_vModularization.git
@@ -96,16 +98,31 @@ cd Block_Chain_vModularization
 pip install -r requirements.txt
 ```
 
-### 2. 配置 LLM API (如果需要运行 LLM 模式)
+### Step 2: 跑通你的第一场实验（无需 API Key，2秒出图！）
 
-复制配置文件并填入你的 API Key：
-在 `configs/llm_provider.yaml` 中配置：
+我们内置了一个不需要大模型即可运行的“纯数学基线验证脚本”，专门用来测试拥堵网络下的自然孤块与分叉。
+执行以下命令：
+
+```bash
+python -m experiments.run_honest_no_llm
+```
+
+等待大约 2-3 秒，引擎会处理完毕。现在打开 `outputs/default/` 目录中最新生成的文件夹，你会获得你的**第一份沙盒报告**：
+- 📊 **数据统计** (`reports/summary.json`)：查看全网节点的孤块率、实际算力收益占比。
+- 🌳 **可视化分叉树** (`visualizations/full_tree.png`)：你将直观地看到一条主链（蓝色），以及因为网络延迟产生的各种孤立分叉（红色/灰色区块）。
+
+### Step 3: 进阶体验 - 注入灵魂（开启多智能体社会）
+
+当你准备好体验拥有独立人格的矿工、Tieba 论坛舆论战以及自私网络攻击时，配置你的大模型 API。
+在 `configs/llm_provider.yaml` 中修改为你自己的配置（推荐使用低成本且快速的模型如 `gpt-4o-mini` 或 `claude-3-haiku`）：
+
 ```yaml
 provider: openai
-model: gpt-4o-mini  # 推荐使用兼顾速度与智能的模型
+model: gpt-4o-mini
 base_url: https://api.openai.com/v1
 api_key: sk-your-api-key-here
 ```
+配置完成后，尝试运行下方的“全量社会战争实验”。
 
 ---
 
