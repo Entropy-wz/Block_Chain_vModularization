@@ -17,6 +17,14 @@ class Edge:
 class DirectedGraph:
     def __init__(self) -> None:
         self._adj: Dict[str, List[Edge]] = {}
+        # Changed to smart analytic cache
+        self._analytics_cache: Optional["GraphAnalyticsCache"] = None
+
+    def _get_cache(self) -> "GraphAnalyticsCache":
+        from .graph_analytics import GraphAnalyticsCache
+        if self._analytics_cache is None:
+            self._analytics_cache = GraphAnalyticsCache(self)
+        return self._analytics_cache
 
     def add_node(self, node_id: str) -> None:
         self._adj.setdefault(node_id, [])
@@ -30,6 +38,15 @@ class DirectedGraph:
 
     def replace_neighbors(self, node_id: str, edges: List[Edge]) -> None:
         self._adj[node_id] = edges
+        self.invalidate_cache_for(node_id)
+
+    def invalidate_cache_for(self, node_id: str) -> None:
+        if self._analytics_cache is not None:
+            self._analytics_cache.invalidate_for_node(node_id)
+
+    def clear_cache(self) -> None:
+        if self._analytics_cache is not None:
+            self._analytics_cache.clear_all()
 
     def nodes(self) -> Iterable[str]:
         return self._adj.keys()
@@ -40,11 +57,19 @@ class DirectedGraph:
     def out_degree(self, node_id: str) -> int:
         return len(self._adj.get(node_id, []))
 
-    def shortest_path_latencies(self, source: str) -> Dict[str, float]:
-        # Dijkstra on edge latency.
+    def shortest_path_latencies(self, source: str, use_cache: bool = True) -> Dict[str, float]:
+        """
+        Calculates shortest path latencies using intelligent caching strategies
+        based on the size of the network.
+        """
+        if use_cache:
+            return self._get_cache().shortest_path_latencies(source)
+            
+        # Uncached fallback
         dist: Dict[str, float] = {n: float("inf") for n in self._adj}
         if source not in dist:
             return dist
+            
         dist[source] = 0.0
         heap: List[Tuple[float, str]] = [(0.0, source)]
 
@@ -69,6 +94,7 @@ class DirectedGraph:
                 else:
                     new_edges.append(e)
             self._adj[src] = new_edges
+        self.clear_cache() # Broad impact, clear all
 
     def apply_latency_multiplier(
         self,
@@ -93,6 +119,7 @@ class DirectedGraph:
             else:
                 replaced.append(edge)
         self._adj[src_node] = replaced
+        self.invalidate_cache_for(src_node)
 
     def avg_shortest_latency(self) -> float:
         all_nodes = list(self._adj.keys())
@@ -101,8 +128,16 @@ class DirectedGraph:
 
         total = 0.0
         count = 0
-        for src in all_nodes:
-            dist = self.shortest_path_latencies(src)
+        
+        # Scale strategy based on size
+        n = len(all_nodes)
+        sample_nodes = all_nodes
+        if n > 500: # K-hop / approximation scale
+            import random
+            sample_nodes = random.sample(all_nodes, k=min(100, n))
+            
+        for src in sample_nodes:
+            dist = self.shortest_path_latencies(src, use_cache=True)
             for dst, d in dist.items():
                 if src == dst or d == float("inf"):
                     continue
@@ -110,31 +145,3 @@ class DirectedGraph:
                 count += 1
         return total / count if count else float("inf")
 
-    @classmethod
-    def random_graph(
-        cls,
-        node_ids: List[str],
-        edge_probability: float,
-        min_latency: float,
-        max_latency: float,
-        min_reliability: float,
-        max_reliability: float,
-        rng: Random,
-    ) -> "DirectedGraph":
-        graph = cls()
-        for n in node_ids:
-            graph.add_node(n)
-
-        for src in node_ids:
-            for dst in node_ids:
-                if src == dst:
-                    continue
-                if rng.random() <= edge_probability:
-                    edge = Edge(
-                        src=src,
-                        dst=dst,
-                        latency=rng.uniform(min_latency, max_latency),
-                        reliability=rng.uniform(min_reliability, max_reliability),
-                    )
-                    graph.add_edge(edge)
-        return graph

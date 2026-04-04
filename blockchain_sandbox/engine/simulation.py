@@ -8,6 +8,7 @@ from typing import Dict, List, Optional, Tuple
 from ..core.config import SimulationConfig
 from ..core.entities import Block, Node
 from ..core.graph_model import DirectedGraph, Edge
+from ..core.storage import BlockStorage
 from .strategies import build_strategy
 
 
@@ -31,7 +32,8 @@ class BlockchainSimulation:
         self.rng = Random(config.random_seed)
 
         self.nodes: Dict[str, Node] = {}
-        self.blocks: Dict[str, Block] = {}
+        # block_storage handles hot/cold prune
+        self.block_storage = BlockStorage(data_dir=None) # Keep in memory for now, or to temp
         self.chain_heights: Dict[str, int] = {}
         self.adopted_counts: Dict[str, int] = {}
         self.block_wins_by_miner: Dict[str, int] = {}
@@ -49,7 +51,7 @@ class BlockchainSimulation:
             miner_id="genesis",
             created_at_step=0,
         )
-        self.blocks[self.genesis_id] = genesis
+        self.block_storage.add_block(genesis)
         self.chain_heights[self.genesis_id] = 0
         self.adopted_counts[self.genesis_id] = 0
 
@@ -93,14 +95,23 @@ class BlockchainSimulation:
             )
 
     def _init_graph(self) -> DirectedGraph:
-        return DirectedGraph.random_graph(
+        from ..core.topology_generator import TopologyGenerator
+        node_weights = {n.node_id: n.hash_power for n in self.nodes.values()}
+        return TopologyGenerator.generate(
+            topology_type=getattr(self.config, "topology_type", "random"),
             node_ids=list(self.nodes.keys()),
+            rng=self.rng,
             edge_probability=self.config.edge_probability,
             min_latency=self.config.min_latency,
             max_latency=self.config.max_latency,
             min_reliability=self.config.min_reliability,
             max_reliability=self.config.max_reliability,
-            rng=self.rng,
+            ba_m=getattr(self.config, "topology_ba_m", 3),
+            ws_k=getattr(self.config, "topology_ws_k", 4),
+            ws_beta=getattr(self.config, "topology_ws_beta", 0.1),
+            core_ratio=getattr(self.config, "topology_core_ratio", 0.05),
+            core_edge_prob=getattr(self.config, "topology_core_edge_prob", 0.8),
+            node_weights=node_weights
         )
 
     def _bootstrap_genesis(self) -> None:
@@ -109,26 +120,35 @@ class BlockchainSimulation:
             self.adopted_counts[self.genesis_id] += 1
 
     def run(self) -> SimulationResult:
-        for step in range(1, self.config.total_steps + 1):
-            self._mine_step(step)
-            self._flush_events(step)
+        prune_interval = getattr(self.config, "prune_interval_steps", 50)
+        
+        try:
+            for step in range(1, self.config.total_steps + 1):
+                self._mine_step(step)
+                self._flush_events(step)
+                
+                if step % prune_interval == 0:
+                    self._prune_blocks()
 
-        canonical_head = self._canonical_head()
-        heaviest_head = self._heaviest_head()
-        orphan_blocks = self._count_orphans(canonical_head)
+            canonical_head = self._canonical_head()
+            heaviest_head = self._heaviest_head()
+            orphan_blocks = self._count_orphans(canonical_head)
 
-        return SimulationResult(
-            blocks=self.blocks,
-            nodes=self.nodes,
-            adopted_counts=self.adopted_counts,
-            canonical_head_id=canonical_head,
-            heaviest_head_id=heaviest_head,
-            fork_events=self.fork_events,
-            orphan_blocks=orphan_blocks,
-            block_wins_by_miner=self.block_wins_by_miner,
-            graph=self.graph,
-            config=self.config,
-        )
+            return SimulationResult(
+                blocks=self.block_storage.reconstruct_all_blocks(),
+                nodes=self.nodes,
+                adopted_counts=self.adopted_counts,
+                canonical_head_id=canonical_head,
+                heaviest_head_id=heaviest_head,
+                fork_events=self.fork_events,
+                orphan_blocks=orphan_blocks,
+                block_wins_by_miner=self.block_wins_by_miner,
+                graph=self.graph,
+                config=self.config,
+            )
+        finally:
+            if hasattr(self.block_storage, 'cleanup'):
+                self.block_storage.cleanup()
 
     def _mine_step(self, step: int) -> None:
         for node in self.nodes.values():
@@ -146,7 +166,7 @@ class BlockchainSimulation:
             if self.rng.random() <= mine_prob:
                 parent_id = node.local_head_id or self.genesis_id
                 parent_h = self.chain_heights[parent_id]
-                block_id = f"B{len(self.blocks)}"
+                block_id = f"B{len(self.block_storage.get_all_summaries())}"
 
                 block = Block(
                     block_id=block_id,
@@ -155,7 +175,7 @@ class BlockchainSimulation:
                     miner_id=node.node_id,
                     created_at_step=step,
                 )
-                self.blocks[block_id] = block
+                self.block_storage.add_block(block)
                 self.chain_heights[block_id] = block.height
                 self.adopted_counts[block_id] = 0
                 self.block_wins_by_miner[node.node_id] += 1
@@ -170,14 +190,24 @@ class BlockchainSimulation:
         if hops >= self.config.max_hops_for_propagation:
             return
 
-        block = self.blocks[block_id]
+        block = self.block_storage.get_summary(block_id)
+        if not block:
+            return
+            
         src_node = self.nodes[src]
         strategy = build_strategy(src_node.strategy_name)
         outgoing = self.graph.neighbors(src)
         decision = strategy.select_propagation_edges(outgoing)
 
-        for edge in decision.forward_edges:
-            self._maybe_schedule_delivery(edge, block.block_id, now_step, hops + 1)
+        # Batch scheduling for Hub nodes
+        avg_degree = self.graph.edge_count() / max(1, len(list(self.graph.nodes())))
+        is_hub = len(decision.forward_edges) > max(20, avg_degree * 3)
+
+        for i, edge in enumerate(decision.forward_edges):
+            # If it's a huge hub, offset every 20 edges by a tiny fraction of a step 
+            # to smooth out heapq insertions and simulated network load
+            offset = (i // 20) * 1e-5 if is_hub else 0.0
+            self._maybe_schedule_delivery(edge, block.block_id, now_step + offset, hops + 1)
 
     def _maybe_schedule_delivery(self, edge: Edge, block_id: str, now_step: float, hops: int) -> None:
         if block_id in self.nodes[edge.dst].known_blocks:
@@ -195,8 +225,10 @@ class BlockchainSimulation:
         while self._events and self._events[0][0] <= current_step:
             _, _, dst, block_id, hops = heapq.heappop(self._events)
             node = self.nodes[dst]
-            block = self.blocks[block_id]
-
+            block = self.block_storage.get_summary(block_id)
+            if not block:
+                continue
+                
             old_head = node.local_head_id
             changed = node.observe_block(block_id, block.height, self.chain_heights)
             if changed:
@@ -213,12 +245,18 @@ class BlockchainSimulation:
     def _heaviest_head(self) -> str:
         best_id = self.genesis_id
         best_h = -1
-        for bid, block in self.blocks.items():
+        for bid, block in self.block_storage.get_all_summaries().items():
+            # For Simulation (No-LLM), created_at_step is usually needed for tiebreak.
+            # But summary doesn't have it. We can tiebreak deterministically by ID if height matches.
             if block.height > best_h:
                 best_h = block.height
                 best_id = bid
-            elif block.height == best_h and block.created_at_step < self.blocks[best_id].created_at_step:
-                best_id = bid
+            elif block.height == best_h:
+                # Fallback to ID sorting
+                n_b = int(bid[1:]) if bid.startswith("B") and bid[1:].isdigit() else 0
+                n_best = int(best_id[1:]) if best_id.startswith("B") and best_id[1:].isdigit() else 0
+                if n_b < n_best:
+                    best_id = bid
         return best_id
 
     def _canonical_head(self) -> str:
@@ -237,7 +275,20 @@ class BlockchainSimulation:
     def _count_orphans(self, canonical_head: str) -> int:
         canonical_set = set()
         cursor: Optional[str] = canonical_head
+        summaries = self.block_storage.get_all_summaries()
         while cursor is not None:
             canonical_set.add(cursor)
-            cursor = self.blocks[cursor].parent_id if cursor in self.blocks else None
-        return sum(1 for b in self.blocks if b not in canonical_set)
+            cursor = summaries[cursor].parent_id if cursor in summaries else None
+        return sum(1 for b in summaries if b not in canonical_set)
+
+    def _prune_blocks(self) -> None:
+        prune_depth = getattr(self.config, "prune_max_depth", 15)
+        active_heads = set()
+        active_heads.add(self._canonical_head())
+        for node in self.nodes.values():
+            if node.local_head_id:
+                active_heads.add(node.local_head_id)
+                
+        pruned_count = self.block_storage.prune_frontier(active_heads, prune_depth)
+        if pruned_count > 0:
+            print(f"[Prune] Moved {pruned_count} blocks to cold storage.")

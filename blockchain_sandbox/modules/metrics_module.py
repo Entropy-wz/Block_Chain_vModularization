@@ -152,37 +152,62 @@ class MetricsObserverModule(ISimulationModule):
     def _canonical_set(self, head: str) -> set[str]:
         out: set[str] = set()
         cur: Optional[str] = head
-        while cur is not None and cur in self.ctx.blocks:
-            out.add(cur)
-            cur = self.ctx.blocks[cur].parent_id
+        b = getattr(self.ctx, "block_storage", None)
+        while cur is not None:
+            if b:
+                summary = b.get_summary(cur)
+                if not summary:
+                    break
+                out.add(cur)
+                cur = summary.parent_id
+            else:
+                if cur not in self.ctx.blocks:
+                    break
+                out.add(cur)
+                cur = self.ctx.blocks[cur].parent_id
         return out
 
     def _heaviest_head(self) -> str:
         best_id = "B0"
         best_h = -1
-        for bid, block in self.ctx.blocks.items():
+        b = getattr(self.ctx, "block_storage", None)
+        items = b.get_all_summaries().items() if b else self.ctx.blocks.items()
+        
+        for bid, block in items:
             if block.height > best_h:
                 best_h = block.height
                 best_id = bid
-            elif block.height == best_h and block.created_at_step < self.ctx.blocks[best_id].created_at_step:
-                best_id = bid
+            elif block.height == best_h:
+                n_b = int(bid[1:]) if bid.startswith("B") and bid[1:].isdigit() else 0
+                n_best = int(best_id[1:]) if best_id.startswith("B") and best_id[1:].isdigit() else 0
+                if n_b < n_best:
+                    best_id = bid
         return best_id
 
     def _count_orphans(self, canonical_head: str) -> int:
         canonical = set()
         cursor: Optional[str] = canonical_head
+        b = getattr(self.ctx, "block_storage", None)
         while cursor is not None:
             canonical.add(cursor)
-            cursor = self.ctx.blocks[cursor].parent_id if cursor in self.ctx.blocks else None
-        return sum(1 for bid in self.ctx.blocks if bid not in canonical)
+            if b:
+                summary = b.get_summary(cursor)
+                cursor = summary.parent_id if summary else None
+            else:
+                cursor = self.ctx.blocks[cursor].parent_id if cursor in self.ctx.blocks else None
+                
+        items = b.get_all_summaries() if b else self.ctx.blocks
+        return sum(1 for bid in items if bid not in canonical)
 
     def _build_window_tree_lines(self, window_ids: List[str]) -> List[str]:
         window = set(window_ids)
         children: Dict[str, List[str]] = {bid: [] for bid in window_ids}
         roots: List[str] = []
 
+        b = getattr(self.ctx, "block_storage", None)
         for bid in window_ids:
-            parent = self.ctx.blocks[bid].parent_id
+            summary = b.get_summary(bid) if b else self.ctx.blocks[bid]
+            parent = summary.parent_id
             if parent in window:
                 children[parent].append(bid)
             else:
@@ -198,17 +223,20 @@ class MetricsObserverModule(ISimulationModule):
         return lines
 
     def _append_tree(self, lines: List[str], children: Dict[str, List[str]], bid: str, depth: int) -> None:
-        block = self.ctx.blocks[bid]
+        b = getattr(self.ctx, "block_storage", None)
+        block = b.get_summary(bid) if b else self.ctx.blocks[bid]
         prefix = "  " * depth + ("- " if depth else "")
         parent = block.parent_id or "None"
-        lines.append(f"{prefix}{bid}(h={block.height},miner={block.miner_id},parent={parent},t={block.created_at_step})")
+        created_at = getattr(block, "created_at_step", "?")
+        lines.append(f"{prefix}{bid}(h={block.height},miner={block.miner_id},parent={parent},t={created_at})")
         for child in children.get(bid, []):
             self._append_tree(lines, children, child, depth + 1)
 
     def _window_miner_wins(self, window_block_ids: List[str]) -> Dict[str, int]:
         out: Dict[str, int] = {}
+        b = getattr(self.ctx, "block_storage", None)
         for bid in window_block_ids:
-            block = self.ctx.blocks[bid]
+            block = b.get_summary(bid) if b else self.ctx.blocks[bid]
             out[block.miner_id] = out.get(block.miner_id, 0) + 1
         return out
 
@@ -218,8 +246,10 @@ class MetricsObserverModule(ISimulationModule):
         window = set(window_ids)
         children: Dict[str, List[str]] = {bid: [] for bid in window_ids}
         roots: List[str] = []
+        b = getattr(self.ctx, "block_storage", None)
         for bid in window_ids:
-            parent = self.ctx.blocks[bid].parent_id
+            summary = b.get_summary(bid) if b else self.ctx.blocks[bid]
+            parent = summary.parent_id
             if parent in window:
                 children[parent].append(bid)
             else:

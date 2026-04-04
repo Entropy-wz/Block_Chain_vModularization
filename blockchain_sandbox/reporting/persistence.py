@@ -37,6 +37,8 @@ def export_run_artifacts(
     _write_snapshots_csv(reports_dir / "window_snapshots.csv", result)
     _write_miner_details_csv(reports_dir / "miner_details.csv", report)
     _write_private_events_jsonl(data_dir / "private_events.jsonl", result)
+    if hasattr(result, "llm_scheduler_metrics") and result.llm_scheduler_metrics:
+        _write_scheduler_metrics_json(reports_dir / "scheduler_metrics.json", result.llm_scheduler_metrics)
     generate_tree_pngs(result, viz_dir)
     if export_prompts:
         _write_prompt_traces_jsonl(data_dir / "prompt_traces.jsonl", result)
@@ -49,6 +51,10 @@ def _build_run_dir(output_root: str) -> Path:
     date_str = datetime.now().strftime("%Y-%m-%d")
     stamp = datetime.now().strftime("%H%M%S")
     return Path(output_root) / group / date_str / f"run_{stamp}"
+
+
+def _write_scheduler_metrics_json(path: Path, metrics: Dict[str, Any]) -> None:
+    path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _write_summary_json(path: Path, result: AgenticSimulationResult, report: AgenticReport) -> None:

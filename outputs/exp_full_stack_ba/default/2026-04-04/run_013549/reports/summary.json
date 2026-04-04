@@ -1,0 +1,457 @@
+{
+  "generated_at": "2026-04-04T01:35:49",
+  "config": {
+    "total_steps": 3500,
+    "random_seed": 11,
+    "num_miners": 15,
+    "num_full_nodes": 30,
+    "edge_probability": 0.24,
+    "topology_type": "barabasi_albert",
+    "topology_ba_m": 2,
+    "topology_ws_k": 4,
+    "topology_ws_beta": 0.1,
+    "topology_core_ratio": 0.05,
+    "topology_core_edge_prob": 0.8,
+    "min_latency": 3.0,
+    "max_latency": 12.0,
+    "min_reliability": 0.85,
+    "max_reliability": 0.98,
+    "block_discovery_chance": 0.035,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": true,
+    "enable_attack_jamming": true,
+    "active_modules": null,
+    "max_hops_for_propagation": 6,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 20,
+    "prune_interval_steps": 50,
+    "prune_max_depth": 15
+  },
+  "headline_metrics": {
+    "total_blocks": 155,
+    "canonical_height": 81,
+    "canonical_head_id": "B152",
+    "orphan_blocks": 73,
+    "orphan_ratio": 0.47096774193548385,
+    "fork_events": 0,
+    "jam_events": 18,
+    "network_efficiency": 18.298327603101573,
+    "forum_post_count": 41,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 21
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 18
+    },
+    {
+      "miner_id": "M14",
+      "discovered_blocks": 17
+    },
+    {
+      "miner_id": "M13",
+      "discovered_blocks": 16
+    },
+    {
+      "miner_id": "M3",
+      "discovered_blocks": 12
+    },
+    {
+      "miner_id": "M9",
+      "discovered_blocks": 12
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 1.0,
+    "M1": 1.0,
+    "M2": 1.0,
+    "M9": 1.0
+  },
+  "final_reputation": {
+    "M13": -9.760000000000002,
+    "M2": 0.0,
+    "M8": 0.0,
+    "M5": 0.0,
+    "M4": 0.0,
+    "M9": 0.24,
+    "M6": 0.0,
+    "M7": 0.0,
+    "M10": 0.0,
+    "M3": 0.0,
+    "M14": 0.12,
+    "M1": 0.0,
+    "M11": 0.24,
+    "M12": 0.0,
+    "M0": 0.0,
+    "SYSTEM": 0.0
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.05946146050375697,
+      "mined_blocks": 3,
+      "canonical_blocks": 0,
+      "orphan_blocks": 3,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.01948051948051948,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.32761589297472166,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          2
+        ],
+        [
+          "publish_private",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_private",
+      "last_reason": "I have a private lead and want to capitalize on this moment before rivals catch up.",
+      "last_prompt": "step=154338;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B74;hash_power=0.05946;local_public_height=38;private_lead=1;rivalry_pressure=0.0000;heads=M1:38,M10:38,M11:38,M12:38,M13:38,M14:37,M2:38,M3:38,M4:37,M5:38,M6:37,M7:38,M8:38,M9:37;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=-0.290;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P30|mining|author=M0|target=M13|tone=-0.50|M13's recent performance is concerning; we need  || P29|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P28|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P27|mining|author=M1|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P26|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must ;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+270.000;tokenomics_fiat_balance=+880.840;tokenomics_token_balance=+1.000;tokenomics_estimated_net_worth=+1150.840;tokenomics_is_powered_off=False;recent_memory=[t=9246 action=jam_target content=none | t=154127 action=jam_target content=M13's recent performance is concerning; ...]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.07357733869220236,
+      "mined_blocks": 10,
+      "canonical_blocks": 1,
+      "orphan_blocks": 9,
+      "orphan_ratio": 0.9,
+      "mined_share": 0.06493506493506493,
+      "canonical_share": 0.012345679012345678,
+      "mined_vs_hp_ratio": 0.882541636993819,
+      "canonical_vs_hp_ratio": 0.16779186678647917,
+      "top_actions": [
+        [
+          "jam_target",
+          5
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M13 is becoming a significant competitor, and I need to slow them down to protect my position.",
+      "last_prompt": "step=120724;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B53;hash_power=0.07358;local_public_height=25;private_lead=1;rivalry_pressure=0.0000;heads=M0:25,M10:25,M11:25,M12:25,M13:25,M14:25,M2:25,M3:25,M4:25,M5:25,M6:25,M7:25,M8:26,M9:25;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=-0.259;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P26|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P25|mining|author=M2|target=M13|tone=-0.50|M13 is becoming a significant competitor; we nee || P24|mining|author=M12|target=M13|tone=-0.50|M13 is gaining too much traction; their recent a || P23|mining|author=M11|target=M13|tone=-0.50|M13 might be gaining too much traction. We need  || P22|mining|author=M9|target=M13|tone=-0.50|M13 is becoming a significant competitor; we nee;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+108.330;tokenomics_fiat_balance=+901.630;tokenomics_token_balance=+3.000;tokenomics_estimated_net_worth=+1226.630;tokenomics_is_powered_off=False;recent_memory=[t=32413 action=jam_target content=Engaging directly against M13 to mitigat... | t=32847 action=jam_target content=M13 is becoming a significant competitor... | t=34942 action=jam_target content=M13 is gaining too much traction. We nee...]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.1214796528992294,
+      "mined_blocks": 21,
+      "canonical_blocks": 9,
+      "orphan_blocks": 12,
+      "orphan_ratio": 0.5714285714285714,
+      "mined_share": 0.13636363636363635,
+      "canonical_share": 0.1111111111111111,
+      "mined_vs_hp_ratio": 1.1225224398422804,
+      "canonical_vs_hp_ratio": 0.9146479139455619,
+      "top_actions": [
+        [
+          "jam_target",
+          5
+        ],
+        [
+          "publish_private",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M13 is becoming a significant competitor, and slowing them down will help preserve my lead.",
+      "last_prompt": "step=123666;miner_id=M2;is_selfish=true;event_kind=on_block_received;trigger_block_id=B55;hash_power=0.12148;local_public_height=26;private_lead=2;rivalry_pressure=0.0000;heads=M0:26,M1:27,M10:27,M11:27,M12:26,M13:27,M14:26,M3:26,M4:26,M5:27,M6:26,M7:27,M8:27,M9:26;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=-0.276;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P28|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P27|mining|author=M1|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P26|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P25|mining|author=M2|target=M13|tone=-0.50|M13 is becoming a significant competitor; we nee || P24|mining|author=M12|target=M13|tone=-0.50|M13 is gaining too much traction; their recent a;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+92.590;tokenomics_fiat_balance=+829.200;tokenomics_token_balance=+9.000;tokenomics_estimated_net_worth=+1662.530;tokenomics_is_powered_off=False;recent_memory=[t=117684 action=jam_target content=M13 is becoming a significant competitor... | t=118899 action=jam_target content=M13's recent performance is concerning; ... | t=121275 action=jam_target content=M13's recent performance is concerning; ...]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.06120575750382224,
+      "mined_blocks": 12,
+      "canonical_blocks": 6,
+      "orphan_blocks": 6,
+      "orphan_ratio": 0.5,
+      "mined_share": 0.07792207792207792,
+      "canonical_share": 0.07407407407407407,
+      "mined_vs_hp_ratio": 1.2731167965237873,
+      "canonical_vs_hp_ratio": 1.2102468312633532,
+      "top_actions": [
+        [
+          "hold",
+          1
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is becoming a significant threat to our position; slowing down their block propagation can help maintain our competitive edge.",
+      "last_prompt": "step=13313;miner_id=M3;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.06121;local_public_height=2;private_lead=0;rivalry_pressure=0.0000;heads=M0:2,M1:3,M10:3,M11:2,M12:2,M13:2,M14:2,M2:2,M4:3,M5:2,M6:2,M7:3,M8:2,M9:2;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=+0.091;forum_personal_sentiment=-0.175;forum_hot_board=mining;forum_feed_digest=P10|mining|author=M2|target=M13|tone=-0.50|M13 is becoming a significant threat to our posi || P9|mining|author=M8|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P8|mining|author=M10|target=M13|tone=-0.50|M13 is becoming a significant threat to our posi || P7|mining|author=M7|target=M13|tone=-0.50|M13 is gaining too much traction. We need to be  || P5|mining|author=M9|target=M13|tone=-0.50|M13 seems to be gaining too much traction. Watch;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+10.000;tokenomics_fiat_balance=+990.940;tokenomics_token_balance=+0.000;tokenomics_estimated_net_worth=+990.940;tokenomics_is_powered_off=False;recent_memory=[t=8849 action=hold content=none]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.06675143375973663,
+      "mined_blocks": 7,
+      "canonical_blocks": 6,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.14285714285714285,
+      "mined_share": 0.045454545454545456,
+      "canonical_share": 0.07407407407407407,
+      "mined_vs_hp_ratio": 0.6809523465541334,
+      "canonical_vs_hp_ratio": 1.1097001203104395,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 poses a growing threat as a significant competitor; slowing down their block propagation could protect my position.",
+      "last_prompt": "step=63524;miner_id=M4;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.06675;local_public_height=13;private_lead=0;rivalry_pressure=0.0000;heads=M0:13,M1:13,M10:13,M11:13,M12:13,M13:13,M14:13,M2:13,M3:13,M5:13,M6:13,M7:13,M8:13,M9:13;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=-0.217;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P22|mining|author=M9|target=M13|tone=-0.50|M13 is becoming a significant competitor; we nee || P21|mining|author=M6|target=M13|tone=-0.50|M13 seems to be growing too strong; careful moni || P18|mining|author=M5|target=M13|tone=-0.50|M13 is becoming a significant competitor. We nee || P20|mining|author=M10|target=M13|tone=-0.50|M13 is becoming a significant competitor and we  || P19|mining|author=M14|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+73.330;tokenomics_fiat_balance=+954.410;tokenomics_token_balance=+0.000;tokenomics_estimated_net_worth=+954.410;tokenomics_is_powered_off=False;recent_memory=[t=8763 action=jam_target content=I'm keeping an eye on our rivals! Let's ...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.0772067604076764,
+      "mined_blocks": 18,
+      "canonical_blocks": 14,
+      "orphan_blocks": 4,
+      "orphan_ratio": 0.2222222222222222,
+      "mined_share": 0.11688311688311688,
+      "canonical_share": 0.1728395061728395,
+      "mined_vs_hp_ratio": 1.5138974393684776,
+      "canonical_vs_hp_ratio": 2.23865766754351,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is gaining too much traction and poses a threat to our position. Slowing them down can preserve our current advantages.",
+      "last_prompt": "step=36007;miner_id=M5;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.07721;local_public_height=9;private_lead=0;rivalry_pressure=0.1667;heads=M0:9,M1:9,M10:7,M11:9,M12:9,M13:8,M14:7,M2:9,M3:9,M4:8,M6:8,M7:9,M8:9,M9:8;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=-0.139;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P17|mining|author=M1|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P16|mining|author=M1|target=M13|tone=-0.50|M13 is becoming a significant competitor to our  || P15|mining|author=M14|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P14|mining|author=M5|target=M13|tone=-0.50|M13 is becoming a significant threat to our posi || P13|mining|author=M9|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+27.270;tokenomics_fiat_balance=+967.110;tokenomics_token_balance=+2.000;tokenomics_estimated_net_worth=+1021.660;tokenomics_is_powered_off=False;recent_memory=[t=8710 action=jam_target content=We're on a roll! Let's keep pushing forw... | t=21520 action=jam_target content=M13 is becoming a significant threat to ...]"
+    },
+    {
+      "miner_id": "M6",
+      "strategy": "honest",
+      "hash_power": 0.024272038065262843,
+      "mined_blocks": 3,
+      "canonical_blocks": 1,
+      "orphan_blocks": 2,
+      "orphan_ratio": 0.6666666666666666,
+      "mined_share": 0.01948051948051948,
+      "canonical_share": 0.012345679012345678,
+      "mined_vs_hp_ratio": 0.8025910073204446,
+      "canonical_vs_hp_ratio": 0.5086379223347673,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is becoming a significant competitor and gaining too much traction. Slowing them down is crucial for reputation management and competitive positioning.",
+      "last_prompt": "step=61576;miner_id=M6;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.02427;local_public_height=12;private_lead=0;rivalry_pressure=0.0000;heads=M0:12,M1:13,M10:13,M11:12,M12:12,M13:12,M14:12,M2:12,M3:12,M4:12,M5:12,M7:13,M8:13,M9:12;persona=M6_reputation_builder;risk=0.44;aggression=0.30;patience=0.73;sociability=0.86;style=brand_reputation;narrative_style=community_first;forum_global_sentiment=-0.190;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P19|mining|author=M14|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P20|mining|author=M10|target=M13|tone=-0.50|M13 is becoming a significant competitor and we  || P18|mining|author=M5|target=M13|tone=-0.50|M13 is becoming a significant competitor. We nee || P17|mining|author=M1|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P16|mining|author=M1|target=M13|tone=-0.50|M13 is becoming a significant competitor to our ;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+71.430;tokenomics_fiat_balance=+984.440;tokenomics_token_balance=+0.000;tokenomics_estimated_net_worth=+984.440;tokenomics_is_powered_off=False;recent_memory=[t=9339 action=jam_target content=M13 seems to be gaining too much tractio...]"
+    },
+    {
+      "miner_id": "M7",
+      "strategy": "honest",
+      "hash_power": 0.06728605456580532,
+      "mined_blocks": 11,
+      "canonical_blocks": 9,
+      "orphan_blocks": 2,
+      "orphan_ratio": 0.18181818181818182,
+      "mined_share": 0.07142857142857142,
+      "canonical_share": 0.1111111111111111,
+      "mined_vs_hp_ratio": 1.0615657566712393,
+      "canonical_vs_hp_ratio": 1.6513245103774836,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is gaining traction, and slowing their block propagation may benefit overall competition.",
+      "last_prompt": "step=9508;miner_id=M7;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.06729;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:1,M10:1,M11:1,M12:1,M13:2,M14:1,M2:1,M3:1,M4:1,M5:1,M6:1,M8:1,M9:1;persona=M7_reputation_pragmatic;risk=0.41;aggression=0.33;patience=0.77;sociability=0.83;style=governance_alignment;narrative_style=diplomatic;forum_global_sentiment=+0.429;forum_personal_sentiment=+0.429;forum_hot_board=mining;forum_feed_digest=P6|mining|author=M6|target=M13|tone=-0.50|M13 seems to be gaining too much traction. We ne || P5|mining|author=M9|target=M13|tone=-0.50|M13 seems to be gaining too much traction. Watch || P4|mining|author=M4|target=M13|tone=+0.80|I'm keeping an eye on our rivals! Let's stay foc || P3|mining|author=M2|target=M13|tone=+0.80|We're on a roll! Let's keep the momentum going! || P2|mining|author=M5|target=M13|tone=+0.80|We're on a roll! Let's keep pushing forward and ;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+10.000;tokenomics_fiat_balance=+997.040;tokenomics_token_balance=+0.000;tokenomics_estimated_net_worth=+997.040;tokenomics_is_powered_off=False;recent_memory=[t=7885 action=jam_target content=none]"
+    },
+    {
+      "miner_id": "M8",
+      "strategy": "honest",
+      "hash_power": 0.08279274825659745,
+      "mined_blocks": 10,
+      "canonical_blocks": 4,
+      "orphan_blocks": 6,
+      "orphan_ratio": 0.6,
+      "mined_share": 0.06493506493506493,
+      "canonical_share": 0.04938271604938271,
+      "mined_vs_hp_ratio": 0.7843086055533914,
+      "canonical_vs_hp_ratio": 0.5964618531122089,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is becoming a significant threat with rising traction; need to mitigate their influence.",
+      "last_prompt": "step=10785;miner_id=M8;is_selfish=false;event_kind=on_block_received;trigger_block_id=B4;hash_power=0.08279;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:2,M10:2,M11:1,M12:1,M13:2,M14:1,M2:1,M3:1,M4:2,M5:1,M6:1,M7:2,M9:1;persona=M8_reputation_growth;risk=0.46;aggression=0.35;patience=0.70;sociability=0.88;style=network_effect_growth;narrative_style=community_first;forum_global_sentiment=+0.222;forum_personal_sentiment=+0.150;forum_hot_board=mining;forum_feed_digest=P8|mining|author=M10|target=M13|tone=-0.50|M13 is becoming a significant threat to our posi || P7|mining|author=M7|target=M13|tone=-0.50|M13 is gaining too much traction. We need to be  || P5|mining|author=M9|target=M13|tone=-0.50|M13 seems to be gaining too much traction. Watch || P6|mining|author=M6|target=M13|tone=-0.50|M13 seems to be gaining too much traction. We ne || P2|mining|author=M5|target=M13|tone=+0.80|We're on a roll! Let's keep pushing forward and ;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+10.000;tokenomics_fiat_balance=+992.880;tokenomics_token_balance=+1.000;tokenomics_estimated_net_worth=+1002.880;tokenomics_is_powered_off=False;recent_memory=[t=8527 action=jam_target content=Let's keep the momentum going! Together,...]"
+    },
+    {
+      "miner_id": "M9",
+      "strategy": "social_selfish",
+      "hash_power": 0.10423009311519313,
+      "mined_blocks": 12,
+      "canonical_blocks": 1,
+      "orphan_blocks": 11,
+      "orphan_ratio": 0.9166666666666666,
+      "mined_share": 0.07792207792207792,
+      "canonical_share": 0.012345679012345678,
+      "mined_vs_hp_ratio": 0.7475967409523459,
+      "canonical_vs_hp_ratio": 0.11844639722907536,
+      "top_actions": [
+        [
+          "jam_target",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M13 is gaining too much traction and poses a significant threat to our position.",
+      "last_prompt": "step=251631;miner_id=M9;is_selfish=true;event_kind=on_block_received;trigger_block_id=B114;hash_power=0.10423;local_public_height=59;private_lead=2;rivalry_pressure=0.0000;heads=M0:59,M1:60,M10:61,M11:60,M12:59,M13:49,M14:59,M2:59,M3:59,M4:60,M5:60,M6:59,M7:61,M8:59;persona=M9_retaliatory_counter;risk=0.76;aggression=0.79;patience=0.67;sociability=0.49;style=counter_punch;narrative_style=sharp;forum_global_sentiment=-0.251;forum_personal_sentiment=-0.128;forum_hot_board=mining;forum_feed_digest=P37|governance|author=M9|target=M13|tone=+0.12|I suggest we ease tensions and focus on more col || P36|governance|author=M13|target=M14|tone=+0.12|I propose we step back and reassess our strategi || P35|governance|author=M13|target=M11|tone=+0.12|I acknowledge the recent performance concerns an || P34|governance|author=M13|target=M11|tone=+0.12|I recognize the concerns regarding my performanc || P32|mining|author=M11|target=M13|tone=-0.50|M13's recent performance is concerning; we need ;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+237.140;tokenomics_fiat_balance=+678.970;tokenomics_token_balance=+10.000;tokenomics_estimated_net_worth=+3050.400;tokenomics_is_powered_off=False;recent_memory=[t=19660 action=jam_target content=M13 is gaining too much traction. We nee... | t=62630 action=jam_target content=M13 is becoming a significant competitor... | t=249095 action=jam_target content=I suggest we ease tensions and focus on ...]"
+    },
+    {
+      "miner_id": "M10",
+      "strategy": "honest",
+      "hash_power": 0.01237173106438662,
+      "mined_blocks": 4,
+      "canonical_blocks": 3,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.25,
+      "mined_share": 0.025974025974025976,
+      "canonical_share": 0.037037037037037035,
+      "mined_vs_hp_ratio": 2.0994657771696192,
+      "canonical_vs_hp_ratio": 2.9936826822603826,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is gaining too much traction and poses a significant threat to my mining operations.",
+      "last_prompt": "step=36097;miner_id=M10;is_selfish=false;event_kind=on_block_received;trigger_block_id=B17;hash_power=0.01237;local_public_height=9;private_lead=0;rivalry_pressure=0.1667;heads=M0:9,M1:9,M11:9,M12:9,M13:8,M14:9,M2:9,M3:9,M4:8,M5:9,M6:8,M7:9,M8:9,M9:8;persona=M10_retaliatory_shield;risk=0.54;aggression=0.58;patience=0.72;sociability=0.52;style=defensive_rotation;narrative_style=firm;forum_global_sentiment=-0.175;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P19|mining|author=M14|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P18|mining|author=M5|target=M13|tone=-0.50|M13 is becoming a significant competitor. We nee || P17|mining|author=M1|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P16|mining|author=M1|target=M13|tone=-0.50|M13 is becoming a significant competitor to our  || P15|mining|author=M14|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+63.640;tokenomics_fiat_balance=+994.640;tokenomics_token_balance=+1.000;tokenomics_estimated_net_worth=+1058.280;tokenomics_is_powered_off=False;recent_memory=[t=7042 action=jam_target content=none | t=9901 action=jam_target content=M13 is becoming a significant threat to ...]"
+    },
+    {
+      "miner_id": "M11",
+      "strategy": "honest",
+      "hash_power": 0.039879526062502856,
+      "mined_blocks": 6,
+      "canonical_blocks": 2,
+      "orphan_blocks": 4,
+      "orphan_ratio": 0.6666666666666666,
+      "mined_share": 0.03896103896103896,
+      "canonical_share": 0.024691358024691357,
+      "mined_vs_hp_ratio": 0.9769684549404033,
+      "canonical_vs_hp_ratio": 0.6191487327605848,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is gaining traction and recent performance is concerning, prompting to slow their block propagation.",
+      "last_prompt": "step=177941;miner_id=M11;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.03988;local_public_height=45;private_lead=0;rivalry_pressure=0.1667;heads=M0:45,M1:45,M10:45,M12:45,M13:45,M14:45,M2:45,M3:45,M4:46,M5:45,M6:45,M7:45,M8:45,M9:45;persona=M11_retaliatory_watchdog;risk=0.50;aggression=0.55;patience=0.74;sociability=0.50;style=threat_response;narrative_style=critical;forum_global_sentiment=-0.297;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P31|mining|author=M0|target=M13|tone=-0.50|M13's recent performance is concerning; we need  || P30|mining|author=M0|target=M13|tone=-0.50|M13's recent performance is concerning; we need  || P29|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P28|mining|author=M2|target=M13|tone=-0.50|M13's recent performance is concerning; we must  || P27|mining|author=M1|target=M13|tone=-0.50|M13's recent performance is concerning; we must ;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+300.000;tokenomics_fiat_balance=+905.090;tokenomics_token_balance=+4.000;tokenomics_estimated_net_worth=+2105.090;tokenomics_is_powered_off=False;recent_memory=[t=7990 action=jam_target content=none | t=64000 action=jam_target content=M13 might be gaining too much traction. ...]"
+    },
+    {
+      "miner_id": "M12",
+      "strategy": "honest",
+      "hash_power": 0.011917874143726982,
+      "mined_blocks": 4,
+      "canonical_blocks": 4,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.025974025974025976,
+      "canonical_share": 0.04938271604938271,
+      "mined_vs_hp_ratio": 2.179417709969483,
+      "canonical_vs_hp_ratio": 4.143584288090128,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is gaining traction and poses a threat; slowing down their block propagation can help maintain my position.",
+      "last_prompt": "step=86988;miner_id=M12;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.01192;local_public_height=20;private_lead=0;rivalry_pressure=0.0000;heads=M0:20,M1:20,M10:20,M11:20,M13:20,M14:19,M2:20,M3:20,M4:20,M5:20,M6:20,M7:20,M8:20,M9:19;persona=M12_steady_fundamentalist;risk=0.23;aggression=0.49;patience=0.91;sociability=0.71;style=value_stability;narrative_style=measured;forum_global_sentiment=-0.229;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P23|mining|author=M11|target=M13|tone=-0.50|M13 might be gaining too much traction. We need  || P22|mining|author=M9|target=M13|tone=-0.50|M13 is becoming a significant competitor; we nee || P21|mining|author=M6|target=M13|tone=-0.50|M13 seems to be growing too strong; careful moni || P20|mining|author=M10|target=M13|tone=-0.50|M13 is becoming a significant competitor and we  || P19|mining|author=M14|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+58.330;tokenomics_fiat_balance=+987.570;tokenomics_token_balance=+0.000;tokenomics_estimated_net_worth=+987.570;tokenomics_is_powered_off=False;recent_memory=[t=8740 action=jam_target content=none]"
+    },
+    {
+      "miner_id": "M13",
+      "strategy": "honest",
+      "hash_power": 0.10642091608437763,
+      "mined_blocks": 16,
+      "canonical_blocks": 5,
+      "orphan_blocks": 11,
+      "orphan_ratio": 0.6875,
+      "mined_share": 0.1038961038961039,
+      "canonical_share": 0.06172839506172839,
+      "mined_vs_hp_ratio": 0.976275225950208,
+      "canonical_vs_hp_ratio": 0.5800400648006636,
+      "top_actions": [
+        [
+          "publish_if_win",
+          5
+        ],
+        [
+          "hold",
+          2
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "To slow down M14's block propagation and protect my current position in the network given my critical reputation risk.",
+      "last_prompt": "step=307794;miner_id=M13;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.10642;local_public_height=73;private_lead=0;rivalry_pressure=1.0000;heads=M0:73,M1:73,M10:72,M11:72,M12:73,M14:73,M2:73,M3:73,M4:73,M5:73,M6:74,M7:73,M8:73,M9:73;persona=M13_steady_fundamentalist;risk=0.43;aggression=0.23;patience=0.56;sociability=0.65;style=value_stability;narrative_style=measured;forum_global_sentiment=-0.232;forum_personal_sentiment=+0.009;forum_hot_board=mining;forum_feed_digest=P39|governance|author=M13|target=M9|tone=+0.12|I suggest we ease tensions and focus on collabor || P38|governance|author=M9|target=M13|tone=+0.12|I suggest we ease tensions and focus on more col || P37|governance|author=M9|target=M13|tone=+0.12|I suggest we ease tensions and focus on more col || P36|governance|author=M13|target=M14|tone=+0.12|I propose we step back and reassess our strategi || P35|governance|author=M13|target=M11|tone=+0.12|I acknowledge the recent performance concerns an;own_reputation=-9.760;reputation_risk=critical;jam_target=M14;tokenomics_current_token_price=+317.140;tokenomics_fiat_balance=+595.810;tokenomics_token_balance=+15.000;tokenomics_estimated_net_worth=+5352.960;tokenomics_is_powered_off=False;recent_memory=[t=190711 action=publish_private content=I acknowledge the recent performance con... | t=200341 action=publish_private content=I propose we step back and reassess our ... | t=284308 action=jam_target content=I suggest we ease tensions and focus on ...]"
+    },
+    {
+      "miner_id": "M14",
+      "strategy": "honest",
+      "hash_power": 0.0911466148757232,
+      "mined_blocks": 17,
+      "canonical_blocks": 16,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.058823529411764705,
+      "mined_share": 0.11038961038961038,
+      "canonical_share": 0.19753086419753085,
+      "mined_vs_hp_ratio": 1.2111213404921803,
+      "canonical_vs_hp_ratio": 2.1671771844391663,
+      "top_actions": [
+        [
+          "publish_if_win",
+          3
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M13 is gaining too much traction and becoming a significant competitor.",
+      "last_prompt": "step=36061;miner_id=M14;is_selfish=false;event_kind=on_block_received;trigger_block_id=B17;hash_power=0.09115;local_public_height=9;private_lead=0;rivalry_pressure=0.1667;heads=M0:9,M1:9,M10:7,M11:9,M12:9,M13:8,M2:9,M3:9,M4:8,M5:9,M6:8,M7:9,M8:9,M9:8;persona=M14_steady_fundamentalist;risk=0.24;aggression=0.24;patience=0.64;sociability=0.41;style=value_stability;narrative_style=measured;forum_global_sentiment=-0.158;forum_personal_sentiment=-0.500;forum_hot_board=mining;forum_feed_digest=P18|mining|author=M5|target=M13|tone=-0.50|M13 is becoming a significant competitor. We nee || P17|mining|author=M1|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P16|mining|author=M1|target=M13|tone=-0.50|M13 is becoming a significant competitor to our  || P15|mining|author=M14|target=M13|tone=-0.50|M13 is gaining too much traction. We need to tak || P14|mining|author=M5|target=M13|tone=-0.50|M13 is becoming a significant threat to our posi;own_reputation=+0.000;reputation_risk=normal;jam_target=M13;tokenomics_current_token_price=+63.640;tokenomics_fiat_balance=+960.810;tokenomics_token_balance=+1.000;tokenomics_estimated_net_worth=+1024.440;tokenomics_is_powered_off=False;recent_memory=[t=9307 action=jam_target content=none | t=26520 action=jam_target content=M13 is gaining too much traction. We nee...]"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
+import asyncio
 
 from ..core.config import LLMConfig
 
@@ -25,6 +26,10 @@ class LLMBackend(ABC):
     def decide(self, system_prompt: str, user_prompt: str) -> LLMDecision:
         raise NotImplementedError
 
+    @abstractmethod
+    async def decide_async(self, system_prompt: str, user_prompt: str) -> LLMDecision:
+        raise NotImplementedError
+
 
 class CompatibleLLMBackend(LLMBackend):
     def __init__(self, config: LLMConfig) -> None:
@@ -45,6 +50,16 @@ class CompatibleLLMBackend(LLMBackend):
             timeout=float(config.timeout_seconds),
             max_retries=3,
         )
+        try:
+            from openai import AsyncOpenAI
+            self.async_client = AsyncOpenAI(
+                api_key=config.api_key,
+                base_url=config.base_url,
+                timeout=float(config.timeout_seconds),
+                max_retries=3,
+            )
+        except Exception:
+            self.async_client = None
 
     def decide(self, system_prompt: str, user_prompt: str) -> LLMDecision:
         text = ""
@@ -85,6 +100,58 @@ class CompatibleLLMBackend(LLMBackend):
         if "social_content" in data: kwargs["social_content"] = _coerce_str(data.get("social_content"), "")
         
         # Capture any remaining arbitrary keys
+        for k, v in data.items():
+            if k not in ["action", "reason", "target_miner", "release_private_blocks"] and k not in kwargs:
+                kwargs[k] = v
+
+        return LLMDecision(
+            action=_coerce_str(data.get("action"), "publish_if_win"),
+            reason=_coerce_str(data.get("reason"), "no reason"),
+            target_miner=_coerce_str(data.get("target_miner"), ""),
+            release_private_blocks=_coerce_int(data.get("release_private_blocks"), 0),
+            **kwargs
+        )
+
+    async def decide_async(self, system_prompt: str, user_prompt: str) -> LLMDecision:
+        if not self.async_client:
+            return self.decide(system_prompt, user_prompt)
+            
+        text = ""
+        if self.config.use_chat_completions:
+            response = await self.async_client.chat.completions.create(
+                model=self.config.model,
+                temperature=self.config.temperature,
+                max_tokens=self.config.max_output_tokens,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+            )
+            text = _extract_chat_text(response)
+        else:
+            response = await self.async_client.responses.create(
+                model=self.config.model,
+                temperature=self.config.temperature,
+                max_output_tokens=self.config.max_output_tokens,
+                input=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+            )
+            text = getattr(response, "output_text", "") or ""
+
+        data = _safe_json_parse(text)
+        if not data:
+            return LLMDecision(action="publish_if_win", reason="Fallback: invalid model output JSON.")
+
+        kwargs = {}
+        if "jam_steps" in data: kwargs["jam_steps"] = _coerce_int(data.get("jam_steps"), 0)
+        if "social_action" in data: kwargs["social_action"] = _coerce_str(data.get("social_action"), "none")
+        if "social_target" in data: kwargs["social_target"] = _coerce_str(data.get("social_target"), "")
+        if "social_board" in data: kwargs["social_board"] = _coerce_str(data.get("social_board"), "mining")
+        if "social_tone" in data: kwargs["social_tone"] = max(-1.0, min(1.0, _coerce_float(data.get("social_tone"), 0.0)))
+        if "social_content" in data: kwargs["social_content"] = _coerce_str(data.get("social_content"), "")
+        
         for k, v in data.items():
             if k not in ["action", "reason", "target_miner", "release_private_blocks"] and k not in kwargs:
                 kwargs[k] = v

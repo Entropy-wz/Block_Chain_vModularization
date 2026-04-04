@@ -1,0 +1,7 @@
+miner_id,strategy,hash_power,mined_blocks,canonical_blocks,orphan_blocks,orphan_ratio,mined_share,canonical_share,mined_vs_hp_ratio,canonical_vs_hp_ratio,top_actions,last_raw_action,last_effective_action,last_reason,last_prompt
+M0,social_selfish,0.12935335,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M1,social_selfish,0.16006125,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M2,social_selfish,0.26426866,1,0,1,1.00000000,1.00000000,0.00000000,3.78402797,0.00000000,publish_private:1,publish_private,publish_private,"With a strong private lead and no immediate rivalry pressure, publishing private blocks maximizes the reward share while maintaining my aggressive stance.","step=11115;miner_id=M2;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.26427;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:0,M1:0,M3:0,M4:0,M5:0;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;recent_memory=[none]"
+M3,honest,0.13314792,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M4,honest,0.14521207,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,
+M5,honest,0.16795675,0,0,0,0.00000000,0.00000000,0.00000000,0.00000000,0.00000000,,n/a,n/a,,

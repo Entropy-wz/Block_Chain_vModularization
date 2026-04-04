@@ -93,14 +93,23 @@ def main() -> None:
             local_head_id=genesis_id,
         )
 
-    graph = DirectedGraph.random_graph(
+    from blockchain_sandbox.core.topology_generator import TopologyGenerator
+    node_weights = {n.node_id: n.hash_power for n in nodes.values()}
+    graph = TopologyGenerator.generate(
+        topology_type=os.getenv("SANDBOX_TOPOLOGY_TYPE", "random"),
         node_ids=list(nodes.keys()),
+        rng=rng,
         edge_probability=cfg.edge_probability,
         min_latency=cfg.min_latency,
         max_latency=cfg.max_latency,
         min_reliability=cfg.min_reliability,
         max_reliability=cfg.max_reliability,
-        rng=rng,
+        ba_m=int(os.getenv("SANDBOX_TOPOLOGY_BA_M", "3")),
+        ws_k=int(os.getenv("SANDBOX_TOPOLOGY_WS_K", "4")),
+        ws_beta=float(os.getenv("SANDBOX_TOPOLOGY_WS_BETA", "0.1")),
+        core_ratio=float(os.getenv("SANDBOX_TOPOLOGY_CORE_RATIO", "0.05")),
+        core_edge_prob=float(os.getenv("SANDBOX_TOPOLOGY_CORE_EDGE_PROB", "0.8")),
+        node_weights=node_weights
     )
 
     for node in nodes.values():
@@ -162,8 +171,15 @@ def main() -> None:
     def propagate_from(src: str, block_id: str, now_time: float, hops: int) -> None:
         if hops >= cfg.max_hops_for_propagation:
             return
-        for edge in graph.neighbors(src):
-            maybe_schedule_delivery(edge, block_id, now_time, hops + 1)
+            
+        # Batch scheduling for Hub nodes
+        avg_degree = graph.edge_count() / max(1, len(list(graph.nodes())))
+        outgoing = graph.neighbors(src)
+        is_hub = len(outgoing) > max(20, avg_degree * 3)
+        
+        for i, edge in enumerate(outgoing):
+            offset = (i // 20) * 1e-5 if is_hub else 0.0
+            maybe_schedule_delivery(edge, block_id, now_time + offset, hops + 1)
 
     start = time.time()
     progress(

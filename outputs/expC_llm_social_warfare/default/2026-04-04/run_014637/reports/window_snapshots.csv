@@ -1,0 +1,7 @@
+step,mined_block_count,window_blocks,window_orphan_count,canonical_head_id,canonical_coverage,max_fork_degree,longest_branch_len,branch_count,forum_window_posts,forum_window_avg_tone,forum_hot_board,forum_top_target
+47005,20,20,7,B19,0.650000,2,14,7,3,0.120000,governance,M13
+111206,40,20,6,B38,0.700000,2,15,6,2,-0.190000,governance,M13
+162857,60,20,6,B59,0.700000,3,15,6,3,0.120000,governance,M13
+221787,80,20,7,B78,0.650000,2,14,7,0,0.000000,none,none
+273616,100,20,8,B99,0.600000,2,13,8,0,0.000000,none,none
+306130,120,20,6,B119,0.700000,3,15,6,0,0.000000,none,none

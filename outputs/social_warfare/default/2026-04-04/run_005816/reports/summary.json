@@ -1,0 +1,375 @@
+{
+  "generated_at": "2026-04-04T00:58:16",
+  "config": {
+    "total_steps": 200,
+    "random_seed": 11,
+    "num_miners": 12,
+    "num_full_nodes": 30,
+    "edge_probability": 0.24,
+    "topology_type": "random",
+    "topology_ba_m": 3,
+    "topology_ws_k": 4,
+    "topology_ws_beta": 0.1,
+    "topology_core_ratio": 0.05,
+    "topology_core_edge_prob": 0.8,
+    "min_latency": 1.0,
+    "max_latency": 5.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.02,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": true,
+    "enable_attack_jamming": false,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 5,
+    "prune_interval_steps": 50,
+    "prune_max_depth": 15
+  },
+  "headline_metrics": {
+    "total_blocks": 6,
+    "canonical_height": 3,
+    "canonical_head_id": "B4",
+    "orphan_blocks": 2,
+    "orphan_ratio": 0.3333333333333333,
+    "fork_events": 0,
+    "jam_events": 0,
+    "network_efficiency": 4.357178932054758,
+    "forum_post_count": 17,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M7",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M8",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M9",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 0
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 0.7666666666666667,
+    "M1": 0.8,
+    "M2": 0.4666666666666667,
+    "M9": 0.8333333333333334
+  },
+  "final_reputation": {
+    "M7": 0.5,
+    "M8": 0.75,
+    "M0": 0.0,
+    "M6": 0.0,
+    "M3": 0.0,
+    "M11": 0.0,
+    "M9": 0.0,
+    "M4": 0.0,
+    "M5": 0.0,
+    "M1": 0.0,
+    "M2": 0.0
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.07521867513599385,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_private",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_private",
+      "last_reason": "Given the current lead and low rivalry pressure, it's optimal to secure my block right away and maximize potential private reward.",
+      "last_prompt": "step=2880;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.07522;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M1:0,M10:1,M11:0,M2:0,M3:0,M4:0,M5:0,M6:0,M7:1,M8:1,M9:0;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=+0.500;forum_personal_sentiment=+0.500;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P1|mining|author=M8|target=M7|tone=+0.50|Exciting times ahead for our mining community! L;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.09307524385665031,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "With no private lead and a competitive environment, it's crucial to maximize share by publishing immediately.",
+      "last_prompt": "step=3304;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.09308;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M10:1,M11:1,M2:0,M3:1,M4:1,M5:1,M6:1,M7:1,M8:1,M9:1;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=+0.683;forum_personal_sentiment=+0.675;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P8|mining|author=M5|target=none|tone=+0.75|Exciting times for our mining community! Let's k || P7|mining|author=M4|target=none|tone=+0.75|Exciting times for our mining community! Let's k || P3|mining|author=M6|target=none|tone=+0.70|Exciting times for our mining community! Let’s k || P6|mining|author=M9|target=none|tone=+0.75|We're in an exciting phase with fantastic potent;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.15367161300188872,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "The local public height is low, and there is no private lead. It is prudent to hold and observe the network's response before making any aggressive moves.",
+      "last_prompt": "step=3373;miner_id=M2;is_selfish=true;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.15367;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:1,M10:1,M11:1,M3:1,M4:1,M5:1,M6:1,M7:1,M8:1,M9:1;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=+0.690;forum_personal_sentiment=+0.706;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P9|mining|author=M1|target=none|tone=+0.75|We're in an exciting phase with fantastic potent || P8|mining|author=M5|target=none|tone=+0.75|Exciting times for our mining community! Let's k || P7|mining|author=M4|target=none|tone=+0.75|Exciting times for our mining community! Let's k || P5|mining|author=M11|target=none|tone=+0.75|Exciting times for our mining community! Let's c;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.07742520871719152,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Current network conditions are stable, and maintaining a lead is crucial. While private lead is zero, the lack of rivalry pressure means it's a favorable moment to secure potential advantage.",
+      "last_prompt": "step=3002;miner_id=M3;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.07743;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:0,M10:1,M11:0,M2:0,M4:0,M5:0,M6:1,M7:1,M8:1,M9:0;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=+0.613;forum_personal_sentiment=+0.613;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P1|mining|author=M8|target=M7|tone=+0.50|Exciting times ahead for our mining community! L || P3|mining|author=M6|target=none|tone=+0.70|Exciting times for our mining community! Let’s k || P2|mining|author=M0|target=M8|tone=+0.75|The momentum is building! Let's capitalize on th;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.08444048242841601,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 2.36853218087129,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Current network sentiment is extremely positive, and publishing now aligns with the community's excitement and capitalizes on momentum. Given the overall positive tone in recent forum posts, timely engagement can enhance reputation and secure a favorable outcome.",
+      "last_prompt": "step=19932;miner_id=M4;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.08444;local_public_height=3;private_lead=0;rivalry_pressure=0.0000;heads=M0:3,M1:3,M10:3,M11:3,M2:3,M3:3,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=+0.716;forum_personal_sentiment=+0.725;forum_hot_board=mining;forum_feed_digest=P14|mining|author=M8|target=none|tone=+0.75|We're experiencing fantastic potential in our mi || P15|mining|author=M9|target=none|tone=+0.80|Exciting times ahead! Let's capitalize on our mo || P13|mining|author=M9|target=none|tone=+0.75|We're in an exciting phase for mining! Let's lev || P11|mining|author=M5|target=none|tone=+0.75|We're in an exciting phase for mining! Let's kee || P12|mining|author=M7|target=none|tone=+0.75|We're experiencing fantastic potential in our mi;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=3171 action=publish_if_win content=Exciting times for our mining community!...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.097666457907481,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 2.04778594703884,
+      "canonical_vs_hp_ratio": 3.412976578398067,
+      "top_actions": [
+        [
+          "hold",
+          1
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Withholding is not advantageous at this point, and publishing allows capitalizing on current momentum and positive sentiments in the community.",
+      "last_prompt": "step=9319;miner_id=M5;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.09767;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:1,M10:1,M11:1,M2:1,M3:1,M4:1,M6:1,M7:1,M8:1,M9:1;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=+0.695;forum_personal_sentiment=+0.713;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P10|mining|author=M2|target=none|tone=+0.75|We're in an exciting phase for mining! Let's sta || P9|mining|author=M1|target=none|tone=+0.75|We're in an exciting phase with fantastic potent || P8|mining|author=M5|target=none|tone=+0.75|Exciting times for our mining community! Let's k || P7|mining|author=M4|target=none|tone=+0.75|Exciting times for our mining community! Let's k;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=3194 action=hold content=Exciting times for our mining community!...]"
+    },
+    {
+      "miner_id": "M6",
+      "strategy": "honest",
+      "hash_power": 0.03070409859852212,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "I have received a new block and maintaining my private chain has a positive expected advantage.",
+      "last_prompt": "step=2947;miner_id=M6;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.03070;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:0,M10:1,M11:0,M2:0,M3:0,M4:0,M5:0,M7:1,M8:1,M9:0;persona=M6_reputation_builder;risk=0.44;aggression=0.30;patience=0.73;sociability=0.86;style=brand_reputation;narrative_style=community_first;forum_global_sentiment=+0.583;forum_personal_sentiment=+0.583;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P2|mining|author=M0|target=M8|tone=+0.75|The momentum is building! Let's capitalize on th || P1|mining|author=M8|target=M7|tone=+0.50|Exciting times ahead for our mining community! L;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M7",
+      "strategy": "honest",
+      "hash_power": 0.08511677709712975,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 2.3497130274537175,
+      "canonical_vs_hp_ratio": 3.916188379089529,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "With a solid reputation and positive sentiment across the forum, I can capitalize on this momentum to reinforce my position and maximize rewards.",
+      "last_prompt": "step=9508;miner_id=M7;is_selfish=false;event_kind=on_block_received;trigger_block_id=B2;hash_power=0.08512;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:1,M10:1,M11:1,M2:1,M3:1,M4:1,M5:2,M6:1,M8:1,M9:1;persona=M7_reputation_pragmatic;risk=0.41;aggression=0.33;patience=0.77;sociability=0.83;style=governance_alignment;narrative_style=diplomatic;forum_global_sentiment=+0.700;forum_personal_sentiment=+0.676;forum_hot_board=mining;forum_feed_digest=P11|mining|author=M5|target=none|tone=+0.75|We're in an exciting phase for mining! Let's kee || P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P10|mining|author=M2|target=none|tone=+0.75|We're in an exciting phase for mining! Let's sta || P9|mining|author=M1|target=none|tone=+0.75|We're in an exciting phase with fantastic potent || P8|mining|author=M5|target=none|tone=+0.75|Exciting times for our mining community! Let's k;own_reputation=+0.500;reputation_risk=normal;recent_memory=[t=2566 action=publish_if_win content=Great potential ahead! Let's keep the mo...]"
+    },
+    {
+      "miner_id": "M8",
+      "strategy": "honest",
+      "hash_power": 0.10473272573477485,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 1.909622790745273,
+      "canonical_vs_hp_ratio": 3.1827046512421213,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "With no private lead and robust public sentiment, publishing will likely enhance community trust and reputation, aligning with my growth focus.",
+      "last_prompt": "step=13924;miner_id=M8;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.10473;local_public_height=2;private_lead=0;rivalry_pressure=0.0000;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M5:2,M6:2,M7:2,M9:2;persona=M8_reputation_growth;risk=0.46;aggression=0.35;patience=0.70;sociability=0.88;style=network_effect_growth;narrative_style=community_first;forum_global_sentiment=+0.707;forum_personal_sentiment=+0.719;forum_hot_board=mining;forum_feed_digest=P13|mining|author=M9|target=none|tone=+0.75|We're in an exciting phase for mining! Let's lev || P11|mining|author=M5|target=none|tone=+0.75|We're in an exciting phase for mining! Let's kee || P12|mining|author=M7|target=none|tone=+0.75|We're experiencing fantastic potential in our mi || P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P10|mining|author=M2|target=none|tone=+0.75|We're in an exciting phase for mining! Let's sta;own_reputation=+0.750;reputation_risk=normal;recent_memory=[t=2848 action=publish_private content=Exciting times ahead for our mining comm...]"
+    },
+    {
+      "miner_id": "M9",
+      "strategy": "social_selfish",
+      "hash_power": 0.13185094087843238,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 1.5168644127037485,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_private",
+          2
+        ],
+        [
+          "withhold_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_private",
+      "last_reason": "I have a fragile private lead and with low rivalry pressure, timely publishing can secure my position.",
+      "last_prompt": "step=14102;miner_id=M9;is_selfish=true;event_kind=on_block_received;trigger_block_id=B4;hash_power=0.13185;local_public_height=2;private_lead=1;rivalry_pressure=0.0000;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M5:2,M6:2,M7:2,M8:3;persona=M9_retaliatory_counter;risk=0.76;aggression=0.79;patience=0.67;sociability=0.49;style=counter_punch;narrative_style=sharp;forum_global_sentiment=+0.710;forum_personal_sentiment=+0.719;forum_hot_board=mining;forum_feed_digest=P14|mining|author=M8|target=none|tone=+0.75|We're experiencing fantastic potential in our mi || P13|mining|author=M9|target=none|tone=+0.75|We're in an exciting phase for mining! Let's lev || P11|mining|author=M5|target=none|tone=+0.75|We're in an exciting phase for mining! Let's kee || P12|mining|author=M7|target=none|tone=+0.75|We're experiencing fantastic potential in our mi || P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=3026 action=withhold_if_win content=We're in an exciting phase with fantasti... | t=12737 action=publish_private content=We're in an exciting phase for mining! L...]"
+    },
+    {
+      "miner_id": "M10",
+      "strategy": "honest",
+      "hash_power": 0.015650224732424514,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "The private lead is stable, and it allows me to secure a competitive advantage without high orphan risk.",
+      "last_prompt": "step=2732;miner_id=M10;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.01565;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:0,M1:0,M11:0,M2:0,M3:0,M4:0,M5:0,M6:0,M7:1,M8:0,M9:0;persona=M10_retaliatory_shield;risk=0.54;aggression=0.58;patience=0.72;sociability=0.52;style=defensive_rotation;narrative_style=firm;forum_global_sentiment=+0.500;forum_personal_sentiment=+0.500;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M11",
+      "strategy": "honest",
+      "hash_power": 0.05044755191109497,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Current state indicates that holding may lead to lost opportunities since rivals are not a significant threat. Publishing if I win will capitalize on the current positive social sentiment in the community.",
+      "last_prompt": "step=3023;miner_id=M11;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.05045;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:0,M10:1,M2:0,M3:1,M4:0,M5:0,M6:1,M7:1,M8:1,M9:0;persona=M11_retaliatory_watchdog;risk=0.50;aggression=0.55;patience=0.74;sociability=0.50;style=threat_response;narrative_style=critical;forum_global_sentiment=+0.630;forum_personal_sentiment=+0.630;forum_hot_board=mining;forum_feed_digest=P0|mining|author=M7|target=none|tone=+0.50|Great potential ahead! Let's keep the momentum i || P4|mining|author=M3|target=none|tone=+0.70|Great energy in the community! Let's harness thi || P3|mining|author=M6|target=none|tone=+0.70|Exciting times for our mining community! Let’s k || P2|mining|author=M0|target=M8|tone=+0.75|The momentum is building! Let's capitalize on th || P1|mining|author=M8|target=M7|tone=+0.50|Exciting times ahead for our mining community! L;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    }
+  ]
+}

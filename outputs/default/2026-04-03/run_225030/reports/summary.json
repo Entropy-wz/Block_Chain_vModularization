@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-04-03T22:50:30",
+  "config": {
+    "total_steps": 30,
+    "random_seed": 11,
+    "num_miners": 4,
+    "num_full_nodes": 6,
+    "edge_probability": 0.24,
+    "topology_type": "core_periphery",
+    "topology_ba_m": 3,
+    "topology_ws_k": 4,
+    "topology_ws_beta": 0.1,
+    "topology_core_ratio": 0.05,
+    "topology_core_edge_prob": 0.8,
+    "min_latency": 1.0,
+    "max_latency": 5.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.05,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": false,
+    "enable_attack_jamming": false,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 5
+  },
+  "headline_metrics": {
+    "total_blocks": 2,
+    "canonical_height": 0,
+    "canonical_head_id": "B0",
+    "orphan_blocks": 1,
+    "orphan_ratio": 0.5,
+    "fork_events": 0,
+    "jam_events": 0,
+    "network_efficiency": 4.853985957071159,
+    "forum_post_count": 0,
+    "forum_hottest_board": "none"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 0
+    },
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 0
+    },
+    {
+      "miner_id": "M3",
+      "discovered_blocks": 0
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 0.0,
+    "M1": 0.0,
+    "M2": 1.0
+  },
+  "final_reputation": {},
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.18833354774813327,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 1.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 5.309728468224598,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_private",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_private",
+      "last_reason": "With no rivalry pressure and a strong private lead, immediate publishing maximizes my expected reward and prevents potential orphan risks.",
+      "last_prompt": "step=695;miner_id=M0;is_selfish=true;event_kind=on_block_mined;trigger_block_id=;hash_power=0.18833;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M1:0,M2:0,M3:0;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.23304306877717765,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [],
+      "last_raw_action": "n/a",
+      "last_effective_action": "n/a",
+      "last_reason": "",
+      "last_prompt": ""
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.3847650867620066,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [],
+      "last_raw_action": "n/a",
+      "last_effective_action": "n/a",
+      "last_reason": "",
+      "last_prompt": ""
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.19385829671268254,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [],
+      "last_raw_action": "n/a",
+      "last_effective_action": "n/a",
+      "last_reason": "",
+      "last_prompt": ""
+    }
+  ]
+}

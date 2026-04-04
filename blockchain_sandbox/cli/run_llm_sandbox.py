@@ -100,6 +100,11 @@ def main() -> None:
         f"LLM ready | model={llm_cfg.model} | base_url={llm_cfg.base_url} | "
         f"use_chat={llm_cfg.use_chat_completions} | key={masked_key}",
     )
+    llm_max_workers = os.getenv("SANDBOX_LLM_MAX_WORKERS")
+    if llm_max_workers:
+        import dataclasses
+        llm_cfg = dataclasses.replace(llm_cfg, max_concurrent_requests=int(llm_max_workers))
+
     log("CONFIG", f"loading agent profile file: {agent_profile_path}")
 
     do_preflight = os.getenv("SANDBOX_PREFLIGHT_LLM", "1").strip().lower() in {"1", "true"}
@@ -125,6 +130,12 @@ def main() -> None:
         num_miners=int(os.getenv("SANDBOX_NUM_MINERS", "12")),
         num_full_nodes=int(os.getenv("SANDBOX_NUM_FULL_NODES", "24")),
         edge_probability=float(os.getenv("SANDBOX_EDGE_PROB", "0.24")),
+        topology_type=os.getenv("SANDBOX_TOPOLOGY_TYPE", "random"),
+        topology_ba_m=int(os.getenv("SANDBOX_TOPOLOGY_BA_M", "3")),
+        topology_ws_k=int(os.getenv("SANDBOX_TOPOLOGY_WS_K", "4")),
+        topology_ws_beta=float(os.getenv("SANDBOX_TOPOLOGY_WS_BETA", "0.1")),
+        topology_core_ratio=float(os.getenv("SANDBOX_TOPOLOGY_CORE_RATIO", "0.05")),
+        topology_core_edge_prob=float(os.getenv("SANDBOX_TOPOLOGY_CORE_EDGE_PROB", "0.8")),
         min_latency=float(os.getenv("SANDBOX_MIN_LATENCY", "1.0")),
         max_latency=float(os.getenv("SANDBOX_MAX_LATENCY", "5.0")),
         min_reliability=float(os.getenv("SANDBOX_MIN_RELIABILITY", "0.9")),
@@ -154,7 +165,7 @@ def main() -> None:
             ("Full Node Count", str(sim_cfg.num_full_nodes)),
             ("Forum Module", "Enabled" if sim_cfg.enable_forum else "Disabled"),
             ("Tokenomics Module", "Enabled" if enable_tokenomics else "Disabled"),
-            ("Edge Probability", f"{sim_cfg.edge_probability:.3f}"),
+            ("Topology", f"{sim_cfg.topology_type} (BA m={sim_cfg.topology_ba_m})" if sim_cfg.topology_type == "barabasi_albert" else f"{sim_cfg.topology_type} (k={getattr(sim_cfg, 'topology_ws_k', 4)}, beta={getattr(sim_cfg, 'topology_ws_beta', 0.1)})" if sim_cfg.topology_type == "watts_strogatz" else f"{sim_cfg.topology_type} (core_ratio={getattr(sim_cfg, 'topology_core_ratio', 0.05)})" if sim_cfg.topology_type == "core_periphery" else f"random (p={sim_cfg.edge_probability:.3f})"),
             ("Latency Range", f"{sim_cfg.min_latency:.2f}~{sim_cfg.max_latency:.2f}"),
             ("Reliability", f"{sim_cfg.min_reliability:.2f}~{sim_cfg.max_reliability:.2f}"),
             ("Block Discovery P", f"{sim_cfg.block_discovery_chance:.3f}"),

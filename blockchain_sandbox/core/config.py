@@ -11,6 +11,12 @@ class SimulationConfig:
 
     # Probability for directed edge creation in random graph.
     edge_probability: float = 0.25
+    topology_type: str = "random"  # "random", "barabasi_albert", "watts_strogatz", "core_periphery"
+    topology_ba_m: int = 3
+    topology_ws_k: int = 4
+    topology_ws_beta: float = 0.1
+    topology_core_ratio: float = 0.05
+    topology_core_edge_prob: float = 0.8
     min_latency: float = 1.0
     max_latency: float = 4.0
     min_reliability: float = 0.92
@@ -22,6 +28,10 @@ class SimulationConfig:
 
     # Controls protocol behavior.
     max_hops_for_propagation: int = 4
+    
+    # Prune parameters
+    prune_interval_steps: int = 50
+    prune_max_depth: int = 15
 
 
 @dataclass(frozen=True)
@@ -36,6 +46,9 @@ class LLMConfig:
     api_key: str = ""
     base_url: str = ""
     use_chat_completions: bool = False
+    max_concurrent_requests: int = 5
+    decision_cooldown_steps: int = 10
+    force_llm_on_fork: bool = True
 
 
 @dataclass(frozen=True)
@@ -47,6 +60,12 @@ class AgenticSimulationConfig:
     num_full_nodes: int = 20
 
     edge_probability: float = 0.22
+    topology_type: str = "random"  # "random", "barabasi_albert", "watts_strogatz", "core_periphery"
+    topology_ba_m: int = 3
+    topology_ws_k: int = 4
+    topology_ws_beta: float = 0.1
+    topology_core_ratio: float = 0.05
+    topology_core_edge_prob: float = 0.8
     min_latency: float = 1.0
     max_latency: float = 5.0
     min_reliability: float = 0.9
@@ -78,3 +97,7 @@ class AgenticSimulationConfig:
     default_private_release_threshold: int = 2
     max_steps_of_jam_effect: int = 6
     snapshot_interval_blocks: int = 10
+    
+    # Prune parameters
+    prune_interval_steps: int = 50
+    prune_max_depth: int = 15

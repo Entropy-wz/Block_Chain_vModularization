@@ -34,7 +34,7 @@ class MinerAgent:
     memory: List[str] = field(default_factory=list)
     trace_callback: Optional[Callable[[Dict[str, object]], None]] = None
 
-    def decide(self, obs: AgentObservation) -> LLMDecision:
+    def _build_prompts(self, obs: AgentObservation) -> tuple[str, str]:
         system_prompt = (
             "You are a strategic Bitcoin mining agent in a simulation sandbox. "
             "Primary objective: maximize your expected canonical-chain reward share over time, "
@@ -51,7 +51,6 @@ class MinerAgent:
             if mp:
                 system_prompt += f"{mp}\n\n"
                 
-        # Build strict JSON format based on core + module expected keys
         expected_keys = {
             "action": "string (publish_if_win, withhold_if_win, publish_private, rebroadcast, hold, jam_target)",
             "reason": "string",
@@ -69,7 +68,6 @@ class MinerAgent:
 
         compact_heads = ",".join(f"{k}:{v}" for k, v in sorted(obs.known_competitor_heads.items()))
 
-        # Build recent memory context (last 3 items)
         recent = self.memory[-3:] if self.memory else ["none"]
         recent_memory_str = " | ".join(recent)
 
@@ -92,7 +90,9 @@ class MinerAgent:
                 user_prompt += f"{k}={v};"
                 
         user_prompt += f"recent_memory=[{recent_memory_str}]"
-        decision = self.llm.decide(system_prompt, user_prompt)
+        return system_prompt, user_prompt
+
+    def _post_process_decision(self, obs: AgentObservation, decision: LLMDecision, system_prompt: str, user_prompt: str) -> None:
         if self.trace_callback is not None:
             trace_payload = {
                 "step": obs.step,
@@ -105,7 +105,6 @@ class MinerAgent:
                     "release_private_blocks": decision.release_private_blocks,
                 }
             }
-            # Also capture any dynamically added keys from modules
             for key in self.modules_decision_keys:
                 trace_payload["decision"][key] = getattr(decision, key, None)
                 
@@ -119,4 +118,15 @@ class MinerAgent:
         self.memory.append(f"t={obs.step} action={decision.action} content={short_content}")
         if len(self.memory) > 60:
             self.memory = self.memory[-60:]
+
+    def decide(self, obs: AgentObservation) -> LLMDecision:
+        system_prompt, user_prompt = self._build_prompts(obs)
+        decision = self.llm.decide(system_prompt, user_prompt)
+        self._post_process_decision(obs, decision, system_prompt, user_prompt)
+        return decision
+
+    async def decide_async(self, obs: AgentObservation) -> LLMDecision:
+        system_prompt, user_prompt = self._build_prompts(obs)
+        decision = await self.llm.decide_async(system_prompt, user_prompt)
+        self._post_process_decision(obs, decision, system_prompt, user_prompt)
         return decision

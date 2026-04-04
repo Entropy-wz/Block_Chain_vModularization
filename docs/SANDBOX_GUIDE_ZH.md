@@ -14,10 +14,12 @@ Blockchain Sandbox 是一个通过 **离散事件仿真（Discrete Event Simulat
 ### 2.1 底层引擎架构 (DES + 图论)
 
 - **离散事件循环**: `agentic_simulation.py` 通过优先队列管理时间线。核心事件是 `mine`（泊松分布生成的出块事件）和 `receive`（区块通过图结构传播的到达事件）。
-- **图网络拓扑**: `graph_model.py` 维护了一个有向图。网络结构包含 `latency`（延迟）和 `reliability`（可靠性/丢包率）。网络攻击（Jamming）会直接修改局部图边权重。
+- **图网络拓扑**: `graph_model.py` 维护了一个有向图。网络结构包含 `latency`（延迟）和 `reliability`（可靠性/丢包率）。网络攻击（Jamming）会直接修改局部图边权重。拓扑生成现已解耦到基于 Registry 机制的 `TopologyGenerator`，原生支持 `random`、`barabasi_albert` (无标度)、`watts_strogatz` (小世界) 与 `core_periphery` (类比特币核心边缘网络)。
+- **规模分级缓存机制**: `GraphAnalyticsCache`。网络节点较多时最短路径（例如计算 gamma）耗时极大，我们针对拓扑大小提供了全量矩阵预计算、懒加载缓存和 Landmark 采样近似计算的自适应方案，防止计算超时。
 
 ### 2.2 LLM Agent 决策机制
 
+- **短路路由 (DecisionRouter)**: 为了极大地降低 API Token 费用，并在合理的时间内跑完数百个区块。新架构引入了 `DecisionRouter`（位于 `llm/router.py`）。所有由网络接收 `receive` 的区块事件，将首先交给路由器。只有在**触发关键判定（发现分叉、声誉恶化、冷却期结束、私链激活）**时，才会挂载 LLM 上下文并交给调度器，否则立即走短路算法执行兜底逻辑（对于诚实节点是 `rebroadcast` 检查，对于未激活私链的自私矿工是 `hold`）。
 - 引擎为每一个矿工包装了 `MinerAgent` (`agent.py`)。它通过整合当前网络状态（区块高度、竞争者头部、私有链优势）、自身矿工人格（`MinerPersona`，风险/攻击性/耐心）、以及各插件系统（Modules）提供的增强上下文（如论坛情绪），向 LLM 请求下一步的行动。
 - 允许 LLM 自定义返回扩展字段（如 `jam_steps`, `social_action` 等），引擎利用一套宽容的反序列化器 (`llm_backend.py`) 抓取所有这些指令，并封装成 `LLMDecision` 触发相应的策略和事件。
 - 如果 LLM 断连、拒绝回答，引擎会使用算法 `fallback` 保证仿真正常继续。
@@ -66,6 +68,12 @@ Blockchain Sandbox 是一个通过 **离散事件仿真（Discrete Event Simulat
 - `SANDBOX_TOTAL_STEPS`: 仿真总逻辑时间步长 (默认: 320)。
 - `SANDBOX_NUM_MINERS`: 矿工数量。
 - `SANDBOX_NUM_FULL_NODES`: 不参与挖矿的纯验证全节点数。
+- `SANDBOX_TOPOLOGY_TYPE`: 网络拓扑模型类型，支持 `random`、`barabasi_albert` (BA 无标度网络)、`watts_strogatz` (小世界网络) 或 `core_periphery` (核心边缘网络)。
+- `SANDBOX_TOPOLOGY_BA_M`: 若类型为 BA，本参数指代每个新节点接入时连接的已有节点数 (默认 3)。
+- `SANDBOX_TOPOLOGY_WS_K`: 若类型为 WS，基础环的邻居数量 (默认 4)。
+- `SANDBOX_TOPOLOGY_WS_BETA`: 若类型为 WS，重连概率，产生捷径 (默认 0.1)。
+- `SANDBOX_TOPOLOGY_CORE_RATIO`: 若类型为 core_periphery，核心节点占比 (默认 0.05)。
+- `SANDBOX_TOPOLOGY_CORE_EDGE_PROB`: 若类型为 core_periphery，核心节点的内部连通率 (默认 0.8)。
 - `SANDBOX_EDGE_PROB`: 生成随机有向图的边概率 (0~1)。越低网络越稀疏，孤块率越高。
 - `SANDBOX_MIN_LATENCY` / `SANDBOX_MAX_LATENCY`: 边延迟。
 - `SANDBOX_MIN_RELIABILITY` / `SANDBOX_MAX_RELIABILITY`: 边可靠性 (0~1)。

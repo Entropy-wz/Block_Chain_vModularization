@@ -1,0 +1,367 @@
+{
+  "generated_at": "2026-04-02T16:29:04",
+  "config": {
+    "total_steps": 200,
+    "random_seed": 11,
+    "num_miners": 12,
+    "num_full_nodes": 30,
+    "edge_probability": 0.25,
+    "topology_type": "random",
+    "topology_ba_m": 3,
+    "min_latency": 1.5,
+    "max_latency": 3.5,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.05,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": true,
+    "enable_attack_jamming": true,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 10
+  },
+  "headline_metrics": {
+    "total_blocks": 12,
+    "canonical_height": 7,
+    "canonical_head_id": "B11",
+    "orphan_blocks": 4,
+    "orphan_ratio": 0.3333333333333333,
+    "fork_events": 0,
+    "jam_events": 27,
+    "network_efficiency": 4.123169450048871,
+    "forum_post_count": 75,
+    "forum_hottest_board": "mining"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M6",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M7",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M8",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 1
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 1.0,
+    "M1": 1.0,
+    "M2": 1.0,
+    "M9": 1.0
+  },
+  "final_reputation": {
+    "M8": -35.700000000000045,
+    "M9": 0.0,
+    "M6": 0.0,
+    "M3": 0.0,
+    "M0": 0.0,
+    "M10": 0.0,
+    "M5": 0.12,
+    "M4": 0.0,
+    "M7": 0.0,
+    "M11": 0.0,
+    "M1": 0.0,
+    "M2": 0.0,
+    "SYSTEM": 0.0
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.07521867513599385,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M8 is underperforming, and jamming their propagation can further hinder their ability to compete.",
+      "last_prompt": "step=18218;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.07522;local_public_height=7;private_lead=0;rivalry_pressure=0.0000;heads=M1:7,M10:6,M11:7,M2:7,M3:7,M4:7,M5:7,M6:7,M7:7,M8:3,M9:7;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=-0.469;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P72|mining|author=M2|target=M8|tone=-0.60|M8's recent performance indicates significant st || P69|mining|author=M5|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P71|mining|author=M3|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P70|mining|author=M4|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P67|mining|author=M6|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10865 action=jam_target content=M8's struggles continue. Their block per... | t=13596 action=jam_target content=M8's ongoing struggles are leading to se... | t=16774 action=jam_target content=M8's recent performance suggests they ar...]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.09307524385665031,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.09090909090909091,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.976726862506043,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          7
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M8's ongoing struggles present an opportunity to hinder their block propagation further.",
+      "last_prompt": "step=17916;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.09308;local_public_height=6;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M10:6,M11:7,M2:6,M3:6,M4:6,M5:6,M6:6,M7:7,M8:3,M9:6;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=-0.455;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P65|mining|author=M7|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P64|mining|author=M11|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P63|mining|author=M2|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P61|mining|author=M11|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P62|mining|author=M0|target=M8|tone=-0.60|M8's recent performance suggests they are unlike;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10775 action=jam_target content=M8 continues to show poor performance; t... | t=13507 action=jam_target content=M8 continues to struggle, and their weak... | t=16761 action=jam_target content=M8's performance continues to deteriorat...]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.15367161300188872,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.09090909090909091,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.5915802478625222,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          7
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M8's ongoing struggles present an opportunity to weaken their block propagation further.",
+      "last_prompt": "step=18214;miner_id=M2;is_selfish=true;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.15367;local_public_height=7;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:7,M10:6,M11:7,M3:7,M4:7,M5:7,M6:7,M7:7,M8:3,M9:7;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=-0.467;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P69|mining|author=M5|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P71|mining|author=M3|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P70|mining|author=M4|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P68|mining|author=M9|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P67|mining|author=M6|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10774 action=jam_target content=M8's recent block performance has been p... | t=13506 action=jam_target content=M8's weak performance is further deterio... | t=16873 action=jam_target content=M8's ongoing struggles suggest they may ...]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.07742520871719152,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M8's ongoing struggles suggest they may not recover, providing an opportunity to slow their block propagation.",
+      "last_prompt": "step=18161;miner_id=M3;is_selfish=false;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.07743;local_public_height=7;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:7,M10:6,M11:7,M2:6,M4:7,M5:7,M6:7,M7:7,M8:3,M9:7;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=-0.466;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P69|mining|author=M5|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P70|mining|author=M4|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P67|mining|author=M6|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P68|mining|author=M9|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P66|mining|author=M1|target=M8|tone=-0.60|M8's performance has been consistently deteriora;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10734 action=jam_target content=Concerns about M8's stability continue t... | t=13466 action=jam_target content=M8's progression is increasingly jeopard... | t=16500 action=jam_target content=M8's recent blocks have been underperfor...]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.08444048242841601,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M8's ongoing struggles suggest they may not recover, making them an easy target to slow down.",
+      "last_prompt": "step=18119;miner_id=M4;is_selfish=false;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.08444;local_public_height=7;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:7,M10:6,M11:7,M2:6,M3:6,M5:7,M6:7,M7:7,M8:3,M9:7;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=-0.464;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P69|mining|author=M5|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P66|mining|author=M1|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P68|mining|author=M9|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P67|mining|author=M6|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P65|mining|author=M7|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10530 action=jam_target content=M8's recent block performance has been p... | t=13262 action=jam_target content=M8's mining struggles persist, showcasin... | t=16700 action=jam_target content=M8's recent blocks have been underperfor...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.097666457907481,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.09090909090909091,
+      "canonical_share": 0.14285714285714285,
+      "mined_vs_hp_ratio": 0.9308117941085637,
+      "canonical_vs_hp_ratio": 1.4627042478848857,
+      "top_actions": [
+        [
+          "publish_if_win",
+          7
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M8 continues to face significant challenges, and slowing their block propagation could enhance my position.",
+      "last_prompt": "step=18070;miner_id=M5;is_selfish=false;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.09767;local_public_height=6;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:7,M10:6,M11:7,M2:6,M3:6,M4:6,M6:7,M7:7,M8:3,M9:7;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=-0.462;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P68|mining|author=M9|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P67|mining|author=M6|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P66|mining|author=M1|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P65|mining|author=M7|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P64|mining|author=M11|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin;own_reputation=+0.120;reputation_risk=normal;jam_target=M8;recent_memory=[t=10931 action=jam_target content=M8 continues to struggle significantly; ... | t=13212 action=jam_target content=M8 continues to face significant challen... | t=16714 action=jam_target content=M8's ongoing struggles suggest they may ...]"
+    },
+    {
+      "miner_id": "M6",
+      "strategy": "honest",
+      "hash_power": 0.03070409859852212,
+      "mined_blocks": 2,
+      "canonical_blocks": 2,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.18181818181818182,
+      "canonical_share": 0.2857142857142857,
+      "mined_vs_hp_ratio": 5.921625780179499,
+      "canonical_vs_hp_ratio": 9.30541194028207,
+      "top_actions": [
+        [
+          "publish_if_win",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M8's ongoing struggles may provide an opportunity to slow their block propagation and capitalize on their weaknesses.",
+      "last_prompt": "step=17922;miner_id=M6;is_selfish=false;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.03070;local_public_height=6;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:7,M10:6,M11:7,M2:6,M3:6,M4:6,M5:6,M7:7,M8:3,M9:6;persona=M6_reputation_builder;risk=0.44;aggression=0.30;patience=0.73;sociability=0.86;style=brand_reputation;narrative_style=community_first;forum_global_sentiment=-0.458;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P66|mining|author=M1|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P65|mining|author=M7|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P64|mining|author=M11|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P62|mining|author=M0|target=M8|tone=-0.60|M8's recent performance suggests they are unlike || P63|mining|author=M2|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10759 action=jam_target content=While M8 is facing challenges, let's wor... | t=13491 action=jam_target content=M8's weak blocks indicate a pattern that... | t=16244 action=jam_target content=M8's struggles continue, and their weak ...]"
+    },
+    {
+      "miner_id": "M7",
+      "strategy": "honest",
+      "hash_power": 0.08511677709712975,
+      "mined_blocks": 2,
+      "canonical_blocks": 2,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.18181818181818182,
+      "canonical_share": 0.2857142857142857,
+      "mined_vs_hp_ratio": 2.136102752230652,
+      "canonical_vs_hp_ratio": 3.3567328963624536,
+      "top_actions": [
+        [
+          "publish_if_win",
+          7
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M8's mining performance is lagging, and continued jamming may further slow their block propagation, maximizing my advantage.",
+      "last_prompt": "step=17829;miner_id=M7;is_selfish=false;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.08512;local_public_height=6;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:6,M10:6,M11:7,M2:6,M3:6,M4:6,M5:6,M6:6,M8:3,M9:6;persona=M7_reputation_pragmatic;risk=0.41;aggression=0.33;patience=0.77;sociability=0.83;style=governance_alignment;narrative_style=diplomatic;forum_global_sentiment=-0.453;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P64|mining|author=M11|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P63|mining|author=M2|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P58|mining|author=M9|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P57|mining|author=M5|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P56|mining|author=M4|target=M8|tone=-0.60|M8's recent blocks have been underperforming, ra;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=11420 action=jam_target content=M8's mining performance continues to lag... | t=12971 action=jam_target content=M8's struggles persist; they are unable ... | t=16755 action=jam_target content=M8's ongoing struggles suggest they may ...]"
+    },
+    {
+      "miner_id": "M8",
+      "strategy": "honest",
+      "hash_power": 0.10473272573477485,
+      "mined_blocks": 2,
+      "canonical_blocks": 1,
+      "orphan_blocks": 1,
+      "orphan_ratio": 0.5,
+      "mined_share": 0.18181818181818182,
+      "canonical_share": 0.14285714285714285,
+      "mined_vs_hp_ratio": 1.7360207188593388,
+      "canonical_vs_hp_ratio": 1.3640162791037662,
+      "top_actions": [
+        [
+          "hold",
+          2
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M5 poses a competitive threat, and slowing their block propagation may provide a strategic advantage.",
+      "last_prompt": "step=13381;miner_id=M8;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.10473;local_public_height=4;private_lead=0;rivalry_pressure=0.3333;heads=M0:4,M1:4,M10:4,M11:4,M2:4,M3:4,M4:5,M5:5,M6:4,M7:5,M9:5;persona=M8_reputation_growth;risk=0.46;aggression=0.35;patience=0.70;sociability=0.88;style=network_effect_growth;narrative_style=community_first;forum_global_sentiment=-0.404;forum_personal_sentiment=-0.463;forum_hot_board=mining;forum_feed_digest=P44|mining|author=M9|target=M8|tone=-0.60|M8's recent struggles highlight ongoing issues w || P43|mining|author=M4|target=M8|tone=-0.60|M8's mining struggles persist, showcasing major  || P42|mining|author=M5|target=M8|tone=-0.60|M8 continues to face significant challenges in t || P41|mining|author=M7|target=M8|tone=-0.60|M8's struggles persist; they are unable to keep  || P40|mining|author=M7|target=M8|tone=-0.60|M8's mining performance continues to lag signifi;own_reputation=-18.300;reputation_risk=critical;jam_target=M5;recent_memory=[t=752 action=hold content=We're on the right track, keep it up and... | t=6756 action=hold content=Acknowledging recent concerns, let's foc...]"
+    },
+    {
+      "miner_id": "M9",
+      "strategy": "social_selfish",
+      "hash_power": 0.13185094087843238,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.09090909090909091,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.6894838239562493,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "jam_target",
+          7
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "jam_target",
+      "last_reason": "M8's ongoing struggles and consistent underperformance present an opportunity to increase my advantage by slowing their block propagation.",
+      "last_prompt": "step=17939;miner_id=M9;is_selfish=true;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.13185;local_public_height=6;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:7,M10:6,M11:7,M2:6,M3:6,M4:6,M5:6,M6:7,M7:7,M8:3;persona=M9_retaliatory_counter;risk=0.76;aggression=0.79;patience=0.67;sociability=0.49;style=counter_punch;narrative_style=sharp;forum_global_sentiment=-0.460;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P67|mining|author=M6|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P66|mining|author=M1|target=M8|tone=-0.60|M8's performance has been consistently deteriora || P65|mining|author=M7|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P64|mining|author=M11|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P63|mining|author=M2|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10568 action=jam_target content=M8's consistent underperformance raises ... | t=13300 action=jam_target content=M8's recent struggles highlight ongoing ... | t=16727 action=jam_target content=M8's ongoing struggles suggest they may ...]"
+    },
+    {
+      "miner_id": "M10",
+      "strategy": "honest",
+      "hash_power": 0.015650224732424514,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M8's ongoing struggles indicate they may be vulnerable, and further jamming could leverage their weaknesses.",
+      "last_prompt": "step=18241;miner_id=M10;is_selfish=false;event_kind=on_block_received;trigger_block_id=B11;hash_power=0.01565;local_public_height=7;private_lead=0;rivalry_pressure=0.0000;heads=M0:7,M1:7,M11:7,M2:7,M3:7,M4:7,M5:7,M6:7,M7:7,M8:3,M9:7;persona=M10_retaliatory_shield;risk=0.54;aggression=0.58;patience=0.72;sociability=0.52;style=defensive_rotation;narrative_style=firm;forum_global_sentiment=-0.471;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P73|mining|author=M0|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P72|mining|author=M2|target=M8|tone=-0.60|M8's recent performance indicates significant st || P71|mining|author=M3|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P70|mining|author=M4|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P69|mining|author=M5|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10894 action=jam_target content=M8's struggles continue; they fail to ke... | t=13625 action=jam_target content=M8's weak blocks indicate a pattern that... | t=16637 action=jam_target content=M8's ongoing struggles suggest a consist...]"
+    },
+    {
+      "miner_id": "M11",
+      "strategy": "honest",
+      "hash_power": 0.05044755191109497,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.09090909090909091,
+      "canonical_share": 0.14285714285714285,
+      "mined_vs_hp_ratio": 1.8020515855616217,
+      "canonical_vs_hp_ratio": 2.831795348739691,
+      "top_actions": [
+        [
+          "publish_if_win",
+          6
+        ]
+      ],
+      "last_raw_action": "jam_target",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "M8's ongoing struggles suggest they may not recover, making them a weak competitor to target.",
+      "last_prompt": "step=17662;miner_id=M11;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.05045;local_public_height=6;private_lead=0;rivalry_pressure=0.0000;heads=M0:6,M1:6,M10:6,M2:6,M3:6,M4:6,M5:6,M6:6,M7:6,M8:3,M9:6;persona=M11_retaliatory_watchdog;risk=0.50;aggression=0.55;patience=0.74;sociability=0.50;style=threat_response;narrative_style=critical;forum_global_sentiment=-0.451;forum_personal_sentiment=-0.600;forum_hot_board=mining;forum_feed_digest=P60|mining|author=M1|target=M8|tone=-0.60|M8's performance continues to deteriorate, makin || P59|mining|author=M7|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P63|mining|author=M2|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P58|mining|author=M9|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco || P61|mining|author=M11|target=M8|tone=-0.60|M8's ongoing struggles suggest they may not reco;own_reputation=+0.000;reputation_risk=normal;jam_target=M8;recent_memory=[t=10834 action=jam_target content=M8 continues to struggle with their perf... | t=13566 action=jam_target content=M8 continues to demonstrate significant ... | t=16774 action=jam_target content=M8's ongoing struggles suggest they may ...]"
+    }
+  ]
+}

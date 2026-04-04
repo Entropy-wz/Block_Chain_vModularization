@@ -1,0 +1,2 @@
+step,mined_block_count,window_blocks,window_orphan_count,canonical_head_id,canonical_coverage,max_fork_degree,longest_branch_len,branch_count,forum_window_posts,forum_window_avg_tone,forum_hot_board,forum_top_target
+19932,5,5,2,B4,0.600000,2,4,2,13,0.770769,governance,none

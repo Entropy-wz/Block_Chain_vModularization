@@ -1,0 +1,13 @@
+{
+  "total_requests": 18,
+  "successful_requests": 18,
+  "failed_requests": 0,
+  "timeout_requests": 0,
+  "rejected_requests": 0,
+  "retried_requests": 0,
+  "queue_size": 0,
+  "max_queue_size": 256,
+  "max_observed_queue_size": 1,
+  "avg_wait_time_sec": 5.4283333339652825e-05,
+  "avg_processing_time_sec": 3.2665971777777827
+}

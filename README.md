@@ -20,9 +20,11 @@
 ### 🤖 LLM 驱动的智能矿工
 - 每个节点背后由独立的 LLM Prompt 驱动，具备独特的阵营分配（诚实、自私）与性格特征（激进、保守、声誉导向等）。
 - 矿工可以感知当前网络的胜率、私有链的长度、竞争对手的压力，自主决定是 **“立刻广播 (Publish)”**、**“囤块隐匿 (Withhold)”** 还是 **“定向物理打击 (Jam Target)”**。
+- **(New!) 智能路由与短路拦截机制 (DecisionRouter)**：内建智能冷却与短路模块。当处于无事发生的平稳期或落后无竞争时，自动进行 Fallback 兜底响应；而在发生分叉、声誉受损、受到网络攻击时立刻唤醒大模型。在保证沙盘复杂性的同时，降低至少 60% 的无意义 Token API 消耗与等待时间！
 
 ### 🌐 基于泊松分布的 DES P2P 网络
-- 高度可调的网络延迟（Latency）与拓扑边缘概率（Edge Probability）。
+- 高度可调的网络延迟（Latency）与拓扑连接算法 (支持 `Random`、`Barabasi-Albert`、`Watts-Strogatz` 小世界网络 及 `Core-Periphery` 核心边缘网络，支持模块化 Registry 扩展)。
+- **(New!) 规模分级缓存与批缓冲机制**：内建 `GraphAnalyticsCache` 以 O(1) 或 O(k) 时间复杂度应对千节点级别图分析；引擎内置 Hub 节点扩散的 $\delta t$ 微小偏移量分批，完美平滑 heapq 并发风暴。
 - 真实的自然孤块（Natural Orphans）模拟与传播冲突检测。
 
 ### 🗣️ 论坛舆论与社会动力学 (Tieba/Forum Module)
@@ -44,9 +46,9 @@
 blockchain_sandbox/
 ├── core/               # 核心层：离散事件引擎、图模型、基础实体 (Block/Node)
 ├── engine/             # 引擎层：事件调度、策略接口、沙盒主控循环
-├── llm/                # LLM 层：异步 API 网关、Prompt 模板、历史上下文管理
+├── llm/                # LLM 层：独立的异步调度器 (Scheduler)、API 网关、Prompt 模板
 ├── modules/            # 扩展模块：论坛(Forum)、治理(Governance)、攻击(Jamming)
-├── reporting/          # 分析报告层：数据持久化、JSONL日志导出、时序统计
+├── reporting/          # 分析报告层：数据持久化、调度性能指标、JSONL日志导出、时序统计
 ├── social/             # 社交动力学：(遗留支持/可与扩展模块组合)
 └── cli/                # 命令行入口
 configs/                # 配置文件 (LLM 密钥, Agent 人格设置)
@@ -127,12 +129,13 @@ python -m experiments.run_social_warfare
 
 ## 📊 结果分析与可视化
 
-引擎在运行结束后，会自动在 `outputs/` 生成极其丰富的实验数据包：
+引擎在运行结束后（包含自动资源 `cleanup` 的保障阶段结束时），会自动在 `outputs/` 生成极其丰富的实验数据包：
 
 1. `summary.json`：全量核心指标，包含算力与主链出块份额的相关性 `corr(hash_power, canonical_share)`。
 2. `blocks.jsonl` / `forum_posts.jsonl` / `jam_events.jsonl`：详细的追溯日志。
 3. `miner_details.csv`：各矿工孤块率、实际收益比例分析表。
-4. **区块树图 (PNG)**：直观展现主链与分叉孤块的树状演化结构。
+4. `scheduler_metrics.json`：LLM 调度器的并发性能与延迟统计。
+5. **区块树图 (PNG)**：直观展现主链与分叉孤块的树状演化结构。
 
 ![Tree Example Demo](https://via.placeholder.com/600x300?text=Block+Tree+Visualization+Demo) *(示意位)*
 

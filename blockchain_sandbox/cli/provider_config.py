@@ -22,6 +22,7 @@ def load_llm_config_from_yaml(path: str) -> LLMConfig:
     temperature = _to_float(data.get("temperature", "0.2"), 0.2)
     max_output_tokens = _to_int(data.get("max_output_tokens", "220"), 220)
     timeout_seconds = _to_int(data.get("timeout_seconds", "30"), 30)
+    max_concurrent = _to_int(data.get("max_concurrent_requests", "5"), 5)
 
     return LLMConfig(
         backend="compatible",
@@ -33,6 +34,7 @@ def load_llm_config_from_yaml(path: str) -> LLMConfig:
         api_key=api_key,
         base_url=base_url,
         use_chat_completions=use_chat,
+        max_concurrent_requests=max_concurrent,
     )
 
 

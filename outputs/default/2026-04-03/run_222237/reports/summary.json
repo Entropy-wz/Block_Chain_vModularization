@@ -1,0 +1,218 @@
+{
+  "generated_at": "2026-04-03T22:22:37",
+  "config": {
+    "total_steps": 120,
+    "random_seed": 11,
+    "num_miners": 6,
+    "num_full_nodes": 10,
+    "edge_probability": 0.24,
+    "topology_type": "random",
+    "topology_ba_m": 3,
+    "min_latency": 1.0,
+    "max_latency": 5.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.02,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": false,
+    "enable_attack_jamming": false,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 5
+  },
+  "headline_metrics": {
+    "total_blocks": 5,
+    "canonical_height": 3,
+    "canonical_head_id": "B3",
+    "orphan_blocks": 1,
+    "orphan_ratio": 0.2,
+    "fork_events": 0,
+    "jam_events": 0,
+    "network_efficiency": 5.46415547662522,
+    "forum_post_count": 0,
+    "forum_hottest_board": "none"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M2",
+      "discovered_blocks": 2
+    },
+    {
+      "miner_id": "M3",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 0
+    },
+    {
+      "miner_id": "M1",
+      "discovered_blocks": 0
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 0
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 0.5,
+    "M1": 0.0,
+    "M2": 0.3
+  },
+  "final_reputation": {},
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.12935335356880617,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "The private lead is nonexistent and there are no immediate threats from rivals. Given the aggressive persona, timely publication of any block received maximizes expected rewards, especially with high aggression and a focus on capitalizing on moments of opportunity.",
+      "last_prompt": "step=2431;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B2;hash_power=0.12935;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M1:0,M2:2,M3:0,M4:0,M5:0;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.16006124682899286,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "The private lead is zero and there is no rivalry pressure, allowing me to publish to secure rewards without risking orphaning. My aggressive and combative style favors seizing immediate opportunities.",
+      "last_prompt": "step=2736;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B2;hash_power=0.16006;local_public_height=2;private_lead=0;rivalry_pressure=0.0000;heads=M0:2,M2:2,M3:2,M4:0,M5:2;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.2642686600659098,
+      "mined_blocks": 2,
+      "canonical_blocks": 2,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.5,
+      "canonical_share": 0.6666666666666666,
+      "mined_vs_hp_ratio": 1.8920139825709854,
+      "canonical_vs_hp_ratio": 2.5226853100946474,
+      "top_actions": [
+        [
+          "publish_private",
+          2
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_private",
+      "last_reason": "Given my aggressive persona and the current low rivalry pressure, I will publish the private block to secure a victory without risking my lead. The return on investment for my aggressive strategy is maximized by making this move now.",
+      "last_prompt": "step=11365;miner_id=M2;is_selfish=true;event_kind=on_block_received;trigger_block_id=B3;hash_power=0.26427;local_public_height=3;private_lead=1;rivalry_pressure=0.0000;heads=M0:2,M1:2,M3:3,M4:3,M5:3;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;recent_memory=[t=1568 action=publish_private content=none | t=2247 action=publish_if_win content=none]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.13314792344090332,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.25,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 1.8776109573421969,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "hold",
+          2
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "Current rivalry pressure is low and maintaining cashflow stability aligns with my conservative strategy. There is no pressing need to act with a fragile private lead.",
+      "last_prompt": "step=11359;miner_id=M3;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.13315;local_public_height=3;private_lead=0;rivalry_pressure=0.1667;heads=M0:2,M1:2,M2:2,M4:3,M5:3;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;recent_memory=[t=2652 action=hold content=none]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.14521207079672052,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.25,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 1.7216199633291505,
+      "canonical_vs_hp_ratio": 2.295493284438867,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ],
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "Current conditions suggest a stable network with equal block height among competitors, making it prudent to wait for a more advantageous opportunity rather than engaging in immediate publishing which may not yield additional rewards.",
+      "last_prompt": "step=10703;miner_id=M4;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.14521;local_public_height=2;private_lead=0;rivalry_pressure=0.0000;heads=M0:2,M1:2,M2:2,M3:2,M5:2;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;recent_memory=[t=2830 action=publish_if_win content=none]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.16795674529866725,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "I have no private lead to protect, and the network seems stable. Publishing now strengthens my position without risk of orphaning.",
+      "last_prompt": "step=2599;miner_id=M5;is_selfish=false;event_kind=on_block_received;trigger_block_id=B2;hash_power=0.16796;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:2,M1:0,M2:2,M3:0,M4:0;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;recent_memory=[none]"
+    }
+  ]
+}

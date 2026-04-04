@@ -51,18 +51,24 @@ python -m experiments.run_honest_no_llm
 4. `SANDBOX_NUM_FULL_NODES`（默认：LLM=24，No-LLM=120）
 - 全节点数量
 
-5. `SANDBOX_EDGE_PROB`（默认：LLM=0.24，No-LLM=0.60）
-- 有向边生成概率
+5. `SANDBOX_TOPOLOGY_TYPE` (默认：`random`)
+- 网络拓扑生成算法。支持 `random` 与 `barabasi_albert` (无标度网络模型)。
 
-6. `SANDBOX_MIN_LATENCY`（默认：LLM=1.0，No-LLM=0.15）
-7. `SANDBOX_MAX_LATENCY`（默认：LLM=5.0，No-LLM=0.70）
+6. `SANDBOX_TOPOLOGY_BA_M` (默认：3)
+- Barabasi-Albert 网络的参数 m（每次添加新节点连入的边数）。仅在拓扑为 barabasi_albert 时生效。
+
+7. `SANDBOX_EDGE_PROB`（默认：LLM=0.24，No-LLM=0.60）
+- 随机有向边生成概率。仅在拓扑为 random 时生效。
+
+8. `SANDBOX_MIN_LATENCY`（默认：LLM=1.0，No-LLM=0.15）
+9. `SANDBOX_MAX_LATENCY`（默认：LLM=5.0，No-LLM=0.70）
 - 边传播延迟范围
 
-8. `SANDBOX_MIN_RELIABILITY`（默认：LLM=0.9，No-LLM=0.997）
-9. `SANDBOX_MAX_RELIABILITY`（默认：1.0）
+10. `SANDBOX_MIN_RELIABILITY`（默认：LLM=0.9，No-LLM=0.997）
+11. `SANDBOX_MAX_RELIABILITY`（默认：1.0）
 - 边可靠性范围
 
-10. `SANDBOX_BLOCK_DISCOVERY_CHANCE`（默认：LLM=0.02，No-LLM=0.02）
+12. `SANDBOX_BLOCK_DISCOVERY_CHANCE`（默认：LLM=0.02，No-LLM=0.02）
 - 泊松出块事件到达率 `lambda`。默认采用高延迟/低并发配置以降低自然孤块。
 
 11. `SANDBOX_MAX_HOPS`（默认：LLM=5，No-LLM=12）
@@ -81,6 +87,18 @@ python -m experiments.run_honest_no_llm
 
 1. `SANDBOX_LLM_CONFIG_FILE`（默认 `configs/llm_provider.yaml`）
 - LLM配置文件路径
+
+2. `LLM_MAX_CONCURRENT_REQUESTS`（在 `llm_provider.yaml` 或环境变量中设置，默认 5）
+- LLM 调度器并发请求数上限，控制并行访问 API 的速度。
+
+3. `LLM_TIMEOUT_SECONDS`（在 `llm_provider.yaml` 中设置，默认 30.0）
+- LLM 调度器单次请求超时时间。
+
+4. `decision_cooldown_steps`（在 `core/config.py` 中的 `LLMConfig` 中设置，默认 10）
+- （新）智能短路路由：在未触发强事件时，若连续 N 步没有请求 LLM，才会允许发送全局周期探测。减少空等时间调用，降低 Token 开销。
+
+5. `force_llm_on_fork`（默认 True）
+- （新）智能短路路由：强制开启发生等高或更高分叉事件时，不管是否在冷却期都唤醒大模型。
 
 2. `SANDBOX_AGENT_PROFILE_FILE`（默认 `configs/agent_profiles.toml`）
 - 矿工人格与阵营配置
@@ -231,6 +249,7 @@ python -m experiments.run_llm_sandbox
 - `reports/summary.json`: 全量核心指标
 - `reports/miner_details.csv`: 各节点胜率与表现
 - `reports/window_snapshots.csv`: 时序指标面板
+- `reports/scheduler_metrics.json`: LLM 独立调度器性能指标 (仅限 LLM 模式)
 - `data/blocks.jsonl`: 链历史
 - `data/forum_posts.jsonl`: 论坛发言 (如开启)
 - `data/prompt_traces.jsonl`: LLM 交互与回退日志

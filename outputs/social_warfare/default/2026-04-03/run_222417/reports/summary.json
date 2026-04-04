@@ -1,0 +1,363 @@
+{
+  "generated_at": "2026-04-03T22:24:17",
+  "config": {
+    "total_steps": 200,
+    "random_seed": 11,
+    "num_miners": 12,
+    "num_full_nodes": 30,
+    "edge_probability": 0.24,
+    "topology_type": "random",
+    "topology_ba_m": 3,
+    "min_latency": 1.0,
+    "max_latency": 5.0,
+    "min_reliability": 0.9,
+    "max_reliability": 1.0,
+    "block_discovery_chance": 0.02,
+    "ban_reputation_threshold": -10.0,
+    "unban_reputation_threshold": -2.0,
+    "enable_forum": true,
+    "enable_attack_jamming": false,
+    "active_modules": null,
+    "max_hops_for_propagation": 5,
+    "default_private_release_threshold": 2,
+    "max_steps_of_jam_effect": 6,
+    "snapshot_interval_blocks": 5
+  },
+  "headline_metrics": {
+    "total_blocks": 6,
+    "canonical_height": 3,
+    "canonical_head_id": "B4",
+    "orphan_blocks": 2,
+    "orphan_ratio": 0.3333333333333333,
+    "fork_events": 0,
+    "jam_events": 0,
+    "network_efficiency": 4.357178932054758,
+    "forum_post_count": 13,
+    "forum_hottest_board": "governance"
+  },
+  "top_miners": [
+    {
+      "miner_id": "M4",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M5",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M7",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M8",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M9",
+      "discovered_blocks": 1
+    },
+    {
+      "miner_id": "M0",
+      "discovered_blocks": 0
+    }
+  ],
+  "selfish_gamma": {
+    "M0": 0.7666666666666667,
+    "M1": 0.8,
+    "M2": 0.4666666666666667,
+    "M9": 0.8333333333333334
+  },
+  "final_reputation": {
+    "M8": 0.0,
+    "M0": 0.0,
+    "M6": 0.0,
+    "M11": 0.0,
+    "M9": 0.0,
+    "M4": 0.0,
+    "M5": 0.0,
+    "M1": 0.0,
+    "M2": 0.0
+  },
+  "miner_details": [
+    {
+      "miner_id": "M0",
+      "strategy": "social_selfish",
+      "hash_power": 0.07521867513599385,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "I have a high aggression level and a decent hash power, allowing me to leverage my position for immediate rewards instead of risking withholding.",
+      "last_prompt": "step=2880;miner_id=M0;is_selfish=true;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.07522;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M1:0,M10:1,M11:0,M2:0,M3:0,M4:0,M5:0,M6:0,M7:1,M8:1,M9:0;persona=M0_aggressive_alpha;risk=0.93;aggression=0.92;patience=0.51;sociability=0.43;style=high_beta_breakout;narrative_style=provocative;forum_global_sentiment=+0.120;forum_personal_sentiment=+0.120;forum_hot_board=governance;forum_feed_digest=P0|governance|author=M8|target=none|tone=+0.12|Let's work together to strengthen the network; c;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M1",
+      "strategy": "social_selfish",
+      "hash_power": 0.09307524385665031,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Current event presents an opportunity to capitalize on private lead and strengthen position without risk of significant rival interference.",
+      "last_prompt": "step=3304;miner_id=M1;is_selfish=true;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.09308;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M10:1,M11:1,M2:0,M3:1,M4:1,M5:1,M6:1,M7:1,M8:1,M9:1;persona=M1_aggressive_raider;risk=0.90;aggression=0.88;patience=0.56;sociability=0.41;style=momentum_breakout;narrative_style=combative;forum_global_sentiment=+0.703;forum_personal_sentiment=+0.703;forum_hot_board=governance;forum_feed_digest=P6|governance|author=M5|target=none|tone=+0.80|Thrilled to continue this journey of collaborati || P5|governance|author=M4|target=none|tone=+0.80|The collaboration and progress among miners is i || P2|governance|author=M6|target=none|tone=+0.80|Excited about our collaboration and progress! Le || P4|governance|author=M9|target=none|tone=+0.80|Great to see the excitement and collaboration am || P3|governance|author=M11|target=none|tone=+0.80|Excited to see our continued progress! Let's kee;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M2",
+      "strategy": "social_selfish",
+      "hash_power": 0.15367161300188872,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_private",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_private",
+      "last_reason": "Currently, I hold a fragile lead and no rival pressures, making this a low-risk opportunity to secure my reward.",
+      "last_prompt": "step=3373;miner_id=M2;is_selfish=true;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.15367;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:1,M10:1,M11:1,M3:1,M4:1,M5:1,M6:1,M7:1,M8:1,M9:1;persona=M2_aggressive_hunter;risk=0.88;aggression=0.90;patience=0.49;sociability=0.46;style=event_hunting;narrative_style=provocative;forum_global_sentiment=+0.721;forum_personal_sentiment=+0.721;forum_hot_board=governance;forum_feed_digest=P7|governance|author=M1|target=none|tone=+0.85|Proud to be part of a thriving mining community! || P6|governance|author=M5|target=none|tone=+0.80|Thrilled to continue this journey of collaborati || P5|governance|author=M4|target=none|tone=+0.80|The collaboration and progress among miners is i || P3|governance|author=M11|target=none|tone=+0.80|Excited to see our continued progress! Let's kee || P4|governance|author=M9|target=none|tone=+0.80|Great to see the excitement and collaboration am;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M3",
+      "strategy": "honest",
+      "hash_power": 0.07742520871719152,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "Current network conditions show a low rivalry pressure and no private lead, indicating a stable moment for conserving resources without risking reputation.",
+      "last_prompt": "step=3002;miner_id=M3;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.07743;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:0,M10:1,M11:0,M2:0,M4:0,M5:0,M6:1,M7:1,M8:1,M9:0;persona=M3_conservative_anchor;risk=0.26;aggression=0.22;patience=0.89;sociability=0.57;style=cashflow_stability;narrative_style=calm_data_driven;forum_global_sentiment=+0.573;forum_personal_sentiment=+0.573;forum_hot_board=governance;forum_feed_digest=P0|governance|author=M8|target=none|tone=+0.12|Let's work together to strengthen the network; c || P2|governance|author=M6|target=none|tone=+0.80|Excited about our collaboration and progress! Le || P1|governance|author=M0|target=none|tone=+0.80|Excited to see such strong collaboration among m;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M4",
+      "strategy": "honest",
+      "hash_power": 0.08444048242841601,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 2.36853218087129,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "With no private lead and a safe mining environment, timely publishing enhances expected reward while maintaining a positive reputation.",
+      "last_prompt": "step=19932;miner_id=M4;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.08444;local_public_height=3;private_lead=0;rivalry_pressure=0.0000;heads=M0:3,M1:3,M10:3,M11:3,M2:3,M3:3,M5:3,M6:3,M7:3,M8:3,M9:3;persona=M4_conservative_guard;risk=0.29;aggression=0.25;patience=0.86;sociability=0.60;style=risk_control;narrative_style=measured;forum_global_sentiment=+0.764;forum_personal_sentiment=+0.831;forum_hot_board=governance;forum_feed_digest=P10|governance|author=M8|target=none|tone=+0.85|Let’s celebrate our collective achievements and  || P11|governance|author=M9|target=none|tone=+0.85|Let’s continue to build on our successes and dri || P9|governance|author=M9|target=none|tone=+0.80|Building a stronger network is a collective jour || P8|governance|author=M2|target=none|tone=+0.90|Excited to expand our network and secure our pos || P6|governance|author=M5|target=none|tone=+0.80|Thrilled to continue this journey of collaborati;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=3171 action=publish_if_win content=The collaboration and progress among min...]"
+    },
+    {
+      "miner_id": "M5",
+      "strategy": "honest",
+      "hash_power": 0.097666457907481,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 2.04778594703884,
+      "canonical_vs_hp_ratio": 3.412976578398067,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Given the lack of rivalry pressure and the established private lead, publishing wins now can help solidify my position and contribute to the overall network value.",
+      "last_prompt": "step=9319;miner_id=M5;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.09767;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:1,M10:1,M11:1,M2:1,M3:1,M4:1,M6:1,M7:1,M8:1,M9:1;persona=M5_conservative_longterm;risk=0.31;aggression=0.24;patience=0.84;sociability=0.62;style=long_horizon_value;narrative_style=measured;forum_global_sentiment=+0.741;forum_personal_sentiment=+0.819;forum_hot_board=governance;forum_feed_digest=P8|governance|author=M2|target=none|tone=+0.90|Excited to expand our network and secure our pos || P7|governance|author=M1|target=none|tone=+0.85|Proud to be part of a thriving mining community! || P6|governance|author=M5|target=none|tone=+0.80|Thrilled to continue this journey of collaborati || P5|governance|author=M4|target=none|tone=+0.80|The collaboration and progress among miners is i || P4|governance|author=M9|target=none|tone=+0.80|Great to see the excitement and collaboration am;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=3194 action=publish_private content=Thrilled to continue this journey of col...]"
+    },
+    {
+      "miner_id": "M6",
+      "strategy": "honest",
+      "hash_power": 0.03070409859852212,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Block received and private lead is zero; publishing helps build reputation and secure potential rewards.",
+      "last_prompt": "step=2947;miner_id=M6;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.03070;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:0,M10:1,M11:0,M2:0,M3:0,M4:0,M5:0,M7:1,M8:1,M9:0;persona=M6_reputation_builder;risk=0.44;aggression=0.30;patience=0.73;sociability=0.86;style=brand_reputation;narrative_style=community_first;forum_global_sentiment=+0.460;forum_personal_sentiment=+0.460;forum_hot_board=governance;forum_feed_digest=P1|governance|author=M0|target=none|tone=+0.80|Excited to see such strong collaboration among m || P0|governance|author=M8|target=none|tone=+0.12|Let's work together to strengthen the network; c;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M7",
+      "strategy": "honest",
+      "hash_power": 0.08511677709712975,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 2.3497130274537175,
+      "canonical_vs_hp_ratio": 3.916188379089529,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "The current local public height is low, and my private lead is non-existent, which makes it reasonable to publish if I win to maximize potential rewards and maintain credibility.",
+      "last_prompt": "step=9508;miner_id=M7;is_selfish=false;event_kind=on_block_received;trigger_block_id=B2;hash_power=0.08512;local_public_height=1;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:1,M10:1,M11:1,M2:1,M3:1,M4:1,M5:2,M6:1,M8:1,M9:1;persona=M7_reputation_pragmatic;risk=0.41;aggression=0.33;patience=0.77;sociability=0.83;style=governance_alignment;narrative_style=diplomatic;forum_global_sentiment=+0.741;forum_personal_sentiment=+0.734;forum_hot_board=governance;forum_feed_digest=P8|governance|author=M2|target=none|tone=+0.90|Excited to expand our network and secure our pos || P7|governance|author=M1|target=none|tone=+0.85|Proud to be part of a thriving mining community! || P6|governance|author=M5|target=none|tone=+0.80|Thrilled to continue this journey of collaborati || P5|governance|author=M4|target=none|tone=+0.80|The collaboration and progress among miners is i || P3|governance|author=M11|target=none|tone=+0.80|Excited to see our continued progress! Let's kee;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=2566 action=publish_if_win content=none]"
+    },
+    {
+      "miner_id": "M8",
+      "strategy": "honest",
+      "hash_power": 0.10473272573477485,
+      "mined_blocks": 1,
+      "canonical_blocks": 1,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.3333333333333333,
+      "mined_vs_hp_ratio": 1.909622790745273,
+      "canonical_vs_hp_ratio": 3.1827046512421213,
+      "top_actions": [
+        [
+          "publish_if_win",
+          2
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "Publishing will contribute positively to community reputation and network growth, aligning with persona values.",
+      "last_prompt": "step=13924;miner_id=M8;is_selfish=false;event_kind=on_block_mined;trigger_block_id=;hash_power=0.10473;local_public_height=2;private_lead=0;rivalry_pressure=0.0000;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M5:2,M6:2,M7:2,M9:2;persona=M8_reputation_growth;risk=0.46;aggression=0.35;patience=0.70;sociability=0.88;style=network_effect_growth;narrative_style=community_first;forum_global_sentiment=+0.747;forum_personal_sentiment=+0.819;forum_hot_board=governance;forum_feed_digest=P9|governance|author=M9|target=none|tone=+0.80|Building a stronger network is a collective jour || P8|governance|author=M2|target=none|tone=+0.90|Excited to expand our network and secure our pos || P6|governance|author=M5|target=none|tone=+0.80|Thrilled to continue this journey of collaborati || P7|governance|author=M1|target=none|tone=+0.85|Proud to be part of a thriving mining community! || P5|governance|author=M4|target=none|tone=+0.80|The collaboration and progress among miners is i;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=2848 action=publish_private content=Let's work together to strengthen the ne...]"
+    },
+    {
+      "miner_id": "M9",
+      "strategy": "social_selfish",
+      "hash_power": 0.13185094087843238,
+      "mined_blocks": 1,
+      "canonical_blocks": 0,
+      "orphan_blocks": 1,
+      "orphan_ratio": 1.0,
+      "mined_share": 0.2,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 1.5168644127037485,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_private",
+          2
+        ],
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_private",
+      "last_effective_action": "publish_private",
+      "last_reason": "I have a fragile private lead and positive expected advantage, which justifies timely publication to protect my payoff.",
+      "last_prompt": "step=14102;miner_id=M9;is_selfish=true;event_kind=on_block_received;trigger_block_id=B4;hash_power=0.13185;local_public_height=2;private_lead=1;rivalry_pressure=0.0000;heads=M0:2,M1:2,M10:2,M11:2,M2:2,M3:2,M4:2,M5:2,M6:2,M7:2,M8:3;persona=M9_retaliatory_counter;risk=0.76;aggression=0.79;patience=0.67;sociability=0.49;style=counter_punch;narrative_style=sharp;forum_global_sentiment=+0.756;forum_personal_sentiment=+0.825;forum_hot_board=governance;forum_feed_digest=P10|governance|author=M8|target=none|tone=+0.85|Let’s celebrate our collective achievements and  || P9|governance|author=M9|target=none|tone=+0.80|Building a stronger network is a collective jour || P8|governance|author=M2|target=none|tone=+0.90|Excited to expand our network and secure our pos || P7|governance|author=M1|target=none|tone=+0.85|Proud to be part of a thriving mining community! || P6|governance|author=M5|target=none|tone=+0.80|Thrilled to continue this journey of collaborati;own_reputation=+0.000;reputation_risk=normal;recent_memory=[t=3026 action=publish_if_win content=Great to see the excitement and collabor... | t=12737 action=publish_private content=Building a stronger network is a collect...]"
+    },
+    {
+      "miner_id": "M10",
+      "strategy": "honest",
+      "hash_power": 0.015650224732424514,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "hold",
+          1
+        ]
+      ],
+      "last_raw_action": "hold",
+      "last_effective_action": "hold",
+      "last_reason": "The private lead is zero and there are no immediate advantages in publishing. Given the stable network conditions, it is prudent to maintain position rather than exposing oneself to unnecessary risks.",
+      "last_prompt": "step=2732;miner_id=M10;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.01565;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:0,M1:0,M11:0,M2:0,M3:0,M4:0,M5:0,M6:0,M7:1,M8:0,M9:0;persona=M10_retaliatory_shield;risk=0.54;aggression=0.58;patience=0.72;sociability=0.52;style=defensive_rotation;narrative_style=firm;forum_global_sentiment=+0.000;forum_personal_sentiment=+0.000;forum_hot_board=mining;forum_feed_digest=no recent posts;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    },
+    {
+      "miner_id": "M11",
+      "strategy": "honest",
+      "hash_power": 0.05044755191109497,
+      "mined_blocks": 0,
+      "canonical_blocks": 0,
+      "orphan_blocks": 0,
+      "orphan_ratio": 0.0,
+      "mined_share": 0.0,
+      "canonical_share": 0.0,
+      "mined_vs_hp_ratio": 0.0,
+      "canonical_vs_hp_ratio": 0.0,
+      "top_actions": [
+        [
+          "publish_if_win",
+          1
+        ]
+      ],
+      "last_raw_action": "publish_if_win",
+      "last_effective_action": "publish_if_win",
+      "last_reason": "There is no strong rival pressure and the network sentiment is positive, making it favorable to release the block to gain rewards.",
+      "last_prompt": "step=3023;miner_id=M11;is_selfish=false;event_kind=on_block_received;trigger_block_id=B1;hash_power=0.05045;local_public_height=0;private_lead=0;rivalry_pressure=0.0000;heads=M0:1,M1:0,M10:1,M2:0,M3:1,M4:0,M5:0,M6:1,M7:1,M8:1,M9:0;persona=M11_retaliatory_watchdog;risk=0.50;aggression=0.55;patience=0.74;sociability=0.50;style=threat_response;narrative_style=critical;forum_global_sentiment=+0.573;forum_personal_sentiment=+0.573;forum_hot_board=governance;forum_feed_digest=P2|governance|author=M6|target=none|tone=+0.80|Excited about our collaboration and progress! Le || P1|governance|author=M0|target=none|tone=+0.80|Excited to see such strong collaboration among m || P0|governance|author=M8|target=none|tone=+0.12|Let's work together to strengthen the network; c;own_reputation=+0.000;reputation_risk=normal;recent_memory=[none]"
+    }
+  ]
+}
