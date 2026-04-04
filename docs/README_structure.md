@@ -59,7 +59,13 @@ D:\my
 │  ├─ llm_provider.yaml
 │  ├─ agent_profiles.toml
 │  └─ agent_profiles_honest_only.toml
-└─ outputs
+├─ outputs
+└─ tests                    <-- 单元测试集合
+   ├─ conftest.py
+   ├─ core/test_topology.py
+   ├─ engine/test_mining.py
+   ├─ llm/test_llm_parser.py
+   └─ modules/test_tokenomics.py
 ```
 
 ---

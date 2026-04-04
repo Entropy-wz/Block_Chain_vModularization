@@ -61,6 +61,28 @@ docs/                   # 详细的技术原理与模块开发者文档
 > - **想了解核心机制与代码架构？** 👉 请参阅 [`docs/README_structure.md`](docs/README_structure.md) (离散事件引擎、模块交互机制与参数设计)
 > - **想调整参数、运行命令行实验？** 👉 请参阅 [`docs/README_engine.md`](docs/README_engine.md) (CLI 参数列表、预设实验配方与输出说明)
 > - **想进行二次开发或编写新模块？** 👉 请参阅 [`docs/MODULE_GUIDE.md`](docs/MODULE_GUIDE.md) (EventBus 事件订阅与 Pluggable Module 开发指南)
+> - **想了解如何运行与编写回归测试？** 👉 请参阅 [`docs/TESTING_GUIDE.md`](docs/TESTING_GUIDE.md) (单元测试模块说明与防崩溃开发指南)
+
+---
+
+## 🧪 单元测试 (Testing)
+
+我们使用 `pytest` 作为单元测试框架，目前的测试用例覆盖了核心模块、大模型解析器、数学概率模型等易损环节。测试代码均放置于 `tests/` 目录下。
+
+### 运行测试
+
+请确保你已经安装了 `pytest`（可以通过 `pip install pytest` 或直接通过 `requirements.txt` 安装）。
+
+```bash
+# 运行全部测试
+python -m pytest tests/
+
+# 运行特定模块的测试
+python -m pytest tests/core/
+python -m pytest tests/engine/
+python -m pytest tests/llm/
+python -m pytest tests/modules/
+```
 
 ---
 
