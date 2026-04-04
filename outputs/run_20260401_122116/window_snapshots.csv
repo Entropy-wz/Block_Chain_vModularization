@@ -1,6 +1,0 @@
-step,mined_block_count,window_blocks,window_orphan_count,canonical_head_id,canonical_coverage,max_fork_degree,longest_branch_len,branch_count,forum_window_posts,forum_window_avg_tone,forum_hot_board,forum_top_target
-1508,10,10,8,B5,0.200000,2,3,4,0,0.000000,none,none
-3544,20,10,7,B15,0.300000,3,4,6,0,0.000000,none,none
-4841,30,10,7,B29,0.300000,2,4,5,0,0.000000,none,none
-5799,40,10,8,B37,0.200000,1,3,5,0,0.000000,none,none
-8335,50,10,7,B48,0.300000,2,4,4,0,0.000000,none,none

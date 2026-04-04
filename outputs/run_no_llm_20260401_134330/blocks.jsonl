@@ -1,8 +1,0 @@
-{"block_id": "B0", "parent_id": null, "height": 0, "miner_id": "genesis", "created_at_step": 0, "is_canonical": true}
-{"block_id": "B1", "parent_id": "B0", "height": 1, "miner_id": "M1", "created_at_step": 1751, "is_canonical": true}
-{"block_id": "B2", "parent_id": "B1", "height": 2, "miner_id": "M4", "created_at_step": 2252, "is_canonical": true}
-{"block_id": "B3", "parent_id": "B2", "height": 3, "miner_id": "M7", "created_at_step": 2602, "is_canonical": true}
-{"block_id": "B4", "parent_id": "B3", "height": 4, "miner_id": "M2", "created_at_step": 3507, "is_canonical": true}
-{"block_id": "B5", "parent_id": "B4", "height": 5, "miner_id": "M2", "created_at_step": 3588, "is_canonical": true}
-{"block_id": "B6", "parent_id": "B5", "height": 6, "miner_id": "M4", "created_at_step": 4454, "is_canonical": true}
-{"block_id": "B7", "parent_id": "B6", "height": 7, "miner_id": "M2", "created_at_step": 5847, "is_canonical": true}
