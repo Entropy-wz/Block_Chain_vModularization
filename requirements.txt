@@ -1,9 +1,9 @@
 # Core Simulation & Data Science
-networkx==3.6.1
+networkx==3.4.2
 matplotlib==3.10.7
 pandas==2.3.3
 numpy==2.2.6
-scipy==1.16.3
+scipy==1.15.3
 seaborn==0.13.2
 
 # LLM & Async Frameworks
@@ -15,6 +15,7 @@ pydantic==2.12.5
 PyYAML==6.0.3
 colorama==0.4.6
 tqdm==4.67.1
+tomli==2.0.1; python_version < "3.11"
 
 # Testing
 pytest==8.0.2

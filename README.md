@@ -1,7 +1,7 @@
 ﻿# Agentic Blockchain Sandbox 
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python Version">
+  <img src="https://img.shields.io/badge/Python-3.10+-blue.svg" alt="Python Version">
   <img src="https://img.shields.io/badge/LLM-Powered-orange.svg" alt="LLM Powered">
   <img src="https://img.shields.io/badge/Simulation-Discrete%20Event-green.svg" alt="Discrete Event">
   <img src="https://img.shields.io/badge/License-MIT-purple.svg" alt="License">

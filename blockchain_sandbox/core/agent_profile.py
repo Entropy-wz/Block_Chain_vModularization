@@ -4,8 +4,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from random import Random
 from typing import Any, Dict, Optional, Tuple
+import sys
 
-import tomllib
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    import tomli as tomllib
 
 from .persona import MinerPersona
 

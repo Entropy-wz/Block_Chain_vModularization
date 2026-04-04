@@ -3,7 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 import heapq
 from random import Random
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .graph_analytics import GraphAnalyticsCache
 
 
 @dataclass(frozen=True)

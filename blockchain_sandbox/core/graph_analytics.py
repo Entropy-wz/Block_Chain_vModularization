@@ -1,5 +1,8 @@
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, TYPE_CHECKING
 import heapq
+
+if TYPE_CHECKING:
+    from .graph_model import DirectedGraph
 
 class GraphAnalyticsCache:
     """
