@@ -107,6 +107,19 @@ sim.run()
   - 当其挖出的块上链时，会获得 `tokens`。而 `tokens` 的法币价格受到全网孤块率的动态影响（网络混乱时币价暴跌）。
   - 大模型可以评估其投入产出比（ROI），当亏本严重时，可以选择主动执行 `power_off` 以关闭算力停止亏损。
 
+### 🖥️ 6. 实时可视化看板模块 (`LiveDashboardModule`)
+*路径：`blockchain_sandbox/modules/dashboard_module.py`*
+
+一个完全可插拔的前端后端结合模块。在独立线程挂载 FastAPI 与静态 HTML（Vue3+ECharts），利用 EventBus 推送事件，绝不阻塞底层离散模拟循环。
+- **可调参数:**
+  - `host` (str, 默认 `"127.0.0.1"`)
+  - `port` (int, 默认 `8000`)
+- **使用说明:**
+  - 加入引擎后，自动提供 `http://127.0.0.1:8000/` 浏览器访问。
+  - 此模块**没有**关联的 LLM 决策输出键，也不会往 LLM Prompt 里注入任何规则，它纯粹是个 **Listener**（只读）。
+  - 在入口脚本 `experiments/run_live_dashboard.py` 里，你可以通过传参决定在模拟结束后是 `无限期等待指定按键关闭 (exit-key)` 还是 `固定倒计时关闭 (keep-alive)`，为自动化实验与屏幕演示提供完美闭环。
+
+
 ---
 
 ## 3. 开发者教程：如何编写一个新模块

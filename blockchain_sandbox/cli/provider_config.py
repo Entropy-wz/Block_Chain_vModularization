@@ -23,6 +23,8 @@ def load_llm_config_from_yaml(path: str) -> LLMConfig:
     max_output_tokens = _to_int(data.get("max_output_tokens", "220"), 220)
     timeout_seconds = _to_int(data.get("timeout_seconds", "30"), 30)
     max_concurrent = _to_int(data.get("max_concurrent_requests", "5"), 5)
+    enable_cache = _to_bool(data.get("enable_cache", "true"))
+    honest_use_llm = _to_bool(data.get("honest_use_llm", "false"))
 
     return LLMConfig(
         backend="compatible",
@@ -35,6 +37,8 @@ def load_llm_config_from_yaml(path: str) -> LLMConfig:
         base_url=base_url,
         use_chat_completions=use_chat,
         max_concurrent_requests=max_concurrent,
+        enable_cache=enable_cache,
+        honest_use_llm=honest_use_llm,
     )
 
 

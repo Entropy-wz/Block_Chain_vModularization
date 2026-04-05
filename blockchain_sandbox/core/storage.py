@@ -17,6 +17,8 @@ class BlockSummary:
 
 import tempfile
 import uuid
+import shutil
+import time
 
 class BlockStorage:
     """
@@ -28,12 +30,12 @@ class BlockStorage:
         self.summaries: Dict[str, BlockSummary] = {}
         self._closed = False
         
-        # If no explicit data_dir is provided by persistence, use a secure temporary directory
+        # If no explicit data_dir is provided by persistence, create a temp dir path managed by us
         if not data_dir:
-            self._temp_dir = tempfile.TemporaryDirectory()
-            data_dir = Path(self._temp_dir.name)
+            self._temp_dir_path = Path(tempfile.mkdtemp(prefix="sandbox_cold_"))
+            data_dir = self._temp_dir_path
         else:
-            self._temp_dir = None
+            self._temp_dir_path = None
             
         # Simple JSONL archive stream
         self.archive_file: Path = data_dir / f"cold_archive_{uuid.uuid4().hex[:8]}.jsonl"
@@ -53,13 +55,14 @@ class BlockStorage:
             finally:
                 self._archive_handle = None
 
-        if hasattr(self, '_temp_dir') and self._temp_dir:
-            try:
-                self._temp_dir.cleanup()
-            except Exception:
-                pass
-            finally:
-                self._temp_dir = None
+        if getattr(self, '_temp_dir_path', None):
+            for _ in range(3):
+                try:
+                    shutil.rmtree(self._temp_dir_path, ignore_errors=True)
+                    break
+                except Exception:
+                    time.sleep(0.1)
+            self._temp_dir_path = None
 
         self._closed = True
 

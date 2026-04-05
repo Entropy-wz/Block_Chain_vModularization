@@ -49,6 +49,8 @@ class LLMConfig:
     max_concurrent_requests: int = 5
     decision_cooldown_steps: int = 10
     force_llm_on_fork: bool = True
+    enable_cache: bool = True
+    honest_use_llm: bool = False
 
 
 @dataclass(frozen=True)

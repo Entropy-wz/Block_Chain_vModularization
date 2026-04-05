@@ -46,6 +46,7 @@ class NetworkAttackModule(ISimulationModule):
 
         action = getattr(effective, "action", "")
         if self.enable_jamming and action == "jam_target":
+            # Give LLM direct control over the target selection instead of overwriting it
             target_miner = getattr(effective, "target_miner", "")
             if target_miner and target_miner in self.ctx.nodes and target_miner != miner_id:
                 jam_steps_req = getattr(effective, "jam_steps", 2)
@@ -76,19 +77,14 @@ class NetworkAttackModule(ISimulationModule):
         self._jam_restore_schedule = remain
 
     def _pick_jam_target(self, miner_id: str) -> str:
+        # Instead of deterministically returning the most powerful honest node,
+        # we now return a list of active competitors to the LLM so it can choose itself
         candidates = [
             n for n in self.ctx.nodes.values()
-            if n.is_miner and n.node_id != miner_id and n.strategy_name == "honest"
+            if n.is_miner and n.node_id != miner_id
         ]
         if not candidates:
-            return ""
-        best = None
-        best_score = float("-inf")
-        for c in candidates:
-            # We don't have direct access to forum here (clean separation), 
-            # so we just pick largest honest hash power if no forum context
-            score = c.hash_power * 2.0
-            if score > best_score:
-                best_score = score
-                best = c.node_id
-        return best or candidates[0].node_id
+            return "none"
+        # Return top 3 competitors by hash power to keep prompt concise
+        top_competitors = sorted(candidates, key=lambda n: n.hash_power, reverse=True)[:3]
+        return ", ".join(f"{c.node_id}({c.hash_power:.2f})" for c in top_competitors)

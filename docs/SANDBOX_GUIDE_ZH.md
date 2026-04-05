@@ -38,8 +38,14 @@ Blockchain Sandbox 是一个通过 **离散事件仿真（Discrete Event Simulat
 - **当前包含的官方模块**:
   1. **ForumModule** (`forum_module.py`): 模拟矿工暗网论坛。LLM可选择发帖吹捧/造谣。如果节点的声誉跌破阈值（默认 -10），会被系统自动物理断网（断绝所有边）。
   2. **NetworkAttackModule** (`network_attack_module.py`): 允许节点发起定向的网络延迟攻击（Jamming），动态成倍拉高目标节点的图边延迟，抑制其区块传播能力。
+  3. **LiveDashboardModule** (`dashboard_module.py`): 建立在事件总线上的可插拔实时前端。不干扰主事件循环生命周期，后台开线程并利用 WebSocket 绘制出酷炫的 Vue3+ECharts 的动效大屏。
 
 ---
+
+### 2.4 Live Dashboard 与可视化模块
+- **可插拔的设计**: Dashboard 作为模块被实现为 `LiveDashboardModule`。它会在独立线程拉起 FastAPI 服务器以避免阻塞核心循环，并通过 WebSocket 广播事件。如果不需要界面，可以随时使用 `--no-dashboard` 开关禁用它。仿真结束后，会在新标签页自动弹出 `/summary` 对战总结界面，你可按页面按钮返回主屏，或在终端随时按 `q` 退出整个 Web 服务。
+- **误区解释：同高度区块与“H5在两条链挖块”**: 图形界面中显示的 `H:x [My]` 含义是“**高度(Height)** 为 x 的区块，由矿工 y 挖出”。因此看到两个分支上各有一个 `H:5` 是因为网络延迟产生了分叉，导致不同矿工都在他们看到的链高度 4 的末端分别打包了新块，**这是正常的设计行为**。
+- **误区解释：为何某个节点（如H2/M2）会被集中攻击**: LLM 在决策时，系统模块 `_pick_jam_target` 会高亮网络中“算力最强”的诚实竞争者。为了平衡实力差距，多个使用 LLM 的矿工会**不约而同地集火（Jam）同一个头部节点**。
 
 ## 3. 支持的实验模式与脚本
 

@@ -33,6 +33,18 @@ cd D:\my
 python -m experiments.run_honest_no_llm
 ```
 
+## 2.3 Live Dashboard 快速模式（新标签页 Summary + 可随时按键退出）
+
+```powershell
+cd D:\my
+python -m experiments.run_live_dashboard --miners 6 --nodes 0 --steps 100 --block-chance 0.1 --auto-open --keep-alive 90
+```
+
+说明：
+- 仿真结束后，Dashboard 会在 **新标签页** 自动打开 `/summary`（默认约 5 秒延迟），主看板保留用于对照。
+- `summary` 页面新增 **Back to Live Dashboard** 与 **Close This Summary Tab** 按钮。
+- 即使设置了 `--keep-alive`，也可在终端随时按 `q`（或 `--exit-key` 指定键）提前优雅退出。
+
 ---
 
 ## 3. 参数总表

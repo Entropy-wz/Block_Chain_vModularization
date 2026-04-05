@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agentic Blockchain Sandbox - Live Dashboard</title>
+    <!-- Include Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- Include ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e2d; margin: 0; padding: 20px; color: #a2a3b7; }
+        .container { display: flex; flex-direction: column; gap: 20px; height: calc(100vh - 40px); }
+        .panel { background: #2b2b40; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); padding: 20px; display: flex; flex-direction: column; }
+        
+        .top-row { display: flex; gap: 20px; height: 460px; flex-shrink: 0; }
+        .bottom-row { display: flex; gap: 20px; flex: 1; min-height: 0; }
+        
+        .topology-panel { flex: 1.25; min-width: 360px; }
+        .tree-panel { flex: 2.2; position: relative; }
+        
+        .stats-panel { flex: 1.25; min-width: 360px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+        .feed-panel { flex: 2.2; display: flex; flex-direction: column; }
+        
+        .event-feed { flex: 1; overflow-y: auto; border: 1px solid #3f3f5a; padding: 10px; border-radius: 6px; background: #232334;}
+        .event-item { margin-bottom: 10px; padding: 10px; border-radius: 6px; border-left: 4px solid #6c7293; font-size: 0.95em; color: #d1d2e0;}
+        .event-item.BLOCK_MINED { border-color: #00c853; background: rgba(0, 200, 83, 0.1); }
+        .event-item.NETWORK_ATTACK { border-color: #ff3d00; background: rgba(255, 61, 0, 0.1); }
+        .event-item.FORUM_POST { border-color: #2979ff; background: rgba(41, 121, 255, 0.1); }
+        .event-item.SIMULATION_END { border-color: #aa00ff; background: rgba(170, 0, 255, 0.1); font-weight: bold; }
+        
+        .stat-box { background: #32324b; padding: 15px; border-radius: 8px; text-align: center; flex: 1; min-width: 140px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); border: 1px solid #3f3f5a;}
+        .stat-value { font-size: 2em; font-weight: bold; color: #50cd89; margin-top: 5px; }
+        .stat-label { font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; color: #6c7293;}
+        
+        h2 { margin-top: 0; font-size: 1.4em; color: #fff; border-bottom: 1px solid #3f3f5a; padding-bottom: 15px; font-weight: 500;}
+        .log-time { color: #8e95b0; font-size: 0.85em; margin-right: 10px; font-family: monospace;}
+        
+        /* Node info tooltip */
+        #tooltip { position: absolute; background: rgba(20,20,30,0.9); border: 1px solid #50cd89; color: white; padding: 12px; border-radius: 6px; font-size: 13px; pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3);}
+        
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #232334; }
+        ::-webkit-scrollbar-thumb { background: #4a4a6a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6c7293; }
+        
+        .highlight { color: #fff; font-weight: 600; }
+        
+        .tree-controls { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; font-size: 0.8em; z-index: 10; }
+        .tree-control-btn { background: #32324b; border: 1px solid #4a4a6a; color: #a2a3b7; padding: 4px 10px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .tree-control-btn:hover { background: #4a4a6a; color: #fff; }
+        .tree-control-btn.active { background: #50cd89; color: #fff; border-color: #50cd89; }
+        
+        .miner-rank-list { margin-top: 15px; display: flex; flex-direction: column; gap: 8px; }
+        .miner-rank-item { display: flex; align-items: center; justify-content: space-between; background: #232334; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ff9800; font-size: 0.9em; }
+        .miner-bar-bg { width: 100%; height: 4px; background: #32324b; border-radius: 2px; margin-top: 4px; overflow: hidden; }
+        .miner-bar-fill { height: 100%; background: #ff9800; }
+    </style>
+</head>
+<body>
+
+<div id="app" class="container">
+    <div id="tooltip"></div>
+
+    <div v-if="summaryReady" style="background:#2b3a2f;border:1px solid #50cd89;color:#d1f5df;padding:10px 14px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span>🏁 Simulation ended. Summary will auto-open in a new tab after ~5s, and you can keep this dashboard page for side-by-side comparison.</span>
+        <button class="tree-control-btn active" @click="openSummary(true)">Open Summary in New Tab</button>
+    </div>
+
+    <!-- Top Row: Topology & Tree -->
+    <div class="top-row">
+        <div class="panel topology-panel">
+            <h2>Topology <span style="font-size: 0.6em; float: right; color: #6c7293; margin-top: 8px;">Miners(Orange) / Full Nodes(Blue)</span></h2>
+            <div id="graph-container" style="width: 100%; height: 100%;"></div>
+        </div>
+        
+        <div class="panel tree-panel">
+            <h2 style="margin-bottom: 0;">Blockchain Tree</h2>
+            <div class="tree-controls">
+                <button class="tree-control-btn" :class="{active: treeMode === 'archive'}" @click="toggleTreeMode">
+                    {{ treeMode === 'archive' ? 'Archive Mode: ON' : 'Archive Mode: OFF' }}
+                </button>
+                <div style="display: flex; align-items: center; gap: 5px; color: #a2a3b7;">
+                    Keep latest: 
+                    <input type="number" v-model.number="keepLatestDepth" style="width: 40px; background: #232334; border: 1px solid #4a4a6a; color: #fff; border-radius: 3px; padding: 2px 4px; text-align: center;" @change="rebuildTreeData">
+                    depth
+                </div>
+            </div>
+            <div id="block-tree-container" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
+
+    <!-- Bottom Row: Stats & Feed -->
+    <div class="bottom-row">
+        <!-- Stats Panel -->
+        <div class="panel stats-panel">
+            <h2>KPIs & Leaderboard</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <div class="stat-box" style="min-width: 45%;">
+                    <div class="stat-label">Step</div>
+                    <div class="stat-value" style="color: #009ef7;">{{ current_step }}</div>
+                </div>
+                <div class="stat-box" style="min-width: 45%;">
+                    <div class="stat-label">Blocks</div>
+                    <div class="stat-value" style="color: #50cd89;">{{ blocks_mined }}</div>
+                </div>
+                <div class="stat-box" style="min-width: 45%;">
+                    <div class="stat-label">Attacks</div>
+                    <div class="stat-value" style="color: #f1416c;">{{ attacks_count }}</div>
+                </div>
+                <div class="stat-box" style="min-width: 45%;">
+                    <div class="stat-label">Posts</div>
+                    <div class="stat-value" style="color: #7239ea;">{{ posts_count }}</div>
+                </div>
+            </div>
+            
+            <h3 style="color: #fff; font-size: 1em; margin-top: 15px; margin-bottom: 5px; border-bottom: 1px dashed #3f3f5a; padding-bottom: 5px;">Miner Leaderboard (Blocks)</h3>
+            <div class="miner-rank-list">
+                <div v-for="(count, miner) in topMiners" :key="miner" class="miner-rank-item">
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #d1d2e0;">{{ miner }}</span>
+                            <span style="color: #50cd89; font-weight: bold;">{{ count }}</span>
+                        </div>
+                        <div class="miner-bar-bg">
+                            <div class="miner-bar-fill" :style="{ width: (count / maxMinerCount * 100) + '%' }"></div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="Object.keys(minerBlocks).length === 0" style="color: #6c7293; font-size: 0.85em; text-align: center; margin-top: 10px;">No blocks mined yet.</div>
+            </div>
+        </div>
+
+        <!-- Feed Panel -->
+        <div class="panel feed-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #3f3f5a; padding-bottom: 15px; margin-bottom: 15px;">
+                <h2 style="border: none; padding: 0; margin: 0;">
+                    Live Event Feed 
+                    <span style="font-size: 0.6em; padding: 4px 8px; border-radius: 12px; margin-left: 10px;" 
+                          :style="{ background: connected ? 'rgba(80, 205, 137, 0.2)' : 'rgba(241, 65, 108, 0.2)', color: connected ? '#50cd89' : '#f1416c' }">
+                        ● {{ connected ? 'Connected' : 'Disconnected' }}
+                    </span>
+                </h2>
+                
+                <div style="display: flex; gap: 10px; font-size: 0.85em; color: #a2a3b7;">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                        <input type="checkbox" v-model="filters.BLOCK_MINED"> BLOCK_MINED
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                        <input type="checkbox" v-model="filters.BLOCK_RECEIVED"> BLOCK_RECEIVED
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                        <input type="checkbox" v-model="filters.NETWORK_ATTACK"> ATTACKS
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                        <input type="checkbox" v-model="filters.FORUM_POST"> FORUM
+                    </label>
+                </div>
+            </div>
+            
+            <div class="event-feed" id="feed-container" style="flex: 1;">
+                <div v-for="event in filteredEvents" :key="event.id" :class="['event-item', event.type]">
+                    <span class="log-time">[T:{{ event.time.toFixed(1) }}s | S:{{ event.step }}]</span>
+                    
+                    <span v-if="event.type === 'BLOCK_MINED'">
+                        🧱 Node <span class="highlight">{{ event.data.miner_id }}</span> mined block #{{ event.data.height }} ({{ event.data.block_id.substring(0,6) }}...)
+                    </span>
+                    
+                    <span v-else-if="event.type === 'NETWORK_ATTACK'">
+                        ⚠️ <span class="highlight" style="color:#f1416c">{{ event.data.attacker_id }}</span> attacked <span class="highlight">{{ event.data.target_id }}</span> (Jamming: {{ event.data.jam_steps }} steps)
+                    </span>
+                    
+                    <span v-else-if="event.type === 'FORUM_POST'">
+                        💬 <span class="highlight" style="color:#009ef7">{{ event.data.author_id }}</span> posted on [{{ event.data.board }}]: "{{ event.data.content }}"
+                    </span>
+                    
+                    <span v-else-if="event.type === 'NODE_BANNED'">
+                        🚫 <span class="highlight" style="color:#f1416c">{{ event.data.node_id }}</span> was banned from network. Reason: {{ event.data.reason }}
+                    </span>
+                    
+                    <span v-else-if="event.type === 'SIMULATION_END'">
+                        🏁 Simulation Ended.
+                    </span>
+                    
+                    <span v-else>
+                        {{ event.type }}: {{ JSON.stringify(event.data) }}
+                    </span>
+                </div>
+                <div v-if="events.length === 0" style="color: #6c7293; text-align: center; margin-top: 40px; font-style: italic;">
+                    Waiting for events...<br>Simulation might take a few moments to start.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        connected: false,
+        ws: null,
+        events: [],
+        filters: {
+            BLOCK_MINED: true,
+            BLOCK_RECEIVED: false,
+            NETWORK_ATTACK: true,
+            FORUM_POST: true,
+            NODE_BANNED: true,
+            SIMULATION_END: true,
+            DASHBOARD_CONNECTED: true
+        },
+        current_step: 0,
+        blocks_mined: 0,
+        attacks_count: 0,
+        posts_count: 0,
+        
+        topology: { nodes: [], edges: [] },
+        chart: null,
+        treeChart: null,
+        blocksTreeData: { name: 'Genesis', id: '0', height: 0, children: [] },
+        blockIndex: { '0': { name: 'Genesis', id: '0', height: 0, parentId: null, children: [] } },
+        minerBlocks: {},
+        
+        treeMode: 'archive', // 'full' or 'archive'
+        keepLatestDepth: 15,
+        maxHeight: 0,
+        
+        next_event_id: 1,
+        pingTimer: null,
+        summaryReady: false,
+        
+        apiHost: window.location.hostname || '127.0.0.1',
+        apiPort: window.location.port || '8000'
+    },
+    computed: {
+        filteredEvents() {
+            return this.events.filter(e => {
+                if (this.filters[e.type] !== undefined) {
+                    return this.filters[e.type];
+                }
+                return true; // Show unknown events by default
+            });
+        },
+        topMiners() {
+            // Sort miners by block count descending
+            const sorted = Object.entries(this.minerBlocks).sort((a, b) => b[1] - a[1]);
+            // Take top 5
+            return Object.fromEntries(sorted.slice(0, 5));
+        },
+        maxMinerCount() {
+            const counts = Object.values(this.minerBlocks);
+            return counts.length > 0 ? Math.max(...counts) : 1;
+        }
+    },
+    mounted() {
+        this.initECharts();
+        this.fetchTopology();
+        this.connectWebSocket();
+    },
+    methods: {
+        initECharts() {
+            // Topology Graph
+            const dom = document.getElementById('graph-container');
+            this.chart = echarts.init(dom);
+            
+            // Block Tree Graph
+            const treeDom = document.getElementById('block-tree-container');
+            this.treeChart = echarts.init(treeDom);
+            
+            window.addEventListener('resize', () => {
+                this.chart.resize();
+                this.treeChart.resize();
+            });
+            
+            this.chart.setOption({
+                backgroundColor: 'transparent',
+                tooltip: { 
+                    formatter: function(params) {
+                        if (params.dataType === 'node') {
+                            const n = params.data.rawNode;
+                            return `
+                                <div style="font-weight:bold;margin-bottom:5px;border-bottom:1px solid #555;padding-bottom:5px;">Node ${n.id}</div>
+                                Type: ${n.is_miner ? 'Miner' : 'Client'}<br/>
+                                Hash Power: ${n.hash_power.toFixed(2)}<br/>
+                                Strategy: ${n.strategy}<br/>
+                                Status: ${n.is_banned ? '<span style="color:#ff3d00">Banned</span>' : '<span style="color:#00e676">Active</span>'}
+                            `;
+                        }
+                        return params.name;
+                    },
+                    backgroundColor: 'rgba(30, 30, 45, 0.95)',
+                    borderColor: '#3f3f5a',
+                    textStyle: { color: '#d1d2e0' }
+                },
+                series: [{
+                    type: 'graph',
+                    layout: 'force',
+                    roam: true,
+                    label: { show: true, position: 'right', formatter: '{b}', color: '#a2a3b7' },
+                    force: { repulsion: 300, edgeLength: 60, gravity: 0.1 },
+                    data: [],
+                    links: []
+                }]
+            });
+            
+            this.treeChart.setOption({
+                backgroundColor: 'transparent',
+                tooltip: { trigger: 'item', triggerOn: 'mousemove' },
+                series: [
+                    {
+                        type: 'tree',
+                        data: [this.blocksTreeData],
+                        left: '2%',
+                        right: '2%',
+                        top: '15%',
+                        bottom: '15%',
+                        symbol: 'emptyCircle',
+                        symbolSize: 8,
+                        orient: 'vertical',
+                        expandAndCollapse: true,
+                        initialTreeDepth: -1,
+                        roam: true, // Enable mouse wheel zoom and drag
+                        label: {
+                            position: 'top',
+                            rotate: 0,
+                            verticalAlign: 'middle',
+                            align: 'center',
+                            fontSize: 10,
+                            color: '#a2a3b7'
+                        },
+                        leaves: {
+                            label: {
+                                position: 'bottom',
+                                rotate: 0,
+                                verticalAlign: 'middle',
+                                align: 'center'
+                            }
+                        },
+                        animationDurationUpdate: 750
+                    }
+                ]
+            });
+        },
+        
+        async fetchTopology() {
+            try {
+                const host = window.location.hostname || '127.0.0.1';
+                const port = window.location.port || '8000';
+                const res = await fetch(`${window.location.protocol}//${host}:${port}/api/topology`);
+                const data = await res.json();
+                this.topology = data;
+                this.updateGraph();
+            } catch (e) {
+                console.error("Failed to fetch topology. Retrying...", e);
+                setTimeout(() => this.fetchTopology(), 2000);
+            }
+        },
+        
+        updateGraph() {
+            if (!this.chart) return;
+            
+            const nodes = this.topology.nodes.map(n => ({
+                id: n.id,
+                name: n.id,
+                symbolSize: n.is_miner ? 30 : 18,
+                rawNode: n, // attach raw data for tooltip
+                itemStyle: {
+                    color: n.is_banned ? '#4a4a6a' : (n.is_miner ? '#ff9800' : '#009ef7'),
+                    borderColor: n.is_banned ? '#f1416c' : '#2b2b40',
+                    borderWidth: n.is_banned ? 3 : 2,
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(0,0,0,0.5)'
+                }
+            }));
+            
+            const links = this.topology.edges.map(e => ({
+                source: e.source,
+                target: e.target,
+                lineStyle: { width: 1.5, opacity: 0.4, color: '#4a4a6a' }
+            }));
+            
+            this.chart.setOption({
+                series: [{
+                    data: nodes,
+                    links: links
+                }]
+            });
+        },
+        
+        connectWebSocket() {
+            const host = window.location.hostname || '127.0.0.1';
+            const port = window.location.port || '8000';
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${host}:${port}/ws/events`;
+            this.ws = new WebSocket(wsUrl);
+            
+            this.ws.onopen = () => {
+                this.connected = true;
+                console.log("WebSocket connected");
+                // Refresh topology on reconnect just in case
+                this.fetchTopology();
+
+                // Client-side keepalive ping to reduce idle disconnect risk
+                if (this.pingTimer) clearInterval(this.pingTimer);
+                this.pingTimer = setInterval(() => {
+                    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                        this.ws.send('ping');
+                    }
+                }, 10000);
+            };
+            
+            this.ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                this.handleEvent(data);
+            };
+            
+            this.ws.onclose = () => {
+                this.connected = false;
+                if (this.pingTimer) {
+                    clearInterval(this.pingTimer);
+                    this.pingTimer = null;
+                }
+                console.log("WebSocket disconnected. Reconnecting in 3s...");
+                setTimeout(() => this.connectWebSocket(), 3000);
+            };
+            
+            this.ws.onerror = (err) => {
+                console.error("WebSocket error:", err);
+                this.ws.close();
+            };
+        },
+        
+        handleEvent(payload) {
+            if (payload.step) this.current_step = payload.step;
+            
+            this.events.unshift({
+                id: this.next_event_id++,
+                type: payload.type,
+                step: payload.step,
+                time: payload.time || 0,
+                data: payload.data
+            });
+            if (this.events.length > 500) this.events.pop();
+            
+            if (payload.type === 'BLOCK_MINED') {
+                this.blocks_mined++;
+                
+                // Track miner leaderboard
+                const minerId = payload.data.miner_id;
+                this.minerBlocks = {
+                    ...this.minerBlocks,
+                    [minerId]: (this.minerBlocks[minerId] || 0) + 1
+                };
+                
+                this.addBlockToTree(payload.data);
+            } else if (payload.type === 'NETWORK_ATTACK') {
+                this.attacks_count++;
+                this.highlightNode(payload.data.attacker_id, '#f1416c');
+                this.highlightLink(payload.data.attacker_id, payload.data.target_id);
+            } else if (payload.type === 'FORUM_POST') {
+                this.posts_count++;
+                this.highlightNode(payload.data.author_id, '#009ef7');
+            } else if (payload.type === 'NODE_BANNED') {
+                const node = this.topology.nodes.find(n => n.id === payload.data.node_id);
+                if (node) {
+                    node.is_banned = true;
+                    this.updateGraph();
+                }
+            } else if (payload.type === 'SIMULATION_END') {
+                this.summaryReady = true;
+                setTimeout(() => {
+                    this.openSummary(false);
+                }, 5000); // Increased delay to 5 seconds before opening summary
+            }
+        },
+
+        openSummary(forceSameTab = false) {
+            const summaryUrl = '/summary';
+            if (forceSameTab) {
+                window.open(summaryUrl, '_blank');
+                return;
+            }
+
+            try {
+                window.open(summaryUrl, '_blank');
+            } catch (e) {
+                console.warn('Auto popup for summary blocked or failed, user can click button.', e);
+            }
+        },
+        
+        addBlockToTree(blockData) {
+            const newBlock = {
+                id: blockData.block_id,
+                height: blockData.height,
+                parentId: blockData.parent_id,
+                name: `H:${blockData.height}\nID:${blockData.block_id.substring(0,6)}\n[${blockData.miner_id}]`,
+                children: []
+            };
+            
+            if (blockData.height > this.maxHeight) {
+                this.maxHeight = blockData.height;
+            }
+            
+            this.blockIndex[blockData.block_id] = newBlock;
+            
+            const parentId = blockData.parent_id;
+            if (this.blockIndex[parentId]) {
+                this.blockIndex[parentId].children.push(newBlock);
+            } else {
+                // Orphan or out of order, attach to root for visual fallback
+                this.blockIndex['0'].children.push(newBlock);
+            }
+            
+            this.rebuildTreeData();
+        },
+        
+        toggleTreeMode() {
+            this.treeMode = this.treeMode === 'archive' ? 'full' : 'archive';
+            this.rebuildTreeData();
+        },
+        
+        rebuildTreeData() {
+            const root = this.blockIndex['0'];
+            if (!root) return;
+
+            const toPositiveInt = (v, fallback = 15) => {
+                const n = parseInt(v, 10);
+                return Number.isFinite(n) && n > 0 ? n : fallback;
+            };
+            this.keepLatestDepth = toPositiveInt(this.keepLatestDepth, 15);
+
+            if (this.treeMode === 'full' || this.maxHeight <= this.keepLatestDepth) {
+                this.treeChart.setOption({ series: [{ data: [root] }] });
+                return;
+            }
+
+            const cutoffHeight = Math.max(1, this.maxHeight - this.keepLatestDepth);
+
+            const cloneVisibleSubtree = (node) => {
+                const copy = { ...node, children: [] };
+                for (const child of node.children || []) {
+                    if (child.height >= cutoffHeight) {
+                        copy.children.push(cloneVisibleSubtree(child));
+                    }
+                }
+                return copy;
+            };
+
+            const collectFrontierNodes = (node) => {
+                if (!node) return [];
+                if (node.height >= cutoffHeight) return [node];
+                let out = [];
+                for (const child of node.children || []) {
+                    out = out.concat(collectFrontierNodes(child));
+                }
+                return out;
+            };
+
+            const frontier = collectFrontierNodes(root);
+            if (frontier.length === 0) {
+                this.treeChart.setOption({ series: [{ data: [root] }] });
+                return;
+            }
+
+            const uniqueFrontier = [];
+            const seen = new Set();
+            for (const node of frontier) {
+                if (!seen.has(node.id)) {
+                    seen.add(node.id);
+                    uniqueFrontier.push(node);
+                }
+            }
+
+            const displayRoot = {
+                id: 'archive_root',
+                name: `Genesis\n(Archived < H:${cutoffHeight})`,
+                itemStyle: { color: '#4a4a6a', borderColor: '#6c7293' },
+                label: { color: '#8e95b0', fontSize: 11, fontStyle: 'italic' },
+                children: uniqueFrontier.map(cloneVisibleSubtree)
+            };
+
+            this.treeChart.setOption({ series: [{ data: [displayRoot] }] });
+        },
+        
+        highlightNode(nodeId, color) {
+            // Future enhancement: Dispatch action to echarts to highlight node temporarily
+            if(!this.chart) return;
+            this.chart.dispatchAction({
+                type: 'highlight',
+                name: nodeId
+            });
+            setTimeout(() => {
+                this.chart.dispatchAction({
+                    type: 'downplay',
+                    name: nodeId
+                });
+            }, 1000);
+        },
+
+        highlightLink(sourceId, targetId) {
+            // Visual enhancement idea for future
+        }
+    }
+});
+</script>
+
+</body>
+</html>

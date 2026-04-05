@@ -497,7 +497,7 @@ class AgenticBlockchainSimulation(ISimulationContext):
                     continue
 
         # Try to use cache first before falling back to dumb algorithm
-        if cache_key in self._llm_decision_cache:
+        if getattr(self.llm_config, "enable_cache", True) and cache_key in self._llm_decision_cache:
             fb = self._llm_decision_cache[cache_key]
             self._progress(f"[LLM-CACHE] Using cached decision for {miner_id} {event_kind} due to API failure.")
         else:
@@ -549,7 +549,7 @@ class AgenticBlockchainSimulation(ISimulationContext):
         if node is None:
             return LLMDecision(action="hold", reason="fallback: missing node")
         reason = f"fallback[{type(error).__name__ if error else 'cooldown'}]"
-        if node.strategy_name == "honest":
+        if node.strategy_name == "honest" and not getattr(self.llm_config, "honest_use_llm", False):
             return LLMDecision(action="publish_if_win" if event_kind == "on_block_mined" else "rebroadcast", reason=reason)
         if event_kind == "on_block_mined":
             return LLMDecision(action="withhold_if_win", reason=reason)
@@ -559,10 +559,26 @@ class AgenticBlockchainSimulation(ISimulationContext):
 
     def _normalize_decision(self, miner_id: str, decision: LLMDecision) -> LLMDecision:
         node = self.nodes.get(miner_id)
-        if node is None or node.strategy_name != "honest":
+        if node is None:
             return decision
-        allowed_actions = {"publish_if_win", "rebroadcast", "hold"}
-        action = decision.action if decision.action in allowed_actions else "publish_if_win"
+        
+        # If honest nodes are not allowed to use LLM, forcefully restrict their actions
+        if node.strategy_name == "honest" and not getattr(self.llm_config, "honest_use_llm", False):
+            allowed_actions = {"publish_if_win", "rebroadcast", "hold"}
+            action = decision.action if decision.action in allowed_actions else "publish_if_win"
+            
+            norm = LLMDecision(
+                action=action,
+                reason=decision.reason,
+                target_miner="",
+                release_private_blocks=0,
+            )
+            for k, v in decision.__dict__.items():
+                if k not in ["action", "reason", "target_miner", "release_private_blocks"]:
+                    setattr(norm, k, v)
+            return norm
+            
+        return decision
         
         # We preserve any extra attributes attached by LLM that modules might need
         norm = LLMDecision(
@@ -691,7 +707,7 @@ class AgenticBlockchainSimulation(ISimulationContext):
         private_lead = len(self.private_chains.get(miner_id, []))
         cache_key = (miner_id, event_kind, public_h_gap, private_lead)
 
-        if cache_key in self._llm_decision_cache:
+        if getattr(self.llm_config, "enable_cache", True) and cache_key in self._llm_decision_cache:
             decision = self._llm_decision_cache[cache_key]
             if event_kind == "on_block_mined":
                 self._execute_mine_decision(miner_id, decision, event_time)
