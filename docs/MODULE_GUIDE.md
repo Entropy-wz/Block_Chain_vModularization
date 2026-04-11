@@ -184,3 +184,45 @@ class AirdropCheerModule(ISimulationModule):
 - `NODE_BANNED`: 有节点被执行了封禁断网（通常由治理模块发出）。
 
 通过订阅这些事件，你可以任意扩展沙盒的统计、攻击、干预与可视化能力。
+
+---
+
+## 7. Selfish Mining Strategy Module（新增）
+
+自私挖矿能力现已解耦为独立策略模块层，用于支持“策略可插拔”和“LLM/no-LLM 共用”。
+
+### 模块目标
+
+- 把固定自私逻辑从主流程中抽离。
+- 通过策略名切换行为，不修改主引擎循环。
+- 让 LLM 链和 no-LLM 自私链复用同一策略执行层。
+
+### 当前内置策略
+
+- `classic`
+- `stubborn`
+- `social`
+
+### 统一参数
+
+- `SANDBOX_SELFISH_STRATEGY=classic|stubborn|social`
+
+适用入口：
+
+- `python -m experiments.run_llm_sandbox`
+- `python -m experiments.run_selfish_no_llm`
+
+### 共用方式
+
+1. LLM链：先执行策略默认动作，再允许LLM在白名单内覆盖；越界覆盖自动回退默认动作。  
+2. no-LLM自私链：直接执行策略默认动作；`classic` 保留理论对照，其他策略用于仿真对比。
+
+### 扩展新策略（约定）
+
+新增策略只需：
+
+1. 实现统一输入/输出接口  
+2. 在策略注册表注册名字  
+3. 通过 `SANDBOX_SELFISH_STRATEGY` 选择
+
+这样不需要改主循环。

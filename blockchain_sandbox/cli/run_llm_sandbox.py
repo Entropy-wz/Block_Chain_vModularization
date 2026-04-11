@@ -145,6 +145,7 @@ def main() -> None:
         snapshot_interval_blocks=int(os.getenv("SANDBOX_SNAPSHOT_INTERVAL_BLOCKS", "10")),
         enable_forum=os.getenv("SANDBOX_ENABLE_FORUM", "1").strip().lower() in {"1", "true"},
         enable_attack_jamming=os.getenv("SANDBOX_ENABLE_ATTACK_JAMMING", "1").strip().lower() in {"1", "true"},
+        selfish_strategy=os.getenv("SANDBOX_SELFISH_STRATEGY", "classic").strip().lower(),
     )
     
     enable_tokenomics = os.getenv("SANDBOX_ENABLE_TOKENOMICS", "0").strip().lower() in {"1", "true"}
@@ -164,6 +165,7 @@ def main() -> None:
             ("Miner Count", str(sim_cfg.num_miners)),
             ("Full Node Count", str(sim_cfg.num_full_nodes)),
             ("Forum Module", "Enabled" if sim_cfg.enable_forum else "Disabled"),
+            ("Selfish Strategy", sim_cfg.selfish_strategy),
             ("Tokenomics Module", "Enabled" if enable_tokenomics else "Disabled"),
             ("Topology", f"{sim_cfg.topology_type} (BA m={sim_cfg.topology_ba_m})" if sim_cfg.topology_type == "barabasi_albert" else f"{sim_cfg.topology_type} (k={getattr(sim_cfg, 'topology_ws_k', 4)}, beta={getattr(sim_cfg, 'topology_ws_beta', 0.1)})" if sim_cfg.topology_type == "watts_strogatz" else f"{sim_cfg.topology_type} (core_ratio={getattr(sim_cfg, 'topology_core_ratio', 0.05)})" if sim_cfg.topology_type == "core_periphery" else f"random (p={sim_cfg.edge_probability:.3f})"),
             ("Latency Range", f"{sim_cfg.min_latency:.2f}~{sim_cfg.max_latency:.2f}"),

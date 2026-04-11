@@ -224,7 +224,7 @@ class AgenticBlockchainSimulation(ISimulationContext):
 
         for i, mid in enumerate(miner_ids):
             is_selfish = self.agent_profile.is_selfish(mid, i, self.config.num_miners)
-            strategy_name = "social_selfish" if is_selfish else "honest"
+            strategy_name = "selfish" if is_selfish else "honest"
             self.personas[mid] = self.agent_profile.build_persona(mid, is_selfish, self.rng)
             self.nodes[mid] = Node(
                 node_id=mid,
@@ -246,7 +246,9 @@ class AgenticBlockchainSimulation(ISimulationContext):
                 
             self.mining_strategies[mid] = build_mining_strategy(
                 strategy_name,
-                reputation_provider=get_rep
+                reputation_provider=get_rep,
+                selfish_strategy_name=getattr(self.config, "selfish_strategy", "classic"),
+                allow_llm_override=True,
             )
             self.agents[mid] = MinerAgent(
                 miner_id=mid,

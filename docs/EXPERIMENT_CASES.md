@@ -135,3 +135,39 @@ python -m experiments.run_llm_sandbox
 你可以根据上述模版，自由组合变量。例如：
 - 调大 `$env:SANDBOX_NUM_MINERS='12'` 观察人数增加时，搭便车（Free-rider）效应是否会让币价系统彻底崩盘。
 - 将 `$env:SANDBOX_BLOCK_DISCOVERY_CHANCE='0.1'` 改为高并发模式，观察代币经济学是否足以对抗极端的网络环境恶化。
+
+---
+
+## Experiment Group B: No-LLM Selfish Mining (Eyal & Sirer)
+
+This section adds a fast theory-oriented selfish-mining baseline without external LLM dependency.
+
+### Entry
+
+```powershell
+python -m experiments.run_selfish_no_llm
+```
+
+### Key Parameters
+
+- `SANDBOX_SELFISH_ALPHA`: selfish hash-power share (default `0.35`)
+- `SANDBOX_SELFISH_GAMMA`: tie-breaking advantage (default `0.5`)
+- `SANDBOX_SELFISH_TARGET_BLOCKS`: target canonical blocks (default `5000`)
+- `SANDBOX_SELFISH_RANDOM_SEED`: run seed (defaults to `SANDBOX_RANDOM_SEED`, then `11`)
+
+### Theory-Comparison Fields (summary.json)
+
+- `simulated_selfish_share`
+- `theoretical_selfish_share`
+- `theory_gap_abs`
+- `theory_match`
+
+### Recommended Presets
+
+1. Baseline: `alpha=0.20`
+2. Threshold zone: `alpha=0.25`
+3. Strong attack zone: `alpha=0.35`
+
+See `docs/SELFISH_NO_LLM_GUIDE.md` for detailed command presets.
+
+- Strategy switch: set SANDBOX_SELFISH_STRATEGY to classic/stubborn/social for the shared selfish module.

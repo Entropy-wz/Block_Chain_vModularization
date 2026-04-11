@@ -145,6 +145,14 @@ python -m experiments.run_honest_no_llm
 - 📊 **数据统计** (`reports/summary.json`)：查看全网节点的孤块率、实际算力收益占比。
 - 🌳 **可视化分叉树** (`visualizations/full_tree.png`)：你将直观地看到一条主链（蓝色），以及因为网络延迟产生的各种孤立分叉（红色/灰色区块）。
 
+如果你想做“理论自私挖矿”快速验证（同样无需 API Key），可以直接运行：
+
+```bash
+python -m experiments.run_selfish_no_llm
+```
+
+该模式会在同一份报告里同时给出“仿真收益占比”和“理论收益占比（Eyal & Sirer）”。
+
 ### Step 3: 进阶体验 - 注入灵魂（开启多智能体社会）
 
 当你准备好体验拥有独立人格的矿工、Tieba 论坛舆论战以及自私网络攻击时，配置你的大模型 API。
@@ -197,6 +205,25 @@ python -m experiments.run_social_warfare
 ### 🟣 实验 4: Tokenomics 代币经济博弈对抗
 观察在大模型面临算力开销、市场币价崩塌时，是否会减缓其恶意的自私分叉行为。
 > **详细参数设计与结果分析方法请参阅**：[docs/EXPERIMENT_CASES.md](docs/EXPERIMENT_CASES.md)
+
+### 🔵 实验 5: No-LLM 自私挖矿理论对照 (Eyal & Sirer)
+不依赖大模型，直接使用 `alpha`（自私算力占比）和 `gamma`（同高竞争优势）进行经典自私挖矿仿真，并自动输出理论对照。
+```powershell
+$env:SANDBOX_SELFISH_ALPHA='0.35'
+$env:SANDBOX_SELFISH_GAMMA='0.5'
+$env:SANDBOX_SELFISH_STRATEGY='classic' # classic / stubborn / social
+$env:SANDBOX_SELFISH_TARGET_BLOCKS='5000'
+python -m experiments.run_selfish_no_llm
+```
+输出会包含以下核心字段：
+- `selfish_alpha`
+- `selfish_gamma`
+- `simulated_selfish_share`
+- `theoretical_selfish_share`
+- `theory_gap_abs`
+- `theory_match`
+
+> **三组预设配方与分析方法请参阅**：[docs/SELFISH_NO_LLM_GUIDE.md](docs/SELFISH_NO_LLM_GUIDE.md)
 
 ---
 

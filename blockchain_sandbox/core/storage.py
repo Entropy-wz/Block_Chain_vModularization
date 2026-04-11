@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -32,8 +33,13 @@ class BlockStorage:
         
         # If no explicit data_dir is provided by persistence, create a temp dir path managed by us
         if not data_dir:
-            self._temp_dir_path = Path(tempfile.mkdtemp(prefix="sandbox_cold_"))
-            data_dir = self._temp_dir_path
+            cold_dir = os.getenv("SANDBOX_COLD_STORAGE_DIR", "").strip()
+            if cold_dir:
+                self._temp_dir_path = None
+                data_dir = Path(cold_dir)
+            else:
+                self._temp_dir_path = Path(tempfile.mkdtemp(prefix="sandbox_cold_"))
+                data_dir = self._temp_dir_path
         else:
             self._temp_dir_path = None
             

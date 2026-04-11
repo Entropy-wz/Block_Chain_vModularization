@@ -87,6 +87,7 @@ class AgenticSimulationConfig:
 
     # Modules
     enable_forum: bool = True
+    selfish_strategy: str = "classic"
     
     # Attack switches
     enable_attack_jamming: bool = True
