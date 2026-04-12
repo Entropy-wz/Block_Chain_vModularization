@@ -35,3 +35,24 @@ def test_disable_override_uses_strategy_default():
     plan = strategy.on_block_mined(ctx)
     # classic on mine default: withhold (publish_new_block=False)
     assert plan.publish_new_block is False
+
+
+def test_stubborn_ds_reads_strategy_context_provider():
+    strategy = build_mining_strategy(
+        "selfish",
+        selfish_strategy_name="stubborn_ds",
+        allow_llm_override=False,
+        strategy_context_provider=lambda **_: {
+            "ds_enabled": True,
+            "ds_target_confirmations": 2,
+            "confirmations_seen": 2,
+            "free_shot_eligible": True,
+        },
+    )
+    ctx = StrategyHookContext(
+        miner_id="M0",
+        private_lead=3,
+        decision=LLMDecision(action="hold", reason="default"),
+    )
+    plan = strategy.on_block_received(ctx)
+    assert plan.publish_private_blocks == 2

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from random import Random
 import time
+import os
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from ..core.agent_profile import AgentProfileConfig, load_agent_profile_config
@@ -48,6 +49,7 @@ class AgenticSimulationResult:
     private_chain_events: List[Dict[str, Any]]
     private_chain_lengths: Dict[str, int]
     llm_scheduler_metrics: Dict[str, Any]
+    economy_metrics: Dict[str, Any]
     config: AgenticSimulationConfig
 
 
@@ -217,13 +219,18 @@ class AgenticBlockchainSimulation(ISimulationContext):
     def _init_nodes_and_agents(self) -> None:
         miner_ids = [f"M{i}" for i in range(self.config.num_miners)]
         full_ids = [f"N{i}" for i in range(self.config.num_full_nodes)]
-        raw = [self.rng.random() for _ in miner_ids]
-        total = sum(raw) or 1.0
-        powers = [r / total for r in raw]
+        selfish_flags = [
+            self.agent_profile.is_selfish(mid, i, self.config.num_miners)
+            for i, mid in enumerate(miner_ids)
+        ]
+        powers = self._sample_hash_powers(
+            selfish_flags=selfish_flags,
+            target_selfish_share=getattr(self.config, "selfish_hash_power_share", None),
+        )
         llm = build_llm_backend(self.llm_config)
 
         for i, mid in enumerate(miner_ids):
-            is_selfish = self.agent_profile.is_selfish(mid, i, self.config.num_miners)
+            is_selfish = selfish_flags[i]
             strategy_name = "selfish" if is_selfish else "honest"
             self.personas[mid] = self.agent_profile.build_persona(mid, is_selfish, self.rng)
             self.nodes[mid] = Node(
@@ -243,12 +250,18 @@ class AgenticBlockchainSimulation(ISimulationContext):
                     if hasattr(mod, "forum"):
                         return mod.forum.reputation_of(m)
                 return 0.0
+            allow_llm_override = os.getenv("SANDBOX_LLM_OFFLINE", "0").strip().lower() not in {"1", "true"}
                 
             self.mining_strategies[mid] = build_mining_strategy(
                 strategy_name,
                 reputation_provider=get_rep,
                 selfish_strategy_name=getattr(self.config, "selfish_strategy", "classic"),
-                allow_llm_override=True,
+                allow_llm_override=allow_llm_override,
+                strategy_context_provider=lambda event_kind, private_lead, _mid=mid: self._build_strategy_context(
+                    miner_id=_mid,
+                    event_kind=event_kind,
+                    private_lead=private_lead,
+                ),
             )
             self.agents[mid] = MinerAgent(
                 miner_id=mid,
@@ -267,6 +280,22 @@ class AgenticBlockchainSimulation(ISimulationContext):
                 known_blocks={self.genesis_id},
                 local_head_id=self.genesis_id,
             )
+
+    def _sample_hash_powers(
+        self,
+        selfish_flags: List[bool],
+        target_selfish_share: Optional[float],
+    ) -> List[float]:
+        raw = [self.rng.random() for _ in selfish_flags]
+        total = sum(raw) or 1.0
+        normalized = [r / total for r in raw]
+        if target_selfish_share is None:
+            return normalized
+        return _rescale_hash_powers_by_group(
+            normalized=normalized,
+            selfish_flags=selfish_flags,
+            target_selfish_share=target_selfish_share,
+        )
 
     def _init_graph(self) -> DirectedGraph:
         from ..core.topology_generator import TopologyGenerator
@@ -387,6 +416,16 @@ class AgenticBlockchainSimulation(ISimulationContext):
         jam_count = self._jam_event_count()
         forum = self._forum_state()
         post_count = len(forum.posts) if forum else 0
+        economy_metrics: Dict[str, Any] = {}
+        for module in self.modules:
+            getter = getattr(module, "get_summary_metrics", None)
+            if callable(getter):
+                try:
+                    metrics = getter()
+                    if isinstance(metrics, dict):
+                        economy_metrics.update(metrics)
+                except Exception:
+                    pass
         
         self._progress(
             f"[SIM] 模拟结束：blocks={len(self.block_storage.get_all_summaries())-1}, orphans={orphan_blocks}, "
@@ -421,8 +460,45 @@ class AgenticBlockchainSimulation(ISimulationContext):
             private_chain_events=list(self.private_chain_events),
             private_chain_lengths={mid: len(chain) for mid, chain in self.private_chains.items()},
             llm_scheduler_metrics=self._llm_scheduler.get_metrics() if self._llm_scheduler else {},
+            economy_metrics=economy_metrics,
             config=self.config,
         )
+
+    def _build_strategy_context(self, miner_id: str, event_kind: str, private_lead: int) -> Dict[str, Any]:
+        mined_blocks = max(0, len(self.block_storage.get_all_summaries()) - 1)
+        epoch_blocks = max(1, int(getattr(self.config, "difficulty_epoch_blocks", 2016)))
+        epoch_index = mined_blocks // epoch_blocks
+        epoch_offset = mined_blocks % epoch_blocks
+        progress = epoch_offset / float(epoch_blocks)
+        if progress < 0.33:
+            phase = "early"
+        elif progress < 0.66:
+            phase = "mid"
+        else:
+            phase = "late"
+        difficulty_alpha = max(0.0, float(getattr(self.config, "difficulty_adjust_alpha", 0.25)))
+        difficulty_level = max(0.1, 1.0 + epoch_index * difficulty_alpha)
+        out: Dict[str, Any] = {
+            "difficulty_epoch_index": int(epoch_index),
+            "difficulty_epoch_progress": float(progress),
+            "difficulty_phase": phase,
+            "difficulty_level": float(difficulty_level),
+            "intermittent_mode": str(getattr(self.config, "intermittent_mode", "post_adjust_burst")),
+            "ds_enabled": bool(getattr(self.config, "ds_enabled", False)),
+            "ds_target_confirmations": int(getattr(self.config, "ds_target_confirmations", 2)),
+            "confirmations_seen": 0,
+            "free_shot_eligible": False,
+        }
+        for module in self.modules:
+            getter = getattr(module, "get_double_spend_context", None)
+            if callable(getter):
+                try:
+                    extra = getter(miner_id)
+                    if isinstance(extra, dict):
+                        out.update(extra)
+                except Exception:
+                    pass
+        return out
 
     def _on_agent_trace(self, payload: Dict[str, object]) -> None:
         self.prompt_traces.append(payload)
@@ -1027,3 +1103,62 @@ class AgenticBlockchainSimulation(ISimulationContext):
     def _progress(self, message: str) -> None:
         if self.progress_callback is not None:
             self.progress_callback(message)
+
+
+def _rescale_hash_powers_by_group(
+    normalized: List[float],
+    selfish_flags: List[bool],
+    target_selfish_share: float,
+) -> List[float]:
+    if len(normalized) != len(selfish_flags):
+        raise ValueError("normalized and selfish_flags must have the same length")
+
+    t = float(target_selfish_share)
+    if not (0.0 <= t <= 1.0):
+        raise ValueError("target_selfish_share must be between 0 and 1")
+
+    selfish_idx = [i for i, is_selfish in enumerate(selfish_flags) if is_selfish]
+    honest_idx = [i for i, is_selfish in enumerate(selfish_flags) if not is_selfish]
+    if t > 0.0 and not selfish_idx:
+        raise ValueError("target_selfish_share > 0 but no selfish miners are configured")
+    if t < 1.0 and not honest_idx:
+        raise ValueError("target_selfish_share < 1 but no honest miners are configured")
+
+    selfish_sum = sum(normalized[i] for i in selfish_idx)
+    honest_sum = sum(normalized[i] for i in honest_idx)
+
+    # Degenerate safeguard: keep deterministic and valid even for pathological RNG outputs.
+    if selfish_idx and selfish_sum <= 0:
+        selfish_sum = float(len(selfish_idx))
+        for i in selfish_idx:
+            normalized[i] = 1.0
+    if honest_idx and honest_sum <= 0:
+        honest_sum = float(len(honest_idx))
+        for i in honest_idx:
+            normalized[i] = 1.0
+
+    out = [0.0] * len(normalized)
+    if selfish_idx:
+        scale_selfish = t / selfish_sum if selfish_sum > 0 else 0.0
+        for i in selfish_idx:
+            out[i] = normalized[i] * scale_selfish
+    if honest_idx:
+        scale_honest = (1.0 - t) / honest_sum if honest_sum > 0 else 0.0
+        for i in honest_idx:
+            out[i] = normalized[i] * scale_honest
+
+    total = sum(out)
+    if total <= 0:
+        # Fallback to equal split by role if everything collapses.
+        if selfish_idx:
+            each = t / len(selfish_idx)
+            for i in selfish_idx:
+                out[i] = each
+        if honest_idx:
+            each = (1.0 - t) / len(honest_idx)
+            for i in honest_idx:
+                out[i] = each
+        total = sum(out)
+    if total > 0 and abs(total - 1.0) > 1e-12:
+        out = [v / total for v in out]
+    return out

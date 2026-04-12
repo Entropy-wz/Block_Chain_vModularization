@@ -50,9 +50,16 @@ class HonestMiningStrategy(MiningStrategy):
 
 
 class AbstractSelfishMining(MiningStrategy):
-    def __init__(self, strategy_name: str, reputation_provider=None, allow_llm_override: bool = True):
+    def __init__(
+        self,
+        strategy_name: str,
+        reputation_provider=None,
+        allow_llm_override: bool = True,
+        strategy_context_provider=None,
+    ):
         self.reputation_provider = reputation_provider
         self.allow_llm_override = allow_llm_override
+        self.strategy_context_provider = strategy_context_provider
         self.selfish_strategy = build_selfish_strategy(strategy_name, reputation_provider=reputation_provider)
 
     def _default_plan(self, event_kind: str, lead: int) -> StrategyHookPlan:
@@ -62,8 +69,16 @@ class AbstractSelfishMining(MiningStrategy):
                 rep = float(self.reputation_provider())
             except Exception:
                 rep = 0.0
+        extra = {}
+        if self.strategy_context_provider is not None:
+            try:
+                provided = self.strategy_context_provider(event_kind=event_kind, private_lead=lead)
+                if isinstance(provided, dict):
+                    extra = dict(provided)
+            except Exception:
+                extra = {}
         out: SelfishStrategyPlan = self.selfish_strategy.decide(
-            SelfishStrategyContext(event_kind=event_kind, private_lead=lead, reputation=rep)
+            SelfishStrategyContext(event_kind=event_kind, private_lead=lead, reputation=rep, **extra)
         )
         release = max(0, int(out.publish_private_blocks))
         return StrategyHookPlan(
@@ -102,20 +117,35 @@ class AbstractSelfishMining(MiningStrategy):
 
 class StandardSelfishMining(AbstractSelfishMining):
     """Classic Eyal & Sirer Selfish Mining via module strategy."""
-    def __init__(self, reputation_provider=None, allow_llm_override: bool = True):
-        super().__init__("classic", reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
+    def __init__(self, reputation_provider=None, allow_llm_override: bool = True, strategy_context_provider=None):
+        super().__init__(
+            "classic",
+            reputation_provider=reputation_provider,
+            allow_llm_override=allow_llm_override,
+            strategy_context_provider=strategy_context_provider,
+        )
 
 
 class SociallyAwareSelfishMining(AbstractSelfishMining):
     """Socially-aware selfish mining via module strategy."""
-    def __init__(self, reputation_provider=None, allow_llm_override: bool = True):
-        super().__init__("social", reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
+    def __init__(self, reputation_provider=None, allow_llm_override: bool = True, strategy_context_provider=None):
+        super().__init__(
+            "social",
+            reputation_provider=reputation_provider,
+            allow_llm_override=allow_llm_override,
+            strategy_context_provider=strategy_context_provider,
+        )
 
 
 class StubbornMining(AbstractSelfishMining):
     """Stubborn mining via module strategy."""
-    def __init__(self, reputation_provider=None, allow_llm_override: bool = True):
-        super().__init__("stubborn", reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
+    def __init__(self, reputation_provider=None, allow_llm_override: bool = True, strategy_context_provider=None):
+        super().__init__(
+            "stubborn",
+            reputation_provider=reputation_provider,
+            allow_llm_override=allow_llm_override,
+            strategy_context_provider=strategy_context_provider,
+        )
 
 
 def build_mining_strategy(
@@ -123,16 +153,45 @@ def build_mining_strategy(
     reputation_provider=None,
     selfish_strategy_name: str = "classic",
     allow_llm_override: bool = True,
+    strategy_context_provider=None,
 ) -> MiningStrategy:
     name = (strategy_name or "").strip().lower()
     if name == "selfish":
         if selfish_strategy_name == "stubborn":
-            return StubbornMining(reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
+            return StubbornMining(
+                reputation_provider=reputation_provider,
+                allow_llm_override=allow_llm_override,
+                strategy_context_provider=strategy_context_provider,
+            )
         if selfish_strategy_name == "social":
-            return SociallyAwareSelfishMining(reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
-        return StandardSelfishMining(reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
+            return SociallyAwareSelfishMining(
+                reputation_provider=reputation_provider,
+                allow_llm_override=allow_llm_override,
+                strategy_context_provider=strategy_context_provider,
+            )
+        # Modular path: allow new registered strategy names directly.
+        if selfish_strategy_name not in {"classic", "stubborn", "social"}:
+            return AbstractSelfishMining(
+                selfish_strategy_name,
+                reputation_provider=reputation_provider,
+                allow_llm_override=allow_llm_override,
+                strategy_context_provider=strategy_context_provider,
+            )
+        return StandardSelfishMining(
+            reputation_provider=reputation_provider,
+            allow_llm_override=allow_llm_override,
+            strategy_context_provider=strategy_context_provider,
+        )
     if name == "social_selfish":
-        return SociallyAwareSelfishMining(reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
+        return SociallyAwareSelfishMining(
+            reputation_provider=reputation_provider,
+            allow_llm_override=allow_llm_override,
+            strategy_context_provider=strategy_context_provider,
+        )
     if name == "stubborn":
-        return StubbornMining(reputation_provider=reputation_provider, allow_llm_override=allow_llm_override)
+        return StubbornMining(
+            reputation_provider=reputation_provider,
+            allow_llm_override=allow_llm_override,
+            strategy_context_provider=strategy_context_provider,
+        )
     return HonestMiningStrategy()

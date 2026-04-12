@@ -10,6 +10,15 @@ class SelfishStrategyContext:
     event_kind: str
     private_lead: int
     reputation: float = 0.0
+    ds_enabled: bool = False
+    ds_target_confirmations: int = 2
+    confirmations_seen: int = 0
+    free_shot_eligible: bool = False
+    difficulty_epoch_index: int = 0
+    difficulty_epoch_progress: float = 0.0
+    difficulty_phase: str = "early"  # early/mid/late
+    difficulty_level: float = 1.0
+    intermittent_mode: str = "post_adjust_burst"
 
 
 @dataclass(frozen=True)
@@ -78,10 +87,64 @@ class SocialSelfishStrategy(SelfishStrategy):
         return SelfishStrategyPlan(publish_private_blocks=1)
 
 
+class StubbornDoubleSpendStrategy(SelfishStrategy):
+    def decide(self, ctx: SelfishStrategyContext) -> SelfishStrategyPlan:
+        lead = max(0, int(ctx.private_lead))
+        if ctx.event_kind == "on_block_mined":
+            # Stubborn family defaults to withholding mined blocks.
+            return SelfishStrategyPlan(publish_new_block=False)
+        if lead <= 0:
+            return SelfishStrategyPlan()
+
+        if not ctx.ds_enabled:
+            return SelfishStrategyPlan(publish_private_blocks=1)
+
+        target = max(1, int(ctx.ds_target_confirmations))
+        seen = max(0, int(ctx.confirmations_seen))
+
+        # "Free-shot" window: once confirmations are close enough, release more aggressively.
+        if ctx.free_shot_eligible and seen >= max(0, target - 1):
+            return SelfishStrategyPlan(publish_private_blocks=min(lead, 2))
+        if seen >= target:
+            return SelfishStrategyPlan(publish_private_blocks=min(lead, 2))
+        return SelfishStrategyPlan(publish_private_blocks=1)
+
+
+class IntermittentEpochStrategy(SelfishStrategy):
+    def decide(self, ctx: SelfishStrategyContext) -> SelfishStrategyPlan:
+        lead = max(0, int(ctx.private_lead))
+        mode = (ctx.intermittent_mode or "post_adjust_burst").strip().lower()
+        phase = (ctx.difficulty_phase or "early").strip().lower()
+
+        if mode == "epoch_end_burst":
+            aggressive = phase == "late"
+        else:
+            aggressive = phase == "early"
+
+        if ctx.event_kind == "on_block_mined":
+            # In non-attack phase, prefer conservative publication.
+            return SelfishStrategyPlan(publish_new_block=(not aggressive))
+
+        if lead <= 0:
+            return SelfishStrategyPlan()
+
+        if aggressive:
+            if lead == 1:
+                return SelfishStrategyPlan(publish_private_blocks=1)
+            return SelfishStrategyPlan(publish_private_blocks=1)
+
+        # Conservative stage: realize gains faster.
+        if lead == 1:
+            return SelfishStrategyPlan(publish_private_blocks=1)
+        return SelfishStrategyPlan(publish_private_blocks=min(lead, 2))
+
+
 _SELFISH_REGISTRY: Dict[str, Callable[[Optional[Callable[[], float]]], SelfishStrategy]] = {
     "classic": lambda reputation_provider=None: ClassicSelfishStrategy(),
     "stubborn": lambda reputation_provider=None: StubbornSelfishStrategy(),
     "social": lambda reputation_provider=None: SocialSelfishStrategy(reputation_provider=reputation_provider),
+    "stubborn_ds": lambda reputation_provider=None: StubbornDoubleSpendStrategy(),
+    "intermittent_epoch": lambda reputation_provider=None: IntermittentEpochStrategy(),
 }
 
 

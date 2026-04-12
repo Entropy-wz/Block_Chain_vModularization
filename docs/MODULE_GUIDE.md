@@ -226,3 +226,44 @@ class AirdropCheerModule(ISimulationModule):
 3. 通过 `SANDBOX_SELFISH_STRATEGY` 选择
 
 这样不需要改主循环。
+
+---
+
+## 8. Settlement Economy Upgrade (UTXO-minimal)
+
+`TokenomicsModule` now supports a settlement lifecycle for double-spend experiments:
+
+- transaction states: `pending -> confirmed -> reverted`
+- success criterion: merchant-confirmed payment later reverted by chain replacement
+- summary metrics:
+  - `ds_attempts`
+  - `ds_success_count`
+  - `ds_reorg_reverts`
+  - `merchant_loss_total`
+  - `attacker_net_profit`
+  - `economy_enabled_effective`
+
+When `SANDBOX_SELFISH_STRATEGY=stubborn_ds`, economy is force-enabled by default.
+
+## 9. Economy Parameter Switches (New)
+
+The economy module is now configurable from runtime env vars:
+
+- Price behavior:
+  - `SANDBOX_ECON_PRICE_FROM_ORPHAN`: enable/disable orphan-ratio impact on token price
+  - `SANDBOX_ECON_PRICE_MODEL`: `orphan_health` or `static`
+  - `SANDBOX_ECON_STATIC_TOKEN_PRICE`: static price value when `SANDBOX_ECON_PRICE_MODEL=static`
+  - `SANDBOX_ECON_ORPHAN_PENALTY_K`: penalty coefficient in `health_factor = 1 - K * orphan_ratio`
+  - `SANDBOX_ECON_PRICE_FLOOR_FACTOR`: lower bound of health factor
+- Cost/reward and initial balances:
+  - `SANDBOX_ECON_MINING_COST_PER_STEP`
+  - `SANDBOX_ECON_BLOCK_REWARD_TOKENS`
+  - `SANDBOX_ECON_INITIAL_FIAT`
+  - `SANDBOX_ECON_INITIAL_TOKENS`
+  - `SANDBOX_ECON_BASE_TOKEN_PRICE`
+
+Suggested workflow:
+
+1. Run with `SANDBOX_ECON_PRICE_MODEL=static` to isolate strategy effects.
+2. Re-enable `orphan_health` to evaluate market-stress sensitivity.
+3. Compare both with `ratio_economic_signed` and `selfish_roi`.

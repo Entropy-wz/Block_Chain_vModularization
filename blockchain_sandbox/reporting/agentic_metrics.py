@@ -21,6 +21,10 @@ class MinerDetail:
     canonical_share: float
     mined_vs_hp_ratio: float
     canonical_vs_hp_ratio: float
+    economic_net_profit: float
+    economic_roi: float
+    economic_share: float
+    economic_vs_hp_ratio: float
     top_actions: List[Tuple[str, int]]
     last_raw_action: str
     last_effective_action: str
@@ -54,6 +58,25 @@ class AgenticReport:
     mae_hashpower_vs_canonical_share: float
     wasted_honest_blocks: int
     unpublished_selfish_blocks: int
+    published_selfish_orphan_blocks: int
+    ds_attempts: int
+    ds_success_count: int
+    ds_reorg_reverts: int
+    ds_public_confirmed_count: int
+    ds_conflict_released_count: int
+    ds_confirmed_and_released_count: int
+    ds_reverts_on_released_count: int
+    merchant_loss_total: float
+    attacker_net_profit: float
+    economy_enabled_effective: bool
+    selfish_hash_power_share: float
+    selfish_economic_share: float
+    selfish_ratio_economic: float
+    selfish_net_profit_total: float
+    network_net_profit_total: float
+    selfish_initial_capital_total: float
+    selfish_roi: float
+    ratio_economic_signed: float
 
 
 def build_agentic_report(result: AgenticSimulationResult) -> AgenticReport:
@@ -72,21 +95,18 @@ def build_agentic_report(result: AgenticSimulationResult) -> AgenticReport:
     total_decisions = len(result.prompt_traces)
     fallback_decisions = sum(1 for tr in result.prompt_traces if bool(tr.get("fallback", False)))
     
-    # Calculate Wasted Honest Blocks & Unpublished Selfish Blocks
-    wasted_honest_blocks = 0
-    unpublished_selfish_blocks = 0
-    
     canonical_set = _canonical_set(result)
-    for block in result.blocks.values():
-        if block.miner_id == "genesis": continue
-        node = result.nodes.get(block.miner_id)
-        if node and node.strategy_name == "honest" and block.block_id not in canonical_set:
-            wasted_honest_blocks += 1
+    wasted_honest_blocks, unpublished_selfish_blocks, published_selfish_orphan_blocks = _orphan_breakdown(result, canonical_set)
             
-    if hasattr(result, "private_chain_lengths") and result.private_chain_lengths:
-        for count in result.private_chain_lengths.values():
-            unpublished_selfish_blocks += count
-            
+    selfish_hash_power_share = _selfish_hash_power_share(result)
+    selfish_economic_share = _selfish_economic_share(miner_details)
+    selfish_ratio_economic = _safe_div(selfish_economic_share, selfish_hash_power_share)
+    selfish_net_profit_total = _selfish_net_profit_total(miner_details)
+    network_net_profit_total = _network_net_profit_total(miner_details)
+    selfish_initial_capital_total = _selfish_initial_capital_total(result, miner_details)
+    selfish_roi = _safe_div(selfish_net_profit_total, selfish_initial_capital_total)
+    ratio_economic_signed = _signed_economic_ratio(selfish_net_profit_total, selfish_hash_power_share, network_net_profit_total)
+
     return AgenticReport(
         total_blocks=total_blocks,
         canonical_height=canonical_height,
@@ -112,6 +132,25 @@ def build_agentic_report(result: AgenticSimulationResult) -> AgenticReport:
         mae_hashpower_vs_canonical_share=_mae(hp, canon_share),
         wasted_honest_blocks=wasted_honest_blocks,
         unpublished_selfish_blocks=unpublished_selfish_blocks,
+        published_selfish_orphan_blocks=published_selfish_orphan_blocks,
+        ds_attempts=int(getattr(result, "economy_metrics", {}).get("ds_attempts", 0)),
+        ds_success_count=int(getattr(result, "economy_metrics", {}).get("ds_success_count", 0)),
+        ds_reorg_reverts=int(getattr(result, "economy_metrics", {}).get("ds_reorg_reverts", 0)),
+        ds_public_confirmed_count=int(getattr(result, "economy_metrics", {}).get("ds_public_confirmed_count", 0)),
+        ds_conflict_released_count=int(getattr(result, "economy_metrics", {}).get("ds_conflict_released_count", 0)),
+        ds_confirmed_and_released_count=int(getattr(result, "economy_metrics", {}).get("ds_confirmed_and_released_count", 0)),
+        ds_reverts_on_released_count=int(getattr(result, "economy_metrics", {}).get("ds_reverts_on_released_count", 0)),
+        merchant_loss_total=float(getattr(result, "economy_metrics", {}).get("merchant_loss_total", 0.0)),
+        attacker_net_profit=float(getattr(result, "economy_metrics", {}).get("attacker_net_profit", 0.0)),
+        economy_enabled_effective=bool(getattr(result, "economy_metrics", {}).get("economy_enabled_effective", False)),
+        selfish_hash_power_share=selfish_hash_power_share,
+        selfish_economic_share=selfish_economic_share,
+        selfish_ratio_economic=selfish_ratio_economic,
+        selfish_net_profit_total=selfish_net_profit_total,
+        network_net_profit_total=network_net_profit_total,
+        selfish_initial_capital_total=selfish_initial_capital_total,
+        selfish_roi=selfish_roi,
+        ratio_economic_signed=ratio_economic_signed,
     )
 
 
@@ -131,6 +170,7 @@ def format_agentic_report(report: AgenticReport) -> str:
         f"Canonical chain height: {report.canonical_height} (heaviest: {report.heaviest_head})",
         f"Orphan blocks: {report.orphan_blocks} ({report.orphan_ratio:.2%})",
         f"  - Wasted Honest Blocks (orphaned): {report.wasted_honest_blocks}",
+        f"  - Published Selfish Blocks (orphaned): {report.published_selfish_orphan_blocks}",
         f"  - Unpublished Selfish Blocks (hoarded): {report.unpublished_selfish_blocks}",
         f"Fork events: {report.fork_events}",
         f"Social jam events: {report.jam_events}",
@@ -149,6 +189,25 @@ def format_agentic_report(report: AgenticReport) -> str:
         f"  - corr(hash_power, canonical_share): {report.corr_hashpower_canonical_share:.3f}",
         f"  - mae(hash_power vs mined_share): {report.mae_hashpower_vs_mined_share:.4f}",
         f"  - mae(hash_power vs canonical_share): {report.mae_hashpower_vs_canonical_share:.4f}",
+        "Double-Spend Settlement:",
+        f"  - economy_enabled: {report.economy_enabled_effective}",
+        f"  - ds_attempts: {report.ds_attempts}",
+        f"  - ds_success_count: {report.ds_success_count}",
+        f"  - ds_reorg_reverts: {report.ds_reorg_reverts}",
+        f"  - ds_public_confirmed_count: {report.ds_public_confirmed_count}",
+        f"  - ds_conflict_released_count: {report.ds_conflict_released_count}",
+        f"  - ds_confirmed_and_released_count: {report.ds_confirmed_and_released_count}",
+        f"  - ds_reverts_on_released_count: {report.ds_reverts_on_released_count}",
+        f"  - merchant_loss_total: {report.merchant_loss_total:.4f}",
+        f"  - attacker_net_profit: {report.attacker_net_profit:.4f}",
+        "Economic Efficiency:",
+        f"  - selfish_hash_power_share: {report.selfish_hash_power_share:.4f}",
+        f"  - selfish_economic_share: {report.selfish_economic_share:.4f}",
+        f"  - ratio_economic (econ_share/hash_power): {report.selfish_ratio_economic:.4f}",
+        f"  - selfish_net_profit_total: {report.selfish_net_profit_total:.4f}",
+        f"  - network_net_profit_total: {report.network_net_profit_total:.4f}",
+        f"  - selfish_roi: {report.selfish_roi:.4f}",
+        f"  - ratio_economic_signed: {report.ratio_economic_signed:.4f}",
         "Top miners by discovered blocks:",
     ])
     for mid, c in report.top_miners:
@@ -202,7 +261,8 @@ def format_miner_details(report: AgenticReport) -> str:
             f"- {d.miner_id} | strategy={d.strategy} | hp={d.hash_power:.4f} | "
             f"mined={d.mined_blocks} | canonical={d.canonical_blocks} | "
             f"orphans={d.orphan_blocks} ({d.orphan_ratio:.1%}) | "
-            f"ratio(mined/hp)={d.mined_vs_hp_ratio:.2f} | ratio(canon/hp)={d.canonical_vs_hp_ratio:.2f}"
+            f"ratio(mined/hp)={d.mined_vs_hp_ratio:.2f} | ratio(canon/hp)={d.canonical_vs_hp_ratio:.2f} | "
+            f"ratio(econ/hp)={d.economic_vs_hp_ratio:.2f}"
         )
         if d.top_actions:
             action_text = ", ".join(f"{a}:{c}" for a, c in d.top_actions)
@@ -296,6 +356,10 @@ def _build_miner_details(result: AgenticSimulationResult) -> List[MinerDetail]:
         last_reason[mid] = reason
 
     details: List[MinerDetail] = []
+    economy_metrics = getattr(result, "economy_metrics", {}) or {}
+    econ_profit_map = economy_metrics.get("miner_net_profit", {}) if isinstance(economy_metrics, dict) else {}
+    econ_initial_map = economy_metrics.get("miner_initial_capital", {}) if isinstance(economy_metrics, dict) else {}
+    econ_share_map = economy_metrics.get("miner_economic_share", {}) if isinstance(economy_metrics, dict) else {}
     total_mined = sum(by_miner_mined.values()) or 1
     total_canonical = sum(by_miner_canonical.values()) or 1
     miner_ids = sorted([nid for nid, node in result.nodes.items() if node.is_miner], key=lambda x: int(x[1:]) if x[1:].isdigit() else 0)
@@ -309,6 +373,11 @@ def _build_miner_details(result: AgenticSimulationResult) -> List[MinerDetail]:
         canonical_share = canon / total_canonical
         mined_vs_hp_ratio = (mined_share / node.hash_power) if node.hash_power > 0 else 0.0
         canonical_vs_hp_ratio = (canonical_share / node.hash_power) if node.hash_power > 0 else 0.0
+        economic_net_profit = float(econ_profit_map.get(mid, 0.0)) if isinstance(econ_profit_map, dict) else 0.0
+        economic_initial = float(econ_initial_map.get(mid, 0.0)) if isinstance(econ_initial_map, dict) else 0.0
+        economic_roi = _safe_div(economic_net_profit, economic_initial)
+        economic_share = float(econ_share_map.get(mid, 0.0)) if isinstance(econ_share_map, dict) else 0.0
+        economic_vs_hp_ratio = (economic_share / node.hash_power) if node.hash_power > 0 else 0.0
         actions = sorted(action_count.get(mid, {}).items(), key=lambda kv: kv[1], reverse=True)[:5]
         details.append(
             MinerDetail(
@@ -323,6 +392,10 @@ def _build_miner_details(result: AgenticSimulationResult) -> List[MinerDetail]:
                 canonical_share=canonical_share,
                 mined_vs_hp_ratio=mined_vs_hp_ratio,
                 canonical_vs_hp_ratio=canonical_vs_hp_ratio,
+                economic_net_profit=economic_net_profit,
+                economic_roi=economic_roi,
+                economic_share=economic_share,
+                economic_vs_hp_ratio=economic_vs_hp_ratio,
                 top_actions=actions,
                 last_raw_action=last_raw_action.get(mid, "n/a"),
                 last_effective_action=last_effective_action.get(mid, "n/a"),
@@ -331,6 +404,69 @@ def _build_miner_details(result: AgenticSimulationResult) -> List[MinerDetail]:
             )
         )
     return details
+
+
+def _selfish_hash_power_share(result: AgenticSimulationResult) -> float:
+    hp = 0.0
+    for mid, node in result.nodes.items():
+        if not node.is_miner:
+            continue
+        if node.strategy_name == "selfish":
+            hp += node.hash_power
+    return hp
+
+
+def _selfish_economic_share(miner_details: List[MinerDetail]) -> float:
+    share = 0.0
+    for d in miner_details:
+        if d.strategy == "selfish":
+            share += d.economic_share
+    return share
+
+
+def _selfish_ratio_economic(result: AgenticSimulationResult, miner_details: List[MinerDetail]) -> float:
+    hp_share = _selfish_hash_power_share(result)
+    if hp_share <= 1e-12:
+        return 0.0
+    return _selfish_economic_share(miner_details) / hp_share
+
+
+def _selfish_net_profit_total(miner_details: List[MinerDetail]) -> float:
+    return sum(d.economic_net_profit for d in miner_details if d.strategy == "selfish")
+
+
+def _network_net_profit_total(miner_details: List[MinerDetail]) -> float:
+    return sum(d.economic_net_profit for d in miner_details)
+
+
+def _selfish_initial_capital_total(result: AgenticSimulationResult, miner_details: List[MinerDetail]) -> float:
+    eco = getattr(result, "economy_metrics", {}) or {}
+    initial_map = eco.get("miner_initial_capital", {}) if isinstance(eco, dict) else {}
+    if isinstance(initial_map, dict) and initial_map:
+        total = 0.0
+        for d in miner_details:
+            if d.strategy != "selfish":
+                continue
+            total += float(initial_map.get(d.miner_id, 0.0))
+        return total
+    # Fallback for non-economy runs
+    count = sum(1 for d in miner_details if d.strategy == "selfish")
+    per = float(eco.get("initial_capital_per_miner", 0.0)) if isinstance(eco, dict) else 0.0
+    return count * per
+
+
+def _signed_economic_ratio(selfish_profit: float, selfish_hp_share: float, network_profit: float) -> float:
+    if abs(selfish_hp_share) <= 1e-12 or abs(network_profit) <= 1e-12:
+        return 0.0
+    selfish_per_hp = selfish_profit / selfish_hp_share
+    network_per_hp = network_profit  # total network hash-power share is 1
+    return selfish_per_hp / network_per_hp
+
+
+def _safe_div(a: float, b: float) -> float:
+    if abs(b) <= 1e-12:
+        return 0.0
+    return a / b
 
 
 def _canonical_set(result: AgenticSimulationResult) -> set[str]:
@@ -347,6 +483,32 @@ def _shorten(text: str, max_len: int) -> str:
     if len(t) <= max_len:
         return t
     return t[: max(0, max_len - 3)] + "..."
+
+
+def _orphan_breakdown(result: AgenticSimulationResult, canonical_set: set[str]) -> tuple[int, int, int]:
+    wasted_honest = 0
+    selfish_orphan_total = 0
+    unpublished_selfish = 0
+
+    for block in result.blocks.values():
+        if block.miner_id == "genesis":
+            continue
+        if block.block_id in canonical_set:
+            continue
+        node = result.nodes.get(block.miner_id)
+        if not node:
+            continue
+        if node.strategy_name == "honest":
+            wasted_honest += 1
+        elif node.strategy_name == "selfish":
+            selfish_orphan_total += 1
+
+    if hasattr(result, "private_chain_lengths") and result.private_chain_lengths:
+        for count in result.private_chain_lengths.values():
+            unpublished_selfish += int(count)
+
+    published_selfish = max(0, selfish_orphan_total - unpublished_selfish)
+    return wasted_honest, unpublished_selfish, published_selfish
 
 
 def _corr(xs: List[float], ys: List[float]) -> float:

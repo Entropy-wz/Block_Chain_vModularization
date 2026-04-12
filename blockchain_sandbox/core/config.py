@@ -60,6 +60,9 @@ class AgenticSimulationConfig:
 
     num_miners: int = 10
     num_full_nodes: int = 20
+    # Optional fixed share for the selfish miner group.
+    # None means using randomized normalized hash powers (default behavior).
+    selfish_hash_power_share: float | None = None
 
     edge_probability: float = 0.22
     topology_type: str = "random"  # "random", "barabasi_albert", "watts_strogatz", "core_periphery"
@@ -88,6 +91,27 @@ class AgenticSimulationConfig:
     # Modules
     enable_forum: bool = True
     selfish_strategy: str = "classic"
+    economy_enabled: bool = False
+    ds_enabled: bool = False
+    ds_target_confirmations: int = 2
+    ds_free_shot_depth: int = 1
+    ds_payment_amount: float = 3.0
+    ds_attack_interval_blocks: int = 30
+    ds_merchant_id: str = ""
+    difficulty_epoch_blocks: int = 2016
+    difficulty_adjust_alpha: float = 0.25
+    intermittent_mode: str = "post_adjust_burst"
+    # Economy controls
+    econ_initial_fiat: float = 1000.0
+    econ_initial_tokens: float = 20.0
+    econ_base_token_price: float = 100.0
+    econ_mining_cost_per_step: float = 1.0
+    econ_block_reward_tokens: float = 1.0
+    econ_price_from_orphan: bool = True
+    econ_price_model: str = "orphan_health"  # orphan_health | static
+    econ_static_token_price: float = 100.0
+    econ_orphan_penalty_k: float = 2.0
+    econ_price_floor_factor: float = 0.1
     
     # Attack switches
     enable_attack_jamming: bool = True

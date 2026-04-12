@@ -40,3 +40,40 @@ def test_invalid_strategy_name_falls_back_to_classic():
     a = unknown.decide(SelfishStrategyContext(event_kind="on_block_received", private_lead=2))
     b = ref.decide(SelfishStrategyContext(event_kind="on_block_received", private_lead=2))
     assert a.publish_private_blocks == b.publish_private_blocks
+
+
+def test_stubborn_ds_uses_free_shot_window():
+    s = build_selfish_strategy("stubborn_ds")
+    plan = s.decide(
+        SelfishStrategyContext(
+            event_kind="on_block_received",
+            private_lead=3,
+            ds_enabled=True,
+            ds_target_confirmations=2,
+            confirmations_seen=2,
+            free_shot_eligible=True,
+        )
+    )
+    assert plan.publish_private_blocks == 2
+
+
+def test_intermittent_epoch_phase_switch():
+    s = build_selfish_strategy("intermittent_epoch")
+    early = s.decide(
+        SelfishStrategyContext(
+            event_kind="on_block_mined",
+            private_lead=0,
+            difficulty_phase="early",
+            intermittent_mode="post_adjust_burst",
+        )
+    )
+    late = s.decide(
+        SelfishStrategyContext(
+            event_kind="on_block_mined",
+            private_lead=0,
+            difficulty_phase="late",
+            intermittent_mode="post_adjust_burst",
+        )
+    )
+    assert early.publish_new_block is False
+    assert late.publish_new_block is True

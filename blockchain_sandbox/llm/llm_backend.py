@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 import asyncio
@@ -165,7 +166,65 @@ class CompatibleLLMBackend(LLMBackend):
         )
 
 
+class OfflineRuleLLMBackend(LLMBackend):
+    """Deterministic local decision backend for no-LLM benchmarking."""
+
+    def decide(self, system_prompt: str, user_prompt: str) -> LLMDecision:
+        fields = _parse_prompt_fields(user_prompt)
+        is_selfish = fields.get("is_selfish", "false").lower() == "true"
+        event_kind = fields.get("event_kind", "periodic")
+        private_lead = _coerce_int(fields.get("private_lead"), 0)
+
+        if not is_selfish:
+            if event_kind == "on_block_received":
+                return LLMDecision(
+                    action="rebroadcast",
+                    reason="offline-rule: honest miner rebroadcasts on receive",
+                )
+            return LLMDecision(
+                action="publish_if_win",
+                reason="offline-rule: honest miner publishes mined blocks",
+            )
+
+        # Selfish miner rules (simple but deterministic):
+        # - Mined event: usually withhold if lead is still small.
+        # - Receive event: release private blocks when contested.
+        if event_kind == "on_block_mined":
+            if private_lead >= 2:
+                return LLMDecision(
+                    action="publish_private",
+                    reason="offline-rule: lock in gains when lead already high",
+                    release_private_blocks=1,
+                )
+            return LLMDecision(
+                action="withhold_if_win",
+                reason="offline-rule: extend private lead",
+            )
+
+        if private_lead >= 2:
+            return LLMDecision(
+                action="publish_private",
+                reason="offline-rule: defend lead on receive",
+                release_private_blocks=1,
+            )
+        if private_lead == 1:
+            return LLMDecision(
+                action="publish_private",
+                reason="offline-rule: trigger race at lead=1",
+                release_private_blocks=1,
+            )
+        return LLMDecision(
+            action="hold",
+            reason="offline-rule: no private lead to release",
+        )
+
+    async def decide_async(self, system_prompt: str, user_prompt: str) -> LLMDecision:
+        return self.decide(system_prompt, user_prompt)
+
+
 def build_llm_backend(config: LLMConfig) -> LLMBackend:
+    if os.getenv("SANDBOX_LLM_OFFLINE", "0").strip().lower() in {"1", "true"}:
+        return OfflineRuleLLMBackend()
     return CompatibleLLMBackend(config)
 
 
@@ -206,6 +265,19 @@ def _extract_chat_text(response: Any) -> str:
         return str(content)
     except Exception:
         return ""
+
+
+def _parse_prompt_fields(user_prompt: str) -> Dict[str, str]:
+    out: Dict[str, str] = {}
+    if not user_prompt:
+        return out
+    for part in user_prompt.split(";"):
+        token = part.strip()
+        if not token or "=" not in token:
+            continue
+        key, value = token.split("=", 1)
+        out[key.strip()] = value.strip()
+    return out
 
 
 def _coerce_str(value: Any, default: str) -> str:

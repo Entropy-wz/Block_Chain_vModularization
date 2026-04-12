@@ -211,7 +211,7 @@ python -m experiments.run_social_warfare
 ```powershell
 $env:SANDBOX_SELFISH_ALPHA='0.35'
 $env:SANDBOX_SELFISH_GAMMA='0.5'
-$env:SANDBOX_SELFISH_STRATEGY='classic' # classic / stubborn / social
+$env:SANDBOX_SELFISH_STRATEGY='classic' # classic / stubborn / social / stubborn_ds / intermittent_epoch
 $env:SANDBOX_SELFISH_TARGET_BLOCKS='5000'
 python -m experiments.run_selfish_no_llm
 ```
@@ -224,6 +224,39 @@ python -m experiments.run_selfish_no_llm
 - `theory_match`
 
 > **三组预设配方与分析方法请参阅**：[docs/SELFISH_NO_LLM_GUIDE.md](docs/SELFISH_NO_LLM_GUIDE.md)
+
+### Double-Spend Economy Switch (New)
+
+- `SANDBOX_ECONOMY_ENABLED=1` enables settlement economy explicitly.
+- If `SANDBOX_SELFISH_STRATEGY=stubborn_ds`, economy is auto-forced ON.
+- New DS parameters:
+  - `SANDBOX_DS_TARGET_CONFIRMATIONS` (default `2`)
+  - `SANDBOX_DS_PAYMENT_AMOUNT` (default `3.0`)
+  - `SANDBOX_DS_ATTACK_INTERVAL_BLOCKS` (default `30`)
+
+### Economy Parameterization (New)
+
+You can now fully control the economy model from env vars:
+
+- Price model switches:
+  - `SANDBOX_ECON_PRICE_FROM_ORPHAN` (`1`/`0`)
+  - `SANDBOX_ECON_PRICE_MODEL` (`orphan_health`/`static`)
+  - `SANDBOX_ECON_STATIC_TOKEN_PRICE` (used when model is `static`)
+  - `SANDBOX_ECON_ORPHAN_PENALTY_K` (default `2.0`)
+  - `SANDBOX_ECON_PRICE_FLOOR_FACTOR` (default `0.1`)
+- Cost/reward and initial conditions:
+  - `SANDBOX_ECON_MINING_COST_PER_STEP` (default `1.0`)
+  - `SANDBOX_ECON_BLOCK_REWARD_TOKENS` (default `1.0`)
+  - `SANDBOX_ECON_INITIAL_FIAT` (default `1000`)
+  - `SANDBOX_ECON_INITIAL_TOKENS` (default `20`)
+  - `SANDBOX_ECON_BASE_TOKEN_PRICE` (default `100`)
+
+Key signed profit metrics (summary/report):
+
+- `selfish_net_profit_total`
+- `network_net_profit_total`
+- `selfish_roi`
+- `ratio_economic_signed`
 
 ---
 

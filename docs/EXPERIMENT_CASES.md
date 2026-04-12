@@ -170,4 +170,67 @@ python -m experiments.run_selfish_no_llm
 
 See `docs/SELFISH_NO_LLM_GUIDE.md` for detailed command presets.
 
-- Strategy switch: set SANDBOX_SELFISH_STRATEGY to classic/stubborn/social for the shared selfish module.
+- Strategy switch: set SANDBOX_SELFISH_STRATEGY to classic/stubborn/social/stubborn_ds/intermittent_epoch for the shared selfish module.
+
+## Experiment Group C: Double-Spend Settlement (New)
+
+Use this profile when evaluating `stubborn_ds` with mandatory settlement economy.
+
+```powershell
+$env:SANDBOX_SELFISH_STRATEGY='stubborn_ds'
+$env:SANDBOX_ECONOMY_ENABLED='1'
+$env:SANDBOX_DS_TARGET_CONFIRMATIONS='2'
+$env:SANDBOX_DS_PAYMENT_AMOUNT='3.0'
+$env:SANDBOX_DS_ATTACK_INTERVAL_BLOCKS='30'
+python -m experiments.run_llm_sandbox
+```
+
+Key summary fields:
+- `ds_attempts`
+- `ds_success_count`
+- `ds_reorg_reverts`
+- `merchant_loss_total`
+- `attacker_net_profit`
+- `economy_enabled_effective`
+
+## Experiment Group D: Fixed-Price Profitability Check (New)
+
+Use this profile to disable orphan-driven price movement and test pure strategy profitability.
+
+```powershell
+$env:SANDBOX_ECONOMY_ENABLED='1'
+$env:SANDBOX_ECON_PRICE_FROM_ORPHAN='0'
+$env:SANDBOX_ECON_PRICE_MODEL='static'
+$env:SANDBOX_ECON_STATIC_TOKEN_PRICE='100'
+$env:SANDBOX_ECON_MINING_COST_PER_STEP='1.0'
+$env:SANDBOX_ECON_BLOCK_REWARD_TOKENS='1.0'
+```
+
+Recommended baseline (high relative-profit scan winner):
+
+```powershell
+$env:SANDBOX_TOTAL_STEPS='2000'
+$env:SANDBOX_RANDOM_SEED='11'
+$env:SANDBOX_NUM_MINERS='8'
+$env:SANDBOX_NUM_FULL_NODES='12'
+$env:SANDBOX_TOPOLOGY_TYPE='random'
+$env:SANDBOX_EDGE_PROB='0.24'
+$env:SANDBOX_MIN_LATENCY='2.0'
+$env:SANDBOX_MAX_LATENCY='5.0'
+$env:SANDBOX_MIN_RELIABILITY='0.96'
+$env:SANDBOX_MAX_RELIABILITY='1.0'
+$env:SANDBOX_BLOCK_DISCOVERY_CHANCE='0.03'
+$env:SANDBOX_SELFISH_STRATEGY='classic'
+$env:SANDBOX_DS_ENABLED='0'
+python -m experiments.run_llm_sandbox
+```
+
+For double-spend under fixed price, switch to:
+
+```powershell
+$env:SANDBOX_SELFISH_STRATEGY='stubborn_ds'
+$env:SANDBOX_DS_ENABLED='1'
+$env:SANDBOX_DS_TARGET_CONFIRMATIONS='1'
+$env:SANDBOX_DS_ATTACK_INTERVAL_BLOCKS='8'
+$env:SANDBOX_DS_PAYMENT_AMOUNT='1.0'
+```

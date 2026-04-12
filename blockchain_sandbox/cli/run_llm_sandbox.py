@@ -24,6 +24,14 @@ from blockchain_sandbox.reporting.agentic_metrics import (
 from blockchain_sandbox.reporting.persistence import export_run_artifacts
 
 
+def resolve_economy_enabled(selfish_strategy_name: str, economy_env_value: str) -> bool:
+    ds_strategy_active = (selfish_strategy_name or "").strip().lower() in {"stubborn_ds"}
+    economy_enabled = (economy_env_value or "0").strip().lower() in {"1", "true"}
+    if ds_strategy_active:
+        return True
+    return economy_enabled
+
+
 def main() -> None:
     run_started = time.time()
 
@@ -124,11 +132,37 @@ def main() -> None:
                 raise
             log("CHECK", "continue with preflight failure ignored")
 
+    selfish_strategy_name = os.getenv("SANDBOX_SELFISH_STRATEGY", "classic").strip().lower()
+    ds_strategy_active = selfish_strategy_name in {"stubborn_ds"}
+    economy_enabled_env = os.getenv("SANDBOX_ECONOMY_ENABLED", os.getenv("SANDBOX_ENABLE_TOKENOMICS", "0"))
+    economy_enabled = resolve_economy_enabled(selfish_strategy_name, economy_enabled_env)
+    if ds_strategy_active and economy_enabled_env.strip().lower() not in {"1", "true"}:
+        log("CONFIG", "double-spend strategy detected, forcing economy system enabled")
+
+    ds_target_confirmations = int(os.getenv("SANDBOX_DS_TARGET_CONFIRMATIONS", "2"))
+    ds_payment_amount = float(os.getenv("SANDBOX_DS_PAYMENT_AMOUNT", "3.0"))
+    ds_attack_interval_blocks = int(os.getenv("SANDBOX_DS_ATTACK_INTERVAL_BLOCKS", "30"))
+    if ds_strategy_active:
+        if ds_target_confirmations <= 0:
+            raise ValueError("SANDBOX_DS_TARGET_CONFIRMATIONS must be > 0 for double-spend strategy")
+        if ds_payment_amount <= 0:
+            raise ValueError("SANDBOX_DS_PAYMENT_AMOUNT must be > 0 for double-spend strategy")
+        if ds_attack_interval_blocks <= 0:
+            raise ValueError("SANDBOX_DS_ATTACK_INTERVAL_BLOCKS must be > 0 for double-spend strategy")
+
+    selfish_hash_power_share_env = os.getenv("SANDBOX_SELFISH_HASH_POWER_SHARE", "").strip()
+    selfish_hash_power_share = None
+    if selfish_hash_power_share_env:
+        selfish_hash_power_share = float(selfish_hash_power_share_env)
+        if not (0.0 <= selfish_hash_power_share <= 1.0):
+            raise ValueError("SANDBOX_SELFISH_HASH_POWER_SHARE must be between 0 and 1")
+
     sim_cfg = AgenticSimulationConfig(
         total_steps=int(os.getenv("SANDBOX_TOTAL_STEPS", "320")),
         random_seed=int(os.getenv("SANDBOX_RANDOM_SEED", "11")),
         num_miners=int(os.getenv("SANDBOX_NUM_MINERS", "12")),
         num_full_nodes=int(os.getenv("SANDBOX_NUM_FULL_NODES", "24")),
+        selfish_hash_power_share=selfish_hash_power_share,
         edge_probability=float(os.getenv("SANDBOX_EDGE_PROB", "0.24")),
         topology_type=os.getenv("SANDBOX_TOPOLOGY_TYPE", "random"),
         topology_ba_m=int(os.getenv("SANDBOX_TOPOLOGY_BA_M", "3")),
@@ -145,10 +179,30 @@ def main() -> None:
         snapshot_interval_blocks=int(os.getenv("SANDBOX_SNAPSHOT_INTERVAL_BLOCKS", "10")),
         enable_forum=os.getenv("SANDBOX_ENABLE_FORUM", "1").strip().lower() in {"1", "true"},
         enable_attack_jamming=os.getenv("SANDBOX_ENABLE_ATTACK_JAMMING", "1").strip().lower() in {"1", "true"},
-        selfish_strategy=os.getenv("SANDBOX_SELFISH_STRATEGY", "classic").strip().lower(),
+        selfish_strategy=selfish_strategy_name,
+        economy_enabled=economy_enabled,
+        ds_enabled=os.getenv("SANDBOX_DS_ENABLED", "0").strip().lower() in {"1", "true"} or ds_strategy_active,
+        ds_target_confirmations=ds_target_confirmations,
+        ds_free_shot_depth=int(os.getenv("SANDBOX_DS_FREE_SHOT_DEPTH", "1")),
+        ds_payment_amount=ds_payment_amount,
+        ds_attack_interval_blocks=ds_attack_interval_blocks,
+        ds_merchant_id=os.getenv("SANDBOX_DS_MERCHANT_ID", "").strip(),
+        difficulty_epoch_blocks=int(os.getenv("SANDBOX_DIFFICULTY_EPOCH_BLOCKS", "2016")),
+        difficulty_adjust_alpha=float(os.getenv("SANDBOX_DIFFICULTY_ADJUST_ALPHA", "0.25")),
+        intermittent_mode=os.getenv("SANDBOX_INTERMITTENT_MODE", "post_adjust_burst").strip().lower(),
+        econ_initial_fiat=float(os.getenv("SANDBOX_ECON_INITIAL_FIAT", "1000")),
+        econ_initial_tokens=float(os.getenv("SANDBOX_ECON_INITIAL_TOKENS", "20")),
+        econ_base_token_price=float(os.getenv("SANDBOX_ECON_BASE_TOKEN_PRICE", "100")),
+        econ_mining_cost_per_step=float(os.getenv("SANDBOX_ECON_MINING_COST_PER_STEP", "1.0")),
+        econ_block_reward_tokens=float(os.getenv("SANDBOX_ECON_BLOCK_REWARD_TOKENS", "1.0")),
+        econ_price_from_orphan=os.getenv("SANDBOX_ECON_PRICE_FROM_ORPHAN", "1").strip().lower() in {"1", "true"},
+        econ_price_model=os.getenv("SANDBOX_ECON_PRICE_MODEL", "orphan_health").strip().lower(),
+        econ_static_token_price=float(os.getenv("SANDBOX_ECON_STATIC_TOKEN_PRICE", "100")),
+        econ_orphan_penalty_k=float(os.getenv("SANDBOX_ECON_ORPHAN_PENALTY_K", "2.0")),
+        econ_price_floor_factor=float(os.getenv("SANDBOX_ECON_PRICE_FLOOR_FACTOR", "0.1")),
     )
     
-    enable_tokenomics = os.getenv("SANDBOX_ENABLE_TOKENOMICS", "0").strip().lower() in {"1", "true"}
+    enable_tokenomics = sim_cfg.economy_enabled
     show_snapshots = os.getenv("SANDBOX_SHOW_SNAPSHOTS", "1").strip().lower() in {"1", "true"}
     progress_interval_steps = int(os.getenv("SANDBOX_PROGRESS_INTERVAL_STEPS", "20"))
     verbose_llm_log = os.getenv("SANDBOX_VERBOSE_LLM_LOG", "0").strip().lower() in {"1", "true"}
@@ -166,7 +220,10 @@ def main() -> None:
             ("Full Node Count", str(sim_cfg.num_full_nodes)),
             ("Forum Module", "Enabled" if sim_cfg.enable_forum else "Disabled"),
             ("Selfish Strategy", sim_cfg.selfish_strategy),
+            ("Selfish HP Target", f"{sim_cfg.selfish_hash_power_share:.4f}" if sim_cfg.selfish_hash_power_share is not None else "random-normalized"),
             ("Tokenomics Module", "Enabled" if enable_tokenomics else "Disabled"),
+            ("DS Mode", "Enabled" if sim_cfg.ds_enabled else "Disabled"),
+            ("DS Confirm Target", str(sim_cfg.ds_target_confirmations)),
             ("Topology", f"{sim_cfg.topology_type} (BA m={sim_cfg.topology_ba_m})" if sim_cfg.topology_type == "barabasi_albert" else f"{sim_cfg.topology_type} (k={getattr(sim_cfg, 'topology_ws_k', 4)}, beta={getattr(sim_cfg, 'topology_ws_beta', 0.1)})" if sim_cfg.topology_type == "watts_strogatz" else f"{sim_cfg.topology_type} (core_ratio={getattr(sim_cfg, 'topology_core_ratio', 0.05)})" if sim_cfg.topology_type == "core_periphery" else f"random (p={sim_cfg.edge_probability:.3f})"),
             ("Latency Range", f"{sim_cfg.min_latency:.2f}~{sim_cfg.max_latency:.2f}"),
             ("Reliability", f"{sim_cfg.min_reliability:.2f}~{sim_cfg.max_reliability:.2f}"),
@@ -198,7 +255,20 @@ def main() -> None:
     
     # Tokenomics module
     if enable_tokenomics:
-        modules.append(TokenomicsModule())
+        modules.append(
+            TokenomicsModule(
+                initial_fiat_balance=sim_cfg.econ_initial_fiat,
+                base_token_price=sim_cfg.econ_base_token_price,
+                initial_token_balance=sim_cfg.econ_initial_tokens,
+                mining_cost_per_step=sim_cfg.econ_mining_cost_per_step,
+                block_reward_tokens=sim_cfg.econ_block_reward_tokens,
+                price_from_orphan=sim_cfg.econ_price_from_orphan,
+                price_model=sim_cfg.econ_price_model,
+                static_token_price=sim_cfg.econ_static_token_price,
+                orphan_penalty_k=sim_cfg.econ_orphan_penalty_k,
+                price_floor_factor=sim_cfg.econ_price_floor_factor,
+            )
+        )
     
     # Metrics Module 
     metrics_mod = MetricsObserverModule(
