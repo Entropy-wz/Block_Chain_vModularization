@@ -317,7 +317,9 @@ class TokenomicsModule(ISimulationModule):
                     self.ds_reorg_reverts += 1
                     self.balances[att.merchant_id]["tokens"] -= att.amount
                     self.merchant_loss_total += att.amount
-                    if att.conflict_released and not att.success_counted:
+                    # Keep settlement accounting consistent: once merchant-confirmed
+                    # payment is reverted, attacker-side gain is recognized immediately.
+                    if not att.success_counted:
                         self._count_double_spend_success(att)
 
         self._last_canonical_set = canonical_set

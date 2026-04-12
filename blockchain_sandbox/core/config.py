@@ -91,6 +91,10 @@ class AgenticSimulationConfig:
     # Modules
     enable_forum: bool = True
     selfish_strategy: str = "classic"
+    llm_decision_mode: str = "persona_first"
+    persona_deviation_level: str = "medium"
+    persona_action_set: str = "extended"
+    strategy_constraint_strictness: str = "safe"
     economy_enabled: bool = False
     ds_enabled: bool = False
     ds_target_confirmations: int = 2

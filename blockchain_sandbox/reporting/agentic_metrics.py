@@ -28,6 +28,7 @@ class MinerDetail:
     top_actions: List[Tuple[str, int]]
     last_raw_action: str
     last_effective_action: str
+    last_executed_action: str
     last_reason: str
     last_prompt: str
 
@@ -77,6 +78,16 @@ class AgenticReport:
     selfish_initial_capital_total: float
     selfish_roi: float
     ratio_economic_signed: float
+    strategy_constrained_rate: float
+    persona_deviation_rate: float
+    fallback_to_strategy_rate: float
+    persona_deviation_impact_delta: float
+    strategy_action_distribution: Dict[str, Dict[str, int]]
+    raw_action_dist: Dict[str, int]
+    effective_action_dist: Dict[str, int]
+    executed_action_dist: Dict[str, int]
+    audit_consistency: bool
+    audit_mismatch_count: int
 
 
 def build_agentic_report(result: AgenticSimulationResult) -> AgenticReport:
@@ -106,6 +117,7 @@ def build_agentic_report(result: AgenticSimulationResult) -> AgenticReport:
     selfish_initial_capital_total = _selfish_initial_capital_total(result, miner_details)
     selfish_roi = _safe_div(selfish_net_profit_total, selfish_initial_capital_total)
     ratio_economic_signed = _signed_economic_ratio(selfish_net_profit_total, selfish_hash_power_share, network_net_profit_total)
+    decision_audit = _decision_audit_summary(result, miner_details)
 
     return AgenticReport(
         total_blocks=total_blocks,
@@ -151,6 +163,16 @@ def build_agentic_report(result: AgenticSimulationResult) -> AgenticReport:
         selfish_initial_capital_total=selfish_initial_capital_total,
         selfish_roi=selfish_roi,
         ratio_economic_signed=ratio_economic_signed,
+        strategy_constrained_rate=decision_audit["strategy_constrained_rate"],
+        persona_deviation_rate=decision_audit["persona_deviation_rate"],
+        fallback_to_strategy_rate=decision_audit["fallback_to_strategy_rate"],
+        persona_deviation_impact_delta=decision_audit["persona_deviation_impact_delta"],
+        strategy_action_distribution=decision_audit["strategy_action_distribution"],
+        raw_action_dist=decision_audit["raw_action_dist"],
+        effective_action_dist=decision_audit["effective_action_dist"],
+        executed_action_dist=decision_audit["executed_action_dist"],
+        audit_consistency=decision_audit["audit_consistency"],
+        audit_mismatch_count=decision_audit["audit_mismatch_count"],
     )
 
 
@@ -208,8 +230,49 @@ def format_agentic_report(report: AgenticReport) -> str:
         f"  - network_net_profit_total: {report.network_net_profit_total:.4f}",
         f"  - selfish_roi: {report.selfish_roi:.4f}",
         f"  - ratio_economic_signed: {report.ratio_economic_signed:.4f}",
-        "Top miners by discovered blocks:",
+        "Decision Audit:",
+        f"  - strategy_constrained_rate: {report.strategy_constrained_rate:.2%}",
+        f"  - persona_deviation_rate: {report.persona_deviation_rate:.2%}",
+        f"  - fallback_to_strategy_rate: {report.fallback_to_strategy_rate:.2%}",
+        f"  - persona_deviation_impact_delta: {report.persona_deviation_impact_delta:+.4f}",
+        f"  - audit_consistency: {report.audit_consistency}",
+        f"  - audit_mismatch_count: {report.audit_mismatch_count}",
+        "Action Distribution (Raw):",
+        "  - "
+        + (
+            ", ".join(
+                f"{k}:{v}" for k, v in sorted(report.raw_action_dist.items(), key=lambda kv: kv[1], reverse=True)
+            )
+            if report.raw_action_dist
+            else "none"
+        ),
+        "Action Distribution (Effective):",
+        "  - "
+        + (
+            ", ".join(
+                f"{k}:{v}" for k, v in sorted(report.effective_action_dist.items(), key=lambda kv: kv[1], reverse=True)
+            )
+            if report.effective_action_dist
+            else "none"
+        ),
+        "Action Distribution (Executed):",
+        "  - "
+        + (
+            ", ".join(
+                f"{k}:{v}" for k, v in sorted(report.executed_action_dist.items(), key=lambda kv: kv[1], reverse=True)
+            )
+            if report.executed_action_dist
+            else "none"
+        ),
+        "Strategy Action Distribution:",
     ])
+    if report.strategy_action_distribution:
+        for strategy_name, action_map in sorted(report.strategy_action_distribution.items()):
+            parts = ", ".join(f"{k}:{v}" for k, v in sorted(action_map.items(), key=lambda kv: kv[1], reverse=True)[:8])
+            lines.append(f"  - {strategy_name}: {parts if parts else 'none'}")
+    else:
+        lines.append("  - none")
+    lines.append("Top miners by discovered blocks:")
     for mid, c in report.top_miners:
         lines.append(f"  - {mid}: {c}")
     lines.append("Selfish-miner gamma estimates:")
@@ -266,13 +329,13 @@ def format_miner_details(report: AgenticReport) -> str:
         )
         if d.top_actions:
             action_text = ", ".join(f"{a}:{c}" for a, c in d.top_actions)
-            lines.append(f"  actions(effective): {action_text}")
+            lines.append(f"  actions(executed): {action_text}")
         else:
-            lines.append("  actions(effective): none")
-        
-        action_disp = d.last_effective_action
+            lines.append("  actions(executed): none")
+
+        action_disp = d.last_executed_action
         if d.last_raw_action != d.last_effective_action:
-            action_disp += f" (raw: {d.last_raw_action})"
+            action_disp += f" (effective: {d.last_effective_action}; raw: {d.last_raw_action})"
             
         lines.append(f"  last_action: {action_disp}")
         lines.append(f"  last_reason: {_shorten(d.last_reason, 180)}")
@@ -328,9 +391,13 @@ def _build_miner_details(result: AgenticSimulationResult) -> List[MinerDetail]:
             by_miner_canonical[block.miner_id] = by_miner_canonical.get(block.miner_id, 0) + 1
 
     action_count: Dict[str, Dict[str, int]] = {}
+    raw_action_count: Dict[str, int] = {}
+    effective_action_count: Dict[str, int] = {}
+    executed_action_count: Dict[str, int] = {}
     last_prompt: Dict[str, str] = {}
     last_raw_action: Dict[str, str] = {}
     last_effective_action: Dict[str, str] = {}
+    last_executed_action: Dict[str, str] = {}
     last_reason: Dict[str, str] = {}
     for tr in result.prompt_traces:
         mid = str(tr.get("miner_id", "")).strip()
@@ -345,14 +412,19 @@ def _build_miner_details(result: AgenticSimulationResult) -> List[MinerDetail]:
             
         raw_act = str(raw_decision.get("action", "")).strip() or "unknown"
         eff_act = str(effective_decision.get("action", "")).strip() or "unknown"
+        exe_act = str(tr.get("executed_action", "")).strip() or eff_act
         reason = str(effective_decision.get("reason", "")).strip()
         up = str(tr.get("user_prompt", "")).strip()
-        
+
+        raw_action_count[raw_act] = raw_action_count.get(raw_act, 0) + 1
+        effective_action_count[eff_act] = effective_action_count.get(eff_act, 0) + 1
+        executed_action_count[exe_act] = executed_action_count.get(exe_act, 0) + 1
         action_count.setdefault(mid, {})
-        action_count[mid][eff_act] = action_count[mid].get(eff_act, 0) + 1
+        action_count[mid][exe_act] = action_count[mid].get(exe_act, 0) + 1
         last_prompt[mid] = up
         last_raw_action[mid] = raw_act
         last_effective_action[mid] = eff_act
+        last_executed_action[mid] = exe_act
         last_reason[mid] = reason
 
     details: List[MinerDetail] = []
@@ -399,6 +471,7 @@ def _build_miner_details(result: AgenticSimulationResult) -> List[MinerDetail]:
                 top_actions=actions,
                 last_raw_action=last_raw_action.get(mid, "n/a"),
                 last_effective_action=last_effective_action.get(mid, "n/a"),
+                last_executed_action=last_executed_action.get(mid, last_effective_action.get(mid, "n/a")),
                 last_reason=last_reason.get(mid, ""),
                 last_prompt=last_prompt.get(mid, ""),
             )
@@ -461,6 +534,84 @@ def _signed_economic_ratio(selfish_profit: float, selfish_hp_share: float, netwo
     selfish_per_hp = selfish_profit / selfish_hp_share
     network_per_hp = network_profit  # total network hash-power share is 1
     return selfish_per_hp / network_per_hp
+
+
+def _decision_audit_summary(result: AgenticSimulationResult, miner_details: List[MinerDetail]) -> Dict[str, object]:
+    audited = 0
+    constrained = 0
+    deviated = 0
+    fallback = 0
+    by_strategy: Dict[str, Dict[str, int]] = {}
+    raw_action_dist: Dict[str, int] = {}
+    effective_action_dist: Dict[str, int] = {}
+    executed_action_dist: Dict[str, int] = {}
+    miner_detail_map = {d.miner_id: d for d in miner_details}
+    dev_scores: List[float] = []
+    base_scores: List[float] = []
+    for tr in result.prompt_traces:
+        raw_decision = tr.get("decision", {})
+        if not isinstance(raw_decision, dict):
+            raw_decision = {}
+        effective_decision = tr.get("effective_decision", raw_decision)
+        if not isinstance(effective_decision, dict):
+            effective_decision = {}
+        raw_action = str(raw_decision.get("action", "")).strip() or "unknown"
+        effective_action = str(effective_decision.get("action", "")).strip() or raw_action
+        executed_action = str(tr.get("executed_action", "")).strip() or effective_action
+        raw_action_dist[raw_action] = raw_action_dist.get(raw_action, 0) + 1
+        effective_action_dist[effective_action] = effective_action_dist.get(effective_action, 0) + 1
+        executed_action_dist[executed_action] = executed_action_dist.get(executed_action, 0) + 1
+
+        audit = tr.get("decision_audit", {})
+        if not isinstance(audit, dict) or not audit:
+            continue
+        audited += 1
+        if effective_action != executed_action:
+            constrained += 1
+        baseline_action = str(audit.get("baseline_action", "")).strip()
+        deviation_reason = str(audit.get("deviation_reason", "")).strip().lower()
+        if bool(audit.get("fallback_to_strategy", False)) or (baseline_action and executed_action == baseline_action and effective_action != baseline_action):
+            fallback += 1
+        is_persona_reason = deviation_reason.startswith("persona")
+        if baseline_action and executed_action != baseline_action and is_persona_reason:
+            deviated += 1
+        strategy_name = str(audit.get("strategy_name", "unknown")).strip() or "unknown"
+        action = executed_action
+        by_strategy.setdefault(strategy_name, {})
+        by_strategy[strategy_name][action] = by_strategy[strategy_name].get(action, 0) + 1
+        miner_id = str(tr.get("miner_id", "")).strip()
+        detail = miner_detail_map.get(miner_id)
+        if detail is None:
+            continue
+        score = detail.canonical_vs_hp_ratio
+        if bool(audit.get("persona_deviation", False)):
+            dev_scores.append(score)
+        else:
+            base_scores.append(score)
+
+    decision_calls = len(result.prompt_traces)
+    executed_total = sum(executed_action_dist.values())
+    mismatch_count = abs(executed_total - decision_calls)
+    audit_consistency = mismatch_count == 0
+
+    return {
+        "strategy_constrained_rate": _safe_div(float(constrained), float(audited)),
+        "persona_deviation_rate": _safe_div(float(deviated), float(audited)),
+        "fallback_to_strategy_rate": _safe_div(float(fallback), float(audited)),
+        "persona_deviation_impact_delta": (_avg(dev_scores) - _avg(base_scores)) if (dev_scores or base_scores) else 0.0,
+        "strategy_action_distribution": by_strategy,
+        "raw_action_dist": raw_action_dist,
+        "effective_action_dist": effective_action_dist,
+        "executed_action_dist": executed_action_dist,
+        "audit_consistency": audit_consistency,
+        "audit_mismatch_count": mismatch_count,
+    }
+
+
+def _avg(values: List[float]) -> float:
+    if not values:
+        return 0.0
+    return sum(values) / len(values)
 
 
 def _safe_div(a: float, b: float) -> float:

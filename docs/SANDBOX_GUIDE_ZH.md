@@ -43,7 +43,9 @@ Blockchain Sandbox 是一个通过 **离散事件仿真（Discrete Event Simulat
 ---
 
 ### 2.4 Live Dashboard 与可视化模块
-- **可插拔的设计**: Dashboard 作为模块被实现为 `LiveDashboardModule`。它会在独立线程拉起 FastAPI 服务器以避免阻塞核心循环，并通过 WebSocket 广播事件。如果不需要界面，可以随时使用 `--no-dashboard` 开关禁用它。仿真结束后，会在新标签页自动弹出 `/summary` 对战总结界面，你可按页面按钮返回主屏，或在终端随时按 `q` 退出整个 Web 服务。
+- **可插拔的设计**: Dashboard 作为模块被实现为 `LiveDashboardModule`。它会在独立线程拉起 FastAPI 服务器以避免阻塞核心循环，并通过 WebSocket 广播事件。如果不需要界面，可以随时使用 `--no-dashboard` 开关禁用它。
+- **当前默认唤醒行为**: `run_live_dashboard` 启动后默认自动打开主页；仿真结束后会由启动器主动再次拉起 `/summary`，并在控制台打印 Dashboard 链接、Summary 链接与自动打开状态。若浏览器策略拦截弹窗，仍可直接用控制台链接访问。
+- **可关闭自动打开**: 如需批处理/无头运行，可使用 `--no-auto-open` 关闭启动时自动打开主页。
 - **误区解释：同高度区块与“H5在两条链挖块”**: 图形界面中显示的 `H:x [My]` 含义是“**高度(Height)** 为 x 的区块，由矿工 y 挖出”。因此看到两个分支上各有一个 `H:5` 是因为网络延迟产生了分叉，导致不同矿工都在他们看到的链高度 4 的末端分别打包了新块，**这是正常的设计行为**。
 - **误区解释：为何某个节点（如H2/M2）会被集中攻击**: LLM 在决策时，系统模块 `_pick_jam_target` 会高亮网络中“算力最强”的诚实竞争者。为了平衡实力差距，多个使用 LLM 的矿工会**不约而同地集火（Jam）同一个头部节点**。
 
@@ -96,6 +98,56 @@ Blockchain Sandbox 是一个通过 **离散事件仿真（Discrete Event Simulat
 - `SANDBOX_SNAPSHOT_INTERVAL_BLOCKS`: 树形快照的时间间隔 (默认: 每20个块)。
 - `SANDBOX_VERBOSE_LLM_LOG`: 打开控制台打印的详细 prompt 日志。
 - `SANDBOX_OUTPUT_ROOT`: 数据导出根目录。
+
+### 4.4 LLM 决策模式参数（本次修复后语义）
+
+- `SANDBOX_LLM_DECISION_MODE`
+  - `strategy_first`: 以策略基线为主，LLM动作会被强约束到基线动作（偏离最少）。
+  - `persona_first`: 默认模式。优先策略，但在允许范围内会给人格一定偏离空间。
+  - `high_persona`: 在合法动作域内，允许更强的人格偏离（偏离最多）。
+- `SANDBOX_PERSONA_DEVIATION_LEVEL`
+  - `low | medium | high | strong`，控制人格触发阈值，强度越高越容易发生偏离。
+- `SANDBOX_PERSONA_ACTION_SET`
+  - `basic`: 仅基础人格动作集合。
+  - `extended`: 启用扩展人格动作（如 panic/feint/spite 等）。
+- `SANDBOX_STRATEGY_CONSTRAINT_STRICTNESS`
+  - `strict`: 更保守的动作域（人格动作受限）。
+  - `safe`: 默认安全边界。
+  - `loose`: 更宽松动作域（仅在策略允许范围内放宽）。
+
+### 4.5 决策审计口径（避免“看起来一样”的误读）
+
+报告与 `summary.json` 现同时输出三套动作分布：
+
+- `raw_action_dist`: LLM原始返回动作
+- `effective_action_dist`: 归一化/约束后动作
+- `executed_action_dist`: 最终实际执行动作（唯一真值）
+
+并增加一致性字段：
+
+- `audit_consistency`: 是否满足 `sum(executed_action_dist) == decision_calls`
+- `audit_mismatch_count`: 一致性差额（正常应为 0）
+
+### 4.6 自私策略参数与语义
+
+- `SANDBOX_SELFISH_STRATEGY`
+  - `classic`: 基础自私策略，适合作为默认对照。
+  - `stubborn`: 更强对抗倾向，常与 `classic` 做差异对比。
+  - `social`: 社交驱动的自私策略变体。
+  - `intermittent_epoch`: 阶段化策略；短程实验建议配合较小 `SANDBOX_DIFFICULTY_EPOCH_BLOCKS`，避免阶段不切换。
+  - `stubborn_ds`: 双花导向策略；启用后通常应同时开启结算经济参数。
+
+### 4.7 经济与双花参数（结算口径）
+
+- `SANDBOX_ECONOMY_ENABLED`: 经济结算总开关（`1/0`）。
+- `SANDBOX_DS_TARGET_CONFIRMATIONS`: 商户确认数阈值。
+- `SANDBOX_DS_PAYMENT_AMOUNT`: 单次支付金额。
+- `SANDBOX_DS_ATTACK_INTERVAL_BLOCKS`: 双花尝试间隔。
+- `SANDBOX_DS_FREE_SHOT_DEPTH`: 释放深度容忍（用于低确认测试）。
+- `SANDBOX_ECON_PRICE_MODEL`: `static` / `orphan_health`。
+- `SANDBOX_ECON_STATIC_TOKEN_PRICE`: 静态价格模式下的固定价格。
+- `SANDBOX_ECON_PRICE_FROM_ORPHAN`: 是否由孤块率驱动价格衰减（`1/0`）。
+- `SANDBOX_ECON_MINING_COST_PER_STEP` / `SANDBOX_ECON_BLOCK_REWARD_TOKENS`: 成本与奖励参数。
 
 ---
 

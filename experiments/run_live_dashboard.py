@@ -4,6 +4,7 @@ import sys
 import time
 import argparse
 import msvcrt
+import webbrowser
 
 # Add project root to Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -68,6 +69,26 @@ def _check_websockets_dependency():
         print("!"*60 + "\n")
         sys.exit(1)
 
+
+def _auto_open_url(url: str, label: str) -> bool:
+    """
+    Try opening url in default browser and print a clear status line.
+    Returns True when webbrowser reports a successful open.
+    """
+    try:
+        opened = bool(webbrowser.open(url, new=2))
+    except Exception as e:
+        print(f"[!] {label}: auto-open failed. Please open manually: {url}")
+        print(f"[!] Reason: {e}")
+        return False
+
+    if opened:
+        print(f"[OK] {label}: auto-opened -> {url}")
+        return True
+
+    print(f"[!] {label}: browser did not confirm auto-open. Please open manually: {url}")
+    return False
+
 def main():
     _suppress_asyncio_windows_bug()
     _check_websockets_dependency()
@@ -82,7 +103,19 @@ def main():
     parser.add_argument("--no-dashboard", action="store_true", help="Disable the live dashboard module.")
     parser.add_argument("--host", type=str, default="127.0.0.1", help="Dashboard host.")
     parser.add_argument("--port", type=int, default=8000, help="Dashboard port.")
-    parser.add_argument("--auto-open", action="store_true", help="Automatically open the dashboard in the default web browser.")
+    parser.add_argument(
+        "--auto-open",
+        dest="auto_open",
+        action="store_true",
+        default=True,
+        help="Automatically open the dashboard in the default web browser (default: enabled).",
+    )
+    parser.add_argument(
+        "--no-auto-open",
+        dest="auto_open",
+        action="store_false",
+        help="Disable automatic opening of the dashboard at startup.",
+    )
     parser.add_argument("--delay", type=float, default=2.0, help="Seconds to wait before starting simulation (allows browser to connect). Default 2.0s.")
     parser.add_argument("--steps", type=int, default=100, help="Total steps for the simulation. Default 100.")
     parser.add_argument("--disable-events", type=str, default="BLOCK_RECEIVED", help="Comma-separated list of events to drop at backend. Use 'none' to enable all events.")
@@ -139,14 +172,15 @@ def main():
 
     if not args.no_dashboard and dashboard and dashboard._server_started:
         dashboard_url = f"http://{dashboard.host}:{dashboard.port}/"
+        summary_url = f"http://{dashboard.host}:{dashboard.port}/summary"
         print(f"\n[!] Dashboard will be available at {dashboard_url}")
         print(f"[!] Health API: http://{dashboard.host}:{dashboard.port}/api/health")
-        
+
         if args.auto_open:
-            import webbrowser
-            print(f"[!] Auto-opening browser to {dashboard_url} ...")
-            webbrowser.open(dashboard_url)
-            
+            _auto_open_url(dashboard_url, "Dashboard")
+        else:
+            print(f"[!] Dashboard auto-open is disabled. Open manually if needed: {dashboard_url}")
+
     elif not args.no_dashboard:
         print("\n[!] Dashboard was not started (port may already be in use).")
     else:
@@ -166,8 +200,14 @@ def main():
     print("\n" + "="*60)
     print("   Simulation Complete / Stopped.")
     print("="*60)
-    
+
     if not args.no_dashboard and dashboard and dashboard._server_started:
+        dashboard_url = f"http://{dashboard.host}:{dashboard.port}/"
+        summary_url = f"http://{dashboard.host}:{dashboard.port}/summary"
+        print("[!] End-of-run links:")
+        print(f"[!] Dashboard: {dashboard_url}")
+        print(f"[!] Summary:   {summary_url}")
+        _auto_open_url(summary_url, "Summary")
         _wait_for_shutdown(args.keep_alive, args.exit_key)
 
 if __name__ == "__main__":

@@ -124,11 +124,10 @@ def test_revert_before_release_still_counts_success_once():
     ctx.current_step += 1
     module.on_step_start(ctx)
     assert module.ds_reorg_reverts >= 1
-    assert module.ds_success_count == 0
-
-    # private release arrives later -> should compensate success exactly once
-    module._on_private_chain_published({"miner_id": att.attacker_id, "blocks": ["PX"]})
     assert module.ds_success_count == 1
+
+    # private release arrives later -> should not double count success
+    module._on_private_chain_published({"miner_id": att.attacker_id, "blocks": ["PX"]})
     prev_success = module.ds_success_count
     module._on_private_chain_published({"miner_id": att.attacker_id, "blocks": ["PY"]})
     assert module.ds_success_count == prev_success

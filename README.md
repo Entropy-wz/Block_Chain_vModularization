@@ -112,11 +112,17 @@ python -m pytest tests/modules/
 python -m experiments.run_live_dashboard
 ```
 
+默认行为（当前版本）：
+- 启动后会默认自动打开 Dashboard 首页。
+- 仿真结束后会由启动器主动再次唤醒 `/summary` 页面（即使前端弹窗被拦截，也会在控制台给出可直接打开的链接）。
+
 **命令行控制参数：**
 - `--keep-alive <秒数>`: 仿真跑完后，自动保持服务并于指定秒数后退出（用于自动化脚本或无头展示）。不论设置多少秒，期间随时可在终端按 `--exit-key` (默认 `q`) 提前优雅关闭。
 - `--exit-key <按键>`: 默认 `q`，在仿真结束后，按该键可优雅关闭后台服务并断开浏览器连接。
 - `--no-dashboard`: 若想以纯净无后端模式跑这个预设实验，可以加上该参数跳过 Dashboard。
 - `--host` / `--port`: 自定义 Web 挂载服务的地址，默认为 `127.0.0.1:8000`。
+- `--no-auto-open`: 关闭“启动时自动打开 Dashboard 首页”。
+- `--auto-open`: 显式开启自动打开（默认已开启，主要用于脚本中自解释）。
 
 ---
 
@@ -257,6 +263,23 @@ Key signed profit metrics (summary/report):
 - `network_net_profit_total`
 - `selfish_roi`
 - `ratio_economic_signed`
+
+### Selfish Strategy Quick Notes
+
+- `classic`: 基础自私策略，对照用主力方案。
+- `stubborn`: 更强对抗倾向；在 LLM 模式下会受动作合法域约束。
+- `intermittent_epoch`: 按阶段切换行为；短程实验建议同时调小 `SANDBOX_DIFFICULTY_EPOCH_BLOCKS`，避免全程停在同一阶段。
+- `stubborn_ds`: 双花导向策略；启用时会强制带上结算经济口径（建议同时配置 DS 相关参数）。
+
+### Persona / Deviation Controls
+
+- `SANDBOX_LLM_DECISION_MODE`
+  - `strategy_first`: 偏离最少
+  - `persona_first`: 中等偏离（默认）
+  - `high_persona`: 偏离最多（在合法动作域内）
+- `SANDBOX_PERSONA_DEVIATION_LEVEL`: `low | medium | high | strong`，控制偏离触发强度。
+- `SANDBOX_PERSONA_ACTION_SET`: `basic | extended`，控制可用人格动作集合。
+- `SANDBOX_STRATEGY_CONSTRAINT_STRICTNESS`: `strict | safe | loose`，控制安全约束强度。
 
 ---
 

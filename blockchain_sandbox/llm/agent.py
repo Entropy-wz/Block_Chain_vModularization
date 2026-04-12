@@ -52,7 +52,10 @@ class MinerAgent:
                 system_prompt += f"{mp}\n\n"
                 
         expected_keys = {
-            "action": "string (publish_if_win, withhold_if_win, publish_private, rebroadcast, hold, jam_target)",
+            "action": (
+                "string (publish_if_win, withhold_if_win, publish_private, rebroadcast, hold, "
+                "panic_publish, temporary_honest, spite_withhold, feint_release, jam_target)"
+            ),
             "reason": "string",
             "release_private_blocks": "integer"
         }
@@ -82,6 +85,15 @@ class MinerAgent:
             f"sociability={obs.persona.sociability:.2f};style={obs.persona.investment_style};"
             f"narrative_style={obs.persona.narrative_style};"
         )
+        allowed_actions = str(obs.modules_context.get("strategy_allowed_actions", "")).strip()
+        baseline_action = str(obs.modules_context.get("strategy_baseline_action", "")).strip()
+        strategy_name = str(obs.modules_context.get("strategy_name", "")).strip()
+        if strategy_name or allowed_actions or baseline_action:
+            user_prompt += (
+                f"strategy_name={strategy_name};"
+                f"strategy_allowed_actions={allowed_actions};"
+                f"strategy_baseline_action={baseline_action};"
+            )
         
         for k, v in obs.modules_context.items():
             if isinstance(v, float):

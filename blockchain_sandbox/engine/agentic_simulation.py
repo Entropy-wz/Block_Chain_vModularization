@@ -64,6 +64,8 @@ class PendingDecision:
     cache_key: Tuple[str, str, int, int]
     future: asyncio.Future
     source_block_id: str = ""
+    persona_state: Dict[str, float] | None = None
+    strategy_runtime: Dict[str, Any] | None = None
 
 
 class AgenticBlockchainSimulation(ISimulationContext):
@@ -124,6 +126,7 @@ class AgenticBlockchainSimulation(ISimulationContext):
         self._pending_receive_context: Dict[int, Tuple[float, str, str]] = {}
         self._next_request_id: int = 1
         self._decision_throughput_by_step: Dict[int, int] = {}
+        self._decision_count_by_miner: Dict[str, int] = {}
         
         self.genesis_id = "B0"
         genesis = Block(self.genesis_id, None, 0, "genesis", 0)
@@ -270,6 +273,7 @@ class AgenticBlockchainSimulation(ISimulationContext):
                 llm=llm,
                 trace_callback=self._on_agent_trace,
             )
+            self._decision_count_by_miner[mid] = 0
 
         for nid in full_ids:
             self.nodes[nid] = Node(
@@ -467,9 +471,15 @@ class AgenticBlockchainSimulation(ISimulationContext):
     def _build_strategy_context(self, miner_id: str, event_kind: str, private_lead: int) -> Dict[str, Any]:
         mined_blocks = max(0, len(self.block_storage.get_all_summaries()) - 1)
         epoch_blocks = max(1, int(getattr(self.config, "difficulty_epoch_blocks", 2016)))
-        epoch_index = mined_blocks // epoch_blocks
-        epoch_offset = mined_blocks % epoch_blocks
-        progress = epoch_offset / float(epoch_blocks)
+        expected_blocks = max(1, int(float(self.config.total_steps) * float(self.config.block_discovery_chance)))
+        short_run_mode = expected_blocks < epoch_blocks
+        if short_run_mode:
+            epoch_index = 0
+            progress = min(1.0, mined_blocks / float(expected_blocks))
+        else:
+            epoch_index = mined_blocks // epoch_blocks
+            epoch_offset = mined_blocks % epoch_blocks
+            progress = epoch_offset / float(epoch_blocks)
         if progress < 0.33:
             phase = "early"
         elif progress < 0.66:
@@ -484,10 +494,15 @@ class AgenticBlockchainSimulation(ISimulationContext):
             "difficulty_phase": phase,
             "difficulty_level": float(difficulty_level),
             "intermittent_mode": str(getattr(self.config, "intermittent_mode", "post_adjust_burst")),
+            "difficulty_short_run_mode": bool(short_run_mode),
             "ds_enabled": bool(getattr(self.config, "ds_enabled", False)),
             "ds_target_confirmations": int(getattr(self.config, "ds_target_confirmations", 2)),
             "confirmations_seen": 0,
             "free_shot_eligible": False,
+            "llm_decision_mode": str(getattr(self.config, "llm_decision_mode", "persona_first")),
+            "persona_deviation_level": str(getattr(self.config, "persona_deviation_level", "medium")),
+            "persona_action_set": str(getattr(self.config, "persona_action_set", "extended")),
+            "strategy_constraint_strictness": str(getattr(self.config, "strategy_constraint_strictness", "safe")),
         }
         for module in self.modules:
             getter = getattr(module, "get_double_spend_context", None)
@@ -499,6 +514,32 @@ class AgenticBlockchainSimulation(ISimulationContext):
                 except Exception:
                     pass
         return out
+
+    def _build_persona_state(self, miner_id: str, event_kind: str, private_lead: int) -> Dict[str, float]:
+        persona = self.personas[miner_id]
+        public_h = self.chain_heights[self._canonical_head()]
+        rivalry_pressure = self._rivalry_pressure(miner_id, public_h)
+        my_h = self.chain_heights.get(self.nodes[miner_id].local_head_id or self.genesis_id, 0)
+        public_h_gap = max(0, public_h - my_h)
+        decision_count = self._decision_count_by_miner.get(miner_id, 0)
+        fatigue = min(1.0, (decision_count / 80.0) + (self._current_time / max(1.0, float(self.config.total_steps))) * 0.5)
+        fear = min(1.0, max(0.0, (1.0 - persona.risk_appetite) * 0.55 + rivalry_pressure * 0.35 + public_h_gap * 0.05))
+        stubbornness = min(1.0, max(0.0, persona.aggression * 0.55 + persona.patience * 0.35 + private_lead * 0.03))
+        reputation = 0.0
+        for mod in self.modules:
+            if hasattr(mod, "forum"):
+                try:
+                    reputation = float(mod.forum.reputation_of(miner_id))
+                except Exception:
+                    reputation = 0.0
+                break
+        revenge = min(1.0, max(0.0, (-reputation) / 20.0 + persona.aggression * 0.3))
+        return {
+            "fear": round(fear, 4),
+            "stubbornness": round(stubbornness, 4),
+            "revenge": round(revenge, 4),
+            "fatigue": round(fatigue, 4),
+        }
 
     def _on_agent_trace(self, payload: Dict[str, object]) -> None:
         self.prompt_traces.append(payload)
@@ -520,6 +561,22 @@ class AgenticBlockchainSimulation(ISimulationContext):
         mod_ctx = {}
         for module in self.modules:
             mod_ctx.update(module.augment_agent_observation(miner_id, self))
+        private_lead = len(self.private_chains[miner_id])
+        persona_state = self._build_persona_state(miner_id, event_kind, private_lead)
+        strategy_runtime = self._build_strategy_context(miner_id, event_kind, private_lead)
+        strategy_obj = self.mining_strategies.get(miner_id)
+        if strategy_obj and hasattr(strategy_obj, "llm_guidance"):
+            try:
+                guidance = strategy_obj.llm_guidance(event_kind=event_kind, private_lead=private_lead)
+                if isinstance(guidance, dict):
+                    mod_ctx.update(guidance)
+            except Exception:
+                pass
+        mod_ctx["persona_fear"] = persona_state.get("fear", 0.0)
+        mod_ctx["persona_stubbornness"] = persona_state.get("stubbornness", 0.0)
+        mod_ctx["persona_revenge"] = persona_state.get("revenge", 0.0)
+        mod_ctx["persona_fatigue"] = persona_state.get("fatigue", 0.0)
+        mod_ctx["strategy_phase"] = strategy_runtime.get("difficulty_phase", "")
             
         obs = AgentObservation(
             step=self._event_step(current_time),
@@ -682,6 +739,41 @@ class AgenticBlockchainSimulation(ISimulationContext):
                 for key in ["jam_steps", "social_action", "social_target", "social_board", "social_tone", "social_content"]:
                     if hasattr(effective, key) and key not in item["decision"]:
                         item["decision"][key] = getattr(effective, key)
+            return
+
+    def _annotate_latest_trace(self, miner_id: str, audit: Dict[str, Any]) -> None:
+        for i in range(len(self.prompt_traces) - 1, -1, -1):
+            item = self.prompt_traces[i]
+            if str(item.get("miner_id", "")) != miner_id:
+                continue
+            if "decision_audit" in item:
+                continue
+            item["decision_audit"] = dict(audit)
+            return
+
+    def _annotate_latest_trace_execution(
+        self,
+        miner_id: str,
+        *,
+        event_kind: str,
+        executed_action: str,
+        executed_release_blocks: int,
+        executed_publish_new: bool,
+        executed_rebroadcast: bool,
+    ) -> None:
+        for i in range(len(self.prompt_traces) - 1, -1, -1):
+            item = self.prompt_traces[i]
+            if str(item.get("miner_id", "")) != miner_id:
+                continue
+            if str(item.get("event_kind", "")).strip() not in {"", event_kind}:
+                continue
+            if "executed_action" in item:
+                continue
+            item["event_kind"] = event_kind
+            item["executed_action"] = executed_action
+            item["executed_release_blocks"] = int(max(0, executed_release_blocks))
+            item["executed_publish_new"] = bool(executed_publish_new)
+            item["executed_rebroadcast"] = bool(executed_rebroadcast)
             return
 
     def _schedule_next_mining(self, now_time: float) -> None:
@@ -910,15 +1002,36 @@ class AgenticBlockchainSimulation(ISimulationContext):
         self.event_bus.publish(EventTypes.BLOCK_MINED, {"miner_id": winner, "block": block})
 
         strategy = self.mining_strategies[winner]
+        persona_state = self._build_persona_state(winner, "on_block_mined", len(self.private_chains[winner]))
+        strategy_runtime = self._build_strategy_context(winner, "on_block_mined", len(self.private_chains[winner]))
         plan = strategy.on_block_mined(
             StrategyHookContext(
                 miner_id=winner,
                 private_lead=len(self.private_chains[winner]),
                 decision=decision,
+                event_kind="on_block_mined",
+                persona_state=persona_state,
+                strategy_runtime=strategy_runtime,
             )
         )
+        self._decision_count_by_miner[winner] = self._decision_count_by_miner.get(winner, 0) + 1
+        self._annotate_latest_trace(
+            winner,
+            {
+                "event_kind": "on_block_mined",
+                "strategy_name": getattr(plan, "strategy_name", ""),
+                "baseline_action": getattr(plan, "baseline_action", ""),
+                "chosen_action": getattr(plan, "chosen_action", ""),
+                "constrained": bool(getattr(plan, "constrained", False)),
+                "persona_deviation": bool(getattr(plan, "persona_deviation", False)),
+                "fallback_to_strategy": bool(getattr(plan, "fallback_to_strategy", False)),
+                "deviation_reason": getattr(plan, "deviation_reason", ""),
+                "allowed_actions": list(getattr(plan, "allowed_actions", ()) or ()),
+            },
+        )
+        released_blocks = 0
         if plan.publish_private_blocks > 0:
-            self._publish_private_chain(winner, current_time, plan.publish_private_blocks)
+            released_blocks = self._publish_private_chain(winner, current_time, plan.publish_private_blocks)
 
         if not plan.publish_new_block:
             self.private_chains[winner].append(block.block_id)
@@ -939,23 +1052,74 @@ class AgenticBlockchainSimulation(ISimulationContext):
             head = self.nodes[winner].local_head_id or self.genesis_id
             self._propagate_from(winner, head, current_time, 0)
 
+        executed_action = "withhold_if_win"
+        if released_blocks > 0:
+            executed_action = "publish_private"
+        elif plan.publish_new_block:
+            executed_action = "publish_if_win"
+        elif plan.rebroadcast_head:
+            executed_action = "rebroadcast"
+        self._annotate_latest_trace_execution(
+            winner,
+            event_kind="on_block_mined",
+            executed_action=executed_action,
+            executed_release_blocks=released_blocks,
+            executed_publish_new=bool(plan.publish_new_block),
+            executed_rebroadcast=bool(plan.rebroadcast_head),
+        )
+
     def _execute_receive_decision(self, miner_id: str, decision: LLMDecision, current_time: float, block_id: str) -> None:
         strategy = self.mining_strategies[miner_id]
+        persona_state = self._build_persona_state(miner_id, "on_block_received", len(self.private_chains[miner_id]))
+        strategy_runtime = self._build_strategy_context(miner_id, "on_block_received", len(self.private_chains[miner_id]))
         plan = strategy.on_block_received(
             StrategyHookContext(
                 miner_id=miner_id,
                 private_lead=len(self.private_chains[miner_id]),
                 decision=decision,
+                event_kind="on_block_received",
+                persona_state=persona_state,
+                strategy_runtime=strategy_runtime,
                 received_block_id=block_id,
             )
         )
+        self._decision_count_by_miner[miner_id] = self._decision_count_by_miner.get(miner_id, 0) + 1
+        self._annotate_latest_trace(
+            miner_id,
+            {
+                "event_kind": "on_block_received",
+                "strategy_name": getattr(plan, "strategy_name", ""),
+                "baseline_action": getattr(plan, "baseline_action", ""),
+                "chosen_action": getattr(plan, "chosen_action", ""),
+                "constrained": bool(getattr(plan, "constrained", False)),
+                "persona_deviation": bool(getattr(plan, "persona_deviation", False)),
+                "fallback_to_strategy": bool(getattr(plan, "fallback_to_strategy", False)),
+                "deviation_reason": getattr(plan, "deviation_reason", ""),
+                "allowed_actions": list(getattr(plan, "allowed_actions", ()) or ()),
+            },
+        )
+        released_blocks = 0
         if plan.publish_private_blocks > 0:
-            self._publish_private_chain(miner_id, current_time, plan.publish_private_blocks)
+            released_blocks = self._publish_private_chain(miner_id, current_time, plan.publish_private_blocks)
         elif not plan.publish_new_block and block_id not in self.private_chains[miner_id]:
             pass
         if plan.rebroadcast_head:
             head = self.nodes[miner_id].local_head_id or self.genesis_id
             self._propagate_from(miner_id, head, current_time, 0)
+
+        executed_action = "hold"
+        if released_blocks > 0:
+            executed_action = "publish_private"
+        elif plan.rebroadcast_head:
+            executed_action = "rebroadcast"
+        self._annotate_latest_trace_execution(
+            miner_id,
+            event_kind="on_block_received",
+            executed_action=executed_action,
+            executed_release_blocks=released_blocks,
+            executed_publish_new=bool(plan.publish_new_block),
+            executed_rebroadcast=bool(plan.rebroadcast_head),
+        )
 
     def _sample_winner_by_hash_power(self) -> str:
         miners = [n for n in self.nodes.values() if n.is_miner]
@@ -983,10 +1147,10 @@ class AgenticBlockchainSimulation(ISimulationContext):
         self.adopted_counts[block_id] = 0
         return block
 
-    def _publish_private_chain(self, miner_id: str, now_time: float, release_count: int) -> None:
+    def _publish_private_chain(self, miner_id: str, now_time: float, release_count: int) -> int:
         private = self.private_chains[miner_id]
         if not private:
-            return
+            return 0
         k = len(private) if release_count <= 0 else min(release_count, len(private))
         to_release = private[:k]
         self.private_chains[miner_id] = private[k:]
@@ -1005,6 +1169,7 @@ class AgenticBlockchainSimulation(ISimulationContext):
                 self.nodes[miner_id].observe_block(bid, block.height, self.chain_heights)
                 self.adopted_counts[bid] += 1
                 self._propagate_from(miner_id, bid, now_time, 0)
+        return len(to_release)
 
     def _propagate_from(self, src: str, block_id: str, now_time: float, hops: int) -> None:
         if hops >= self.config.max_hops_for_propagation:
